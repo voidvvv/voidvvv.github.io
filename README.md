@@ -1,0 +1,2 @@
+# voidvvv.github.io
+blog
