@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="作为一个java后端开发，最近有时候会用到Vue进行前端开发，特地来补课. 此篇博客作为我学习Vue的一个记录，以及知识汇总.不会把知识点罗列到很细，仅供自己之后参考. 此篇是进阶内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue学习-2">
+<meta property="og:url" content="https://voidvvv.github.io/2023/12/18/vue-study02/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="作为一个java后端开发，最近有时候会用到Vue进行前端开发，特地来补课. 此篇博客作为我学习Vue的一个记录，以及知识汇总.不会把知识点罗列到很细，仅供自己之后参考. 此篇是进阶内容">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210403131545445.png">
+<meta property="article:published_time" content="2023-12-18T11:45:09.000Z">
+<meta property="article:modified_time" content="2023-12-18T11:52:18.110Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="frontier">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20210403131545445.png">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2023/12/18/vue-study02/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2023/12/18/vue-study02/","path":"2023/12/18/vue-study02/","title":"Vue学习-2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue学习-2 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack"><span class="nav-number">1.1.</span> <span class="nav-text">webpack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E5%AE%89%E8%A3%85%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">webpack安装：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-config-js"><span class="nav-number">1.1.2.</span> <span class="nav-text">webpack.config.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loader"><span class="nav-number">1.1.3.</span> <span class="nav-text">loader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5css%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">导入css相关：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E5%9B%BE%E7%89%87%E7%9B%B8%E5%85%B3"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">导入图片相关</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E6%8F%92%E4%BB%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">webpack插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-dev-server%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.1.5.</span> <span class="nav-text">webpack-dev-server搭建本地服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E6%95%B4%E5%90%88vue"><span class="nav-number">1.1.6.</span> <span class="nav-text">webpack整合vue</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%89%8B%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">脚手架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">更改默认配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-number">2.2.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.2.1.</span> <span class="nav-text">路由懒加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%B5%8C%E5%A5%97"><span class="nav-number">2.2.2.</span> <span class="nav-text">路由嵌套</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">2.2.3.</span> <span class="nav-text">路由参数传递</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%85%A8%E5%B1%80%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB"><span class="nav-number">2.3.</span> <span class="nav-text">路由全局导航守卫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keepalive"><span class="nav-number">2.4.</span> <span class="nav-text">keepalive</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vueX-vue%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">vueX vue状态管理工具。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#axios"><span class="nav-number">4.</span> <span class="nav-text">axios</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%90%88elementui"><span class="nav-number">4.1.</span> <span class="nav-text">整合elementui</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#elementui%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3"><span class="nav-number">4.1.1.</span> <span class="nav-text">elementui使用问题及解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#el-form%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C%E7%9B%B8%E5%85%B3%EF%BC%9A"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">el-form表单校验相关：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#el-form%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E8%A1%A8%E5%8D%95%E4%B8%94%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99%EF%BC%9A"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">el-form动态添加表单且自定义校验规则：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">my study record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2023/12/18/vue-study02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="my study record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vue学习-2 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue学习-2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-12-18 19:45:09 / Modified: 19:52:18" itemprop="dateCreated datePublished" datetime="2023-12-18T19:45:09+08:00">2023-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>作为一个java后端开发，最近有时候会用到Vue进行前端开发，特地来补课. 此篇博客作为我学习Vue的一个记录，以及知识汇总.不会把知识点罗列到很细，仅供自己之后参考. 此篇是进阶内容</p>
+</blockquote>
+<span id="more"></span>
+<p><a href="../vue-study01">基础篇</a>在这里</p>
+<h1 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h1><p>前端模块化，类似于java中的类的概念。把某些功能抽离出来封装一个类，然后根据功能需要块来选择使用什么模块，什么方法。<br>目前了解，前端区分模块主要是文件级别区分，一个文件作为一个模块。某个文件用到别的文件中的内容，就需要导入该文件，对应文件需要导出</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//commonJS模块化的导入和导出</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">//导出属性</span></span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;voidvvv&#x27;</span>,</span><br><span class="line">    <span class="comment">//导出方法</span></span><br><span class="line">    <span class="title function_">say</span>(<span class="params">mes</span>)&#123;</span><br><span class="line">        <span class="title function_">alert</span>(mes)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//导入</span></span><br><span class="line"><span class="keyword">const</span> &#123;name,say&#125; = <span class="built_in">require</span>(<span class="string">&#x27;demo.js&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// es6默认导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;voidvvv - es6&#x27;</span>,</span><br><span class="line">    <span class="title function_">say</span>(<span class="params">mes</span>)&#123;</span><br><span class="line">        <span class="title function_">alert</span>(mes+<span class="string">&quot;es6&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// es6 指定导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> a = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">shout</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;shout!!!!!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6 默认导入</span></span><br><span class="line"><span class="keyword">import</span> mydefault <span class="keyword">from</span> <span class="string">&#x27;./demo&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6 指定导入</span></span><br><span class="line"><span class="keyword">import</span> &#123;a&#125; <span class="keyword">from</span> <span class="string">&#x27;./demo&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><p>一个模块化打包工具。可以类比于java的 打jar包，用来帮助我们整理繁琐的前端代码的各个模块。<br>不同于打jar包的是，打jar包包括了编译文件到class的这一步，但是前端不需要这一步。前端需要的是对各种资源的整理。比如css样式，js代码，甚至图片文件等资源webpack可以帮助我们整理这些资源，在我们使用的时候直接在html页面引入一个最终js即可。</p>
+<h3 id="webpack安装："><a href="#webpack安装：" class="headerlink" title="webpack安装："></a>webpack安装：</h3><ol>
+<li>首先需要安装<a target="_blank" rel="noopener" href="http://nodejs.cn/">nodejs</a>,其中内置了npm包管理工具</li>
+<li>在当前项目下执行<code>npm init</code>初始化npm管理</li>
+<li>命令行执行<code>npm install webpack -g</code>进行全局安装。或者在当前项目下，<code>npm install webpack --save-dev</code>进行局部安装</li>
+<li>在当前项目下，执行<code>webpack ./src/main.js ./dist/bundle.js</code>这一步是执行webpack指令。后面的两个参数，一个是打包程序的入口，也是整个应用启动的地方，类似于java 的main方法。后一个参数代表将所有资源整合打包后，所放在什么地方。我这里放在当前项目的dist文件夹下的bundle.js中了</li>
+<li>执行完后，会生成目标文件，在html中引用该文件即可</li>
+</ol>
+<h3 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h3><p>在每次执行打包命令时，都要指定一遍源文件以及目标文件未免有些过于繁琐，因为这两个位置是不经常发生改变的，所以需要有个地方来配置<br>在当前文件夹下创建webpack.config.js文件，里面内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">entry</span>:<span class="string">&#x27;./src/main.js&#x27;</span>,</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">    <span class="attr">output</span>:&#123;</span><br><span class="line">        <span class="attr">path</span>:path.<span class="title function_">resolve</span>(__dirname,<span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        <span class="attr">filename</span>:<span class="string">&#x27;bundle.js&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这里就配置了当前项目打包的源文件以及目标文件。<br>之后，若还想再次打包，直接执行webpack即可.</p>
+<p>手动指定配置文件方式：<code>webpack --config 文件位置</code></p>
+<h3 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h3><p>现在，我们只是完成了javascript文件的打包。若我们想使用css，甚至图片呢？这就需要webpack的组件：loader了。<br>若js中引用了css，则需要安装cssloader以及styleloader。详情可看<a target="_blank" rel="noopener" href="https://webpack.docschina.org/loaders/">官网</a>。这里就只介绍怎么用，以及我自己遇到的一些问题以及排查</p>
+<h4 id="导入css相关："><a href="#导入css相关：" class="headerlink" title="导入css相关："></a>导入css相关：</h4><p>首先执行<code>npm install url-loader --save-dev</code>以及<code>npm install --save-dev css-loader</code>，然后配置webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.css$/i</span>,</span><br><span class="line">        <span class="attr">use</span>: [<span class="string">&quot;style-loader&quot;</span>, <span class="string">&quot;css-loader&quot;</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="导入图片相关"><a href="#导入图片相关" class="headerlink" title="导入图片相关"></a>导入图片相关</h4><p>图片需要两个loader。一个url <code>npm install url-loader --save-dev</code>，一个file <code>npm install file-loader --save-dev</code>。然后配置webpack.config.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.(png|jpg|gif)$/i</span>,</span><br><span class="line">        <span class="attr">use</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">loader</span>: <span class="string">&#x27;url-loader&#x27;</span>,</span><br><span class="line">            <span class="attr">options</span>: &#123;</span><br><span class="line">              <span class="attr">limit</span>: <span class="number">8192</span>,</span><br><span class="line">              <span class="attr">name</span>: <span class="string">&#x27;[path][name][hash:8].[ext]&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;,</span><br><span class="line">        ],</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里需要注意一点，就是导入图片只虽然是引入了两个loader，但是在配置文件中只需要一个loader就可以了。配置了两个会出现加载图片重复并且无法显示的问题。</p>
+<h3 id="webpack插件"><a href="#webpack插件" class="headerlink" title="webpack插件"></a>webpack插件</h3><p>目前我们的项目打包后，只会生成js代码以及用到的图片等文件.想要自动生成首页的html的话，还需要安装插件html-webpack-plugin<br><code>npm install html-webpack-plugin --save-dev</code><br>在配置文件中导入<code>const htmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;)</code><br>然后新增</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins</span>:[</span><br><span class="line">        <span class="keyword">new</span> <span class="title function_">htmlWebpackPlugin</span>(&#123;</span><br><span class="line">            <span class="attr">template</span>:<span class="string">&#x27;index.html&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ],</span><br></pre></td></tr></table></figure>
+
+<p>   然后项目在打包的时候，会带上根目录的indexhtml作为模板。并且将打包后生成的目标js自动放进模板中</p>
+<h3 id="webpack-dev-server搭建本地服务器"><a href="#webpack-dev-server搭建本地服务器" class="headerlink" title="webpack-dev-server搭建本地服务器"></a>webpack-dev-server搭建本地服务器</h3><figure class="highlight plaintext"><figcaption><span>install webpack-dev-server```安装组件。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">配置文件中，添加如下配置：</span><br><span class="line"></span><br><span class="line">```json</span><br><span class="line">devServer: &#123;</span><br><span class="line">        contentBase: path.join(__dirname, &#x27;dist&#x27;),</span><br><span class="line">        compress: true,</span><br><span class="line">        port: 9000,</span><br><span class="line">        inline:true</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后执行 webpack serve 命令启动。</p>
+<p>或者可以直接在配置文件中的scripts中配置命令。使用npm run 命令方式启动</p>
+<p>老版本的这个，需要的命令是webpack-dev-server。此命令用在新版本会出现错误。</p>
+<p><code>Error: Cannot find module &#39;webpack-cli/bin/config-yargs&#39;</code></p>
+<p>是新老版本不兼容的错误。使用新命令webpack serve即可</p>
+<h3 id="webpack整合vue"><a href="#webpack整合vue" class="headerlink" title="webpack整合vue"></a>webpack整合vue</h3><p>首先通过npm安装vue <code>npm install vue --save</code>，这，我们就可以在js文件中，通过import Vue from ‘vue’来引入vue了，然后就可以向入门时候一样来使用了。<br>但是这里会遇到一个问题：<br><code>You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.</code><br><img src="https://img-blog.csdnimg.cn/20210403131545445.png" alt="在这里插入图片描述"><br>这是因为默认使用了runtimeonly版本，无法对template编译。所以我们需要进行一部转换(后期template分离后，可以用这个版本，更快，更小),在webpackconfig文件中，添加如下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">resolve:&#123;</span><br><span class="line">        alias:&#123;</span><br><span class="line">            &#x27;vue$&#x27;:&#x27;vue/dist/vue.esm.js&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="脚手架"><a href="#脚手架" class="headerlink" title="脚手架"></a>脚手架</h1><p>帮助进行vue开发的框架。把webpack以及一些插件loader的配置给默认配置好了</p>
+<p>首先安装vuecli：<code>npm install @vue/cli -g</code></p>
+<p>然后通过vue创建项目。（可以通过webstorm以及相关工具直接创建）<code>vue create 项目名称</code></p>
+<p>创建好项目后，就可以直接进行开发了。目前使用的是vue4.+，默认有asset文件，放静态资源，components文件夹，放vue模板，App.vue，默认的一个主模板，main.js，默认的主程序入口。总之，之前所有的配置在这里全部都默化了。可以直接使用。</p>
+<h2 id="更改默认配置"><a href="#更改默认配置" class="headerlink" title="更改默认配置"></a>更改默认配置</h2><p>我们可以看到配置全部都默认化了，而且自带css，图片等的解析功能。并且自带本地服务功能。若是想再修改配置文件，可以通过<code>vue ui</code>命令来图形化的修改相关属性，以及管理各种组件。也可以通过新建vue.config.js文件，看当作自己的配置文件。</p>
+<p>具体用法跟webpack中的webpack.config.js一样，可以当作sprringboot里面的application.yml</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>vue开发使用的是单页面模式，即整个前端项目只有一个html，通过路由来控制显示什么样的组件。</p>
+<ol>
+<li><p>如果想使用路由，需要先安装<code>npm install vue-router --save</code></p>
+</li>
+<li><p>然后新建一个router文件夹，创建index.js文件，导入：<code>import VueRouter from &quot;vue-router&quot;;</code>示例如下</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&quot;vue-router&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Home</span> <span class="keyword">from</span> <span class="string">&quot;@/components/Home&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">PicCon</span> <span class="keyword">from</span> <span class="string">&quot;@/components/PicCon&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//1. Vue.use(插件) 个人理解，算是注册插件</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VueRouter</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>:<span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>:<span class="title class_">Home</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>:<span class="string">&#x27;/pic&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>:<span class="title class_">PicCon</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">//2. 创建Vuerouter对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">    routes</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，<font color='red'>这里的数组routes对象，不可以随便命名。必须为routes</font></p>
+<ol start="3">
+<li>再在main.js中，引入路由，放在我们根vue对象里</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./plugins/element.js&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&quot;@/router&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">router</span>:<span class="title class_">VueRouter</span>,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>使用：<code>&lt;router-link to=&quot;home&quot;&gt;home&lt;/router-link&gt;</code>这样来表示路由到某个path，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 若不想使用router-link，想使用自定义的组件来实现，可以使用@click绑定方法.</span><br><span class="line">```vue</span><br><span class="line">this.router.push(&#x27;url&#x27;) 来实现。push中也可以放对象，对象中可以有path，以及query参数。</span><br><span class="line">&#123;</span><br><span class="line">    path::&#x27;/home&#x27;,</span><br><span class="line">    query:&#123;</span><br><span class="line">        name:&#x27;test&#x27;,</span><br><span class="line">        age:20</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h3><p>在需要用到js组件时，才加载相应的组件。类似于java设计模式中的懒汉式。将路由的写法写成让如下方式即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">        <span class="attr">redirect</span>: <span class="string">&#x27;/home&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/components/Home&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/pic&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>   (<span class="string">&#x27;@/components/PicCon&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由嵌套"><a href="#路由嵌套" class="headerlink" title="路由嵌套"></a>路由嵌套</h3><p>当一个路由下面有子路由时，需要使用路由嵌套。比如：&#x2F;home&#x2F;news </p>
+<p>嵌套路由需要在路由中使用children属性，里面配置子路由</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@/components/Home&#x27;</span>),</span><br><span class="line">        <span class="attr">children</span>:[</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">path</span>:<span class="string">&#x27;news&#x27;</span>,</span><br><span class="line">                <span class="attr">component</span>:<span class="function">()=&gt;</span><span class="keyword">import</span>(<span class="string">&#x27;@/components/home/HomeNwes&#x27;</span>)</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">path</span>:<span class="string">&#x27;video&#x27;</span>,</span><br><span class="line">                <span class="attr">component</span>:<span class="function">()=&gt;</span><span class="keyword">import</span>(<span class="string">&#x27;@/components/home/HomeVideo&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，子路由中，也使用如下方式，相对路由来定位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link to=&quot;news&quot;&gt;嗯，去看看新闻&lt;/router-link&gt;</span><br><span class="line">&lt;router-link to=&quot;video&quot;&gt;嗯，去看看视频&lt;/router-link&gt;</span><br><span class="line">&lt;router-view&gt;routerview&lt;/router-view&gt;</span><br></pre></td></tr></table></figure>
+<p>问题：如何使用routerlink能实现新打开一个页面来跳转呢？ 直接在router-link 上添加target属性，设置_blank即可</p>
+<h3 id="路由参数传递"><a href="#路由参数传递" class="headerlink" title="路由参数传递"></a>路由参数传递</h3><p>传递方式两种。params和query。<br><strong>params</strong> 可以类比于javaweb中的pathvariable获取参数形式。这种方式的操作方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//路由文件配置映射： </span></span><br><span class="line">/home/:id</span><br><span class="line"><span class="comment">//传递方式：直接在路径拼接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 接受方式：</span></span><br><span class="line">在子组件中使用：</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$route</span>.<span class="property">params</span>.<span class="property">id</span></span><br><span class="line"><span class="comment">// 可以类比于javaweb使用 @PathVariable</span></span><br></pre></td></tr></table></figure>
+<p><strong>query</strong> 可以类比于get请求直接加参数。这种方式会在路径上显示参数（get请求）。这种方式的操作方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//路由配置文件无需改动</span><br><span class="line"></span><br><span class="line">//传递方式：router-link 标签，其中的to属性需要交给vue管理。即改为 :to. 其中内容也由字符串变为对象。如下：</span><br><span class="line">&lt;router-link :to=&quot;&#123;path:&#x27;/news&#x27;,query:&#123;name:&#x27;zhangsan&#x27;,age:10&#125;&#125;&quot;&gt;嗯，去看看新闻&lt;/router-link&gt;</span><br><span class="line"></span><br><span class="line">// 取出参数,在子组件中，使用如下：</span><br><span class="line">this.$route.query 可以取出传入的对象。</span><br><span class="line">this.$route.query.name 可以取出对象中的某个值</span><br></pre></td></tr></table></figure>
+<h2 id="路由全局导航守卫"><a href="#路由全局导航守卫" class="headerlink" title="路由全局导航守卫"></a>路由全局导航守卫</h2><h2 id="keepalive"><a href="#keepalive" class="headerlink" title="keepalive"></a>keepalive</h2><h1 id="vueX-vue状态管理工具。"><a href="#vueX-vue状态管理工具。" class="headerlink" title="vueX vue状态管理工具。"></a>vueX vue状态管理工具。</h1><p>vuex主要就是负责将各个模块公共的一些资源统一进行管理，并且进行响应式修改的工具.<br>使用：</p>
+<ol>
+<li><p>安装 <code>npm install vuex --save</code></p>
+</li>
+<li><p>配置 ：新建store文件夹，创建index.js，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vuex</span> <span class="keyword">from</span> <span class="string">&quot;vuex&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">Vuex</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">    <span class="attr">state</span>:&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">mutations</span>:&#123;</span><br><span class="line">        <span class="comment">//此处放方法。外界修改值就是调用这里的方法.方法会默认有一个参数，state，就是本对象中的state,可以通过这个state来修改真正的属性</span></span><br><span class="line">        <span class="comment">//mutations的使用比较特别,需要用 $store.commite(&#x27;方法名&#x27;，参数) 的方法来调用.传入的参数会放在第二个参数</span></span><br><span class="line">        <span class="title function_">incres</span>(<span class="params">state</span>)&#123;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">actions</span>:&#123;&#125;,</span><br><span class="line">    <span class="attr">getters</span>:&#123;</span><br><span class="line">        <span class="comment">//这里用来放公共的计算属性。这里计算属性有两个默认的参数，第一个就是state属性，第二个时getter属性。用来递归</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">modules</span>:&#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册：在main.js中首先导入：<code>import store from &#39;./store&#39;</code>,然后再放进根vue中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">router</span>:<span class="title class_">VueRouter</span>,</span><br><span class="line">  store,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用： 在子组件中，通过this.$store ,来获取注册的store对象。想获取其中的state，<code>$store.state.name</code>即可</p>
+</li>
+</ol>
+<h1 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h1><h2 id="整合elementui"><a href="#整合elementui" class="headerlink" title="整合elementui"></a>整合elementui</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue add element</span><br></pre></td></tr></table></figure>
+<h3 id="elementui使用问题及解决"><a href="#elementui使用问题及解决" class="headerlink" title="elementui使用问题及解决"></a>elementui使用问题及解决</h3><h4 id="el-form表单校验相关："><a href="#el-form表单校验相关：" class="headerlink" title="el-form表单校验相关："></a>el-form表单校验相关：</h4><p>基本的写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-form :model=<span class="string">&quot;ruleForm&quot;</span> status-icon :rules=<span class="string">&quot;rules&quot;</span> ref=<span class="string">&quot;ruleForm&quot;</span> label-width=<span class="string">&quot;100px&quot;</span> <span class="keyword">class</span>=<span class="string">&quot;demo-ruleForm&quot;</span>&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;密码&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;pass&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;ruleForm.pass&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;确认密码&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;checkPass&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;ruleForm.checkPass&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label</span>=<span class="string">&quot;年龄&quot;</span> <span class="attr">prop</span>=<span class="string">&quot;age&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">el-input</span> <span class="attr">v-model.number</span>=<span class="string">&quot;ruleForm.age&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">type</span>=<span class="string">&quot;primary&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;submitForm(&#x27;ruleForm&#x27;)&quot;</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">&quot;resetForm(&#x27;ruleForm&#x27;)&quot;</span>&gt;</span>重置<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line">&lt;/el-form&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">var</span> <span class="title function_">checkAge</span> = (<span class="params">rule, value, callback</span>) =&gt; &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">if</span> (!value) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="keyword">return</span> <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;年龄不能为空&#x27;</span>));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="keyword">if</span> (!<span class="title class_">Number</span>.<span class="title function_">isInteger</span>(value)) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;请输入数字值&#x27;</span>));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">if</span> (value &lt; <span class="number">18</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">              <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;必须年满18岁&#x27;</span>));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">              <span class="title function_">callback</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;, <span class="number">1000</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">var</span> <span class="title function_">validatePass</span> = (<span class="params">rule, value, callback</span>) =&gt; &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">if</span> (value === <span class="string">&#x27;&#x27;</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;请输入密码&#x27;</span>));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">ruleForm</span>.<span class="property">checkPass</span> !== <span class="string">&#x27;&#x27;</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">ruleForm</span>.<span class="title function_">validateField</span>(<span class="string">&#x27;checkPass&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="title function_">callback</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">var</span> <span class="title function_">validatePass2</span> = (<span class="params">rule, value, callback</span>) =&gt; &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="keyword">if</span> (value === <span class="string">&#x27;&#x27;</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;请再次输入密码&#x27;</span>));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value !== <span class="variable language_">this</span>.<span class="property">ruleForm</span>.<span class="property">pass</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;两次输入密码不一致!&#x27;</span>));</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="title function_">callback</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">ruleForm</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="attr">pass</span>: <span class="string">&#x27;&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="attr">checkPass</span>: <span class="string">&#x27;&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="attr">age</span>: <span class="string">&#x27;&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">rules</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="attr">pass</span>: [</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#123; <span class="attr">validator</span>: validatePass, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          ],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="attr">checkPass</span>: [</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#123; <span class="attr">validator</span>: validatePass2, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          ],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="attr">age</span>: [</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#123; <span class="attr">validator</span>: checkAge, <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span> &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          ]</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="title function_">submitForm</span>(<span class="params">formName</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="variable language_">this</span>.<span class="property">$refs</span>[formName].<span class="title function_">validate</span>(<span class="function">(<span class="params">valid</span>) =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          <span class="keyword">if</span> (valid) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">alert</span>(<span class="string">&#x27;submit!&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;error submit!!&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span> <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">          &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="title function_">resetForm</span>(<span class="params">formName</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="variable language_">this</span>.<span class="property">$refs</span>[formName].<span class="title function_">resetFields</span>();</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>其中，el-form中的v-model所绑定的对象，需要是vue中的对象。el-form-item中，prop属性所对应的值，就是 el-form中的v-model所绑定的对象 的对应属性名称。<br>这样，我们定义校验器的时候，就可以使用el-form中的rules属性来指定校验器对象，校验器对象是一个数组。数组中每个对象的key就是el-form中的v-model所绑定的对象 的对应属性名称，表示每个属性的校验方法。<br>同时，el-form-item也可以使用自己的rules标签来覆盖el-form给的校验规则。</p>
+<h4 id="el-form动态添加表单且自定义校验规则："><a href="#el-form动态添加表单且自定义校验规则：" class="headerlink" title="el-form动态添加表单且自定义校验规则："></a>el-form动态添加表单且自定义校验规则：</h4><p>但是，在动态添加表单的时候，如果想自定义校验器该怎么做呢？</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span>  <span class="attr">:model</span>=<span class="string">&quot;curEdit&quot;</span>  <span class="attr">:rules</span>=<span class="string">&quot;rules&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;ruleForm&quot;</span> <span class="attr">label-width</span>=<span class="string">&quot;120px&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                    <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">style</span>=<span class="string">&quot;width: 70%;&quot;</span> <span class="attr">v-for</span>=<span class="string">&quot;(item,i) in curEdit.times&quot;</span> <span class="attr">:label</span>=<span class="string">&quot;&#x27;打款时间点&#x27;+(i+1)&quot;</span> <span class="attr">:prop</span>=<span class="string">&quot;&#x27;times.&#x27;+i+&#x27;.value&#x27;&quot;</span> <span class="attr">:rules</span>=<span class="string">&quot;checkRule(i)&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">el-input</span>  <span class="attr">v-model</span>=<span class="string">&quot;item.value&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这是我自定义的表单，可以看到，其中的el-form-item条数是不断变化的。根据的是vue对象中的一个数组来决定的。<br>那么，这么个动态变化的表单如何做校验呢<br>首先，这个数组必须在一个vue对象A中，然后该数组成员也必须是有属性的对象。<br>整个表单el-form来跟这个对象A绑定，v-model，这里可以指定规则，也可以不指定，因为没用。<br>其次，el-form-item使用v-for来遍历这个对象中的该数组属性。<br>这里的prop属性，需要为属性值。但是因为我们这里需要取数组中的属性，则先拿到当前数组对应的属性，我这里叫times。然后取索引，i，最后拼接数组成员的属性，我这里直接就叫value。<br>最重要的一点，rules属性，因为我这里需要自定义实现，并且需要校验的属性是 A 对象的一个数组属性中的一个成员的属性，所以默认的映射也很难达到，这里可以直接 ：prop，这里可以传入一个vue 的方法。方法返回一个校验规则对象即可。<br>详细的校验规则对象可以取elemntui官网看<br>我这里方法名就叫checkRule，并且传入了一个索引<br>下面是我的方法的具体实现。主要就是判断数字是否合规并且是否重复,且是失去焦点才会校验</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">checkRule</span>: <span class="keyword">function</span> (<span class="params">index</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> vali = &#123;</span><br><span class="line">                <span class="attr">required</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">validator</span>: <span class="function">(<span class="params">rule, value, callback</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// console.log(value)</span></span><br><span class="line">                    <span class="keyword">if</span> (index === <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="title function_">callback</span>();</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (!value.<span class="title function_">match</span>(<span class="regexp">/^\d&#123;1,2&#125;$/</span>)) &#123;</span><br><span class="line">                        <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;请输入正确格式的内容后提交&#x27;</span>));</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (value &lt; <span class="number">0</span> || value &gt; <span class="number">23</span>) &#123;</span><br><span class="line">                        <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;请输入正确格式的内容后提交&#x27;</span>));</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">var</span> x = <span class="number">0</span>; x &lt; <span class="variable language_">this</span>.<span class="property">curEdit</span>.<span class="property">times</span>.<span class="property">length</span>; x++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">curEdit</span>.<span class="property">times</span>[x].<span class="property">value</span> === value) &#123;</span><br><span class="line">                            count++;</span><br><span class="line">                            <span class="keyword">if</span> (count &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">                                <span class="title function_">callback</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;请输入正确格式的内容后提交&#x27;</span>));</span><br><span class="line">                                <span class="keyword">return</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="title function_">callback</span>();</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">trigger</span>: <span class="string">&#x27;blur&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> vali;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2023/12/18/vue-study02/" title="Vue学习-2">https://voidvvv.github.io/2023/12/18/vue-study02/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+              <a href="/tags/frontier/" rel="tag"># frontier</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/18/cpp-and-unreal/" rel="prev" title="c++与unreal学习">
+                  <i class="fa fa-angle-left"></i> c++与unreal学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/18/vue-study01/" rel="next" title="Vue学习-1">
+                  Vue学习-1 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

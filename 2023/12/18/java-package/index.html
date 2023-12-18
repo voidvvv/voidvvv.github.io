@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="相关问题总结;在获取根目录时：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java包获取路径">
+<meta property="og:url" content="https://voidvvv.github.io/2023/12/18/java-package/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="相关问题总结;在获取根目录时：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-18T11:24:53.000Z">
+<meta property="article:modified_time" content="2023-12-18T11:44:20.961Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2023/12/18/java-package/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2023/12/18/java-package/","path":"2023/12/18/java-package/","title":"java包获取路径"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>java包获取路径 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">my study record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2023/12/18/java-package/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="my study record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="java包获取路径 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java包获取路径
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-12-18 19:24:53 / Modified: 19:44:20" itemprop="dateCreated datePublished" datetime="2023-12-18T19:24:53+08:00">2023-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>相关问题总结;<br>在获取根目录时：</p>
+<span id="more"></span>>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource</span> <span class="operator">=</span> MyTest.class.getResource(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource2</span> <span class="operator">=</span> MyTest.class.getResource(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource3</span> <span class="operator">=</span> MyTest.class.getClassLoader().getResource(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource4</span> <span class="operator">=</span> MyTest.class.getClassLoader().getResource(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource5</span> <span class="operator">=</span> MyTest.class.getClassLoader().getClass().getResource(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource6</span> <span class="operator">=</span> MyTest.class.getClassLoader().getClass().getResource(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> MyTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;codesource:&quot;</span>+path); <span class="comment">// jar包和idea环境均获取相同值，为当前项目路径</span></span><br><span class="line">        <span class="type">File</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(path);</span><br><span class="line">        System.out.println(<span class="string">&quot;exist？&quot;</span>+f.exists());</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">path2</span> <span class="operator">=</span> System.getProperty(<span class="string">&quot;java.class.path&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;path2::&quot;</span>+path2); <span class="comment">// 获取环境变量,jar 中就是获取当前jar包名称。</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;class / :&quot;</span>+resource); <span class="comment">// idea中获取当前项目地址,jar中为null</span></span><br><span class="line">        System.out.println(<span class="string">&quot;class 空 :&quot;</span>+resource2); <span class="comment">// idea 中获取当前类所在位置。 jar中也是，但是不是file，是jar格式</span></span><br><span class="line">        System.out.println(<span class="string">&quot;classloader / :&quot;</span>+resource4); <span class="comment">// idea null  jar  null</span></span><br><span class="line">        System.out.println(<span class="string">&quot;classloader 空 :&quot;</span>+resource3); <span class="comment">// idea 当前项目地址  jar null</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;loader+class/:&quot;</span>+resource6); <span class="comment">// idea 当前项目地址 jar 空</span></span><br><span class="line">        System.out.println(<span class="string">&quot;loader+class 空:&quot;</span>+resource5); <span class="comment">// idea null  jar null</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 找到jar包内，properties指定位置路径下所有指定类型的文件</span></span><br><span class="line">        <span class="keyword">if</span> (path.endsWith(<span class="string">&quot;.jar&quot;</span>))&#123; <span class="comment">// 若是jar包，则需要这样做来获取文件</span></span><br><span class="line">            System.out.println(<span class="string">&quot;jar execute&quot;</span>);</span><br><span class="line">            <span class="type">JarFile</span> <span class="variable">jarFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JarFile</span>(path);</span><br><span class="line">            Enumeration&lt;JarEntry&gt; entries = jarFile.entries();</span><br><span class="line">            <span class="keyword">while</span> (entries.hasMoreElements())&#123;</span><br><span class="line">                <span class="type">JarEntry</span> <span class="variable">jarEntry</span> <span class="operator">=</span> entries.nextElement();</span><br><span class="line">                <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> jarEntry.getName(); <span class="comment">// 全类名(/cn/text/A.class),以及包名</span></span><br><span class="line"><span class="comment">//                System.out.println(name);</span></span><br><span class="line">                <span class="keyword">if</span> (name.startsWith(<span class="string">&quot;fxml/&quot;</span>)&amp;&amp;name.endsWith(<span class="string">&quot;.txt&quot;</span>))&#123;</span><br><span class="line">                    System.out.println(<span class="string">&quot;zhjao&quot;</span>);</span><br><span class="line">                    <span class="type">BufferedReader</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(MyTest.class.getResourceAsStream(<span class="string">&quot;/&quot;</span>+name))));</span><br><span class="line">                    <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> b.readLine();</span><br><span class="line">                    System.out.println(s);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">resourceAsStream</span> <span class="operator">=</span> MyTest.class.getResourceAsStream(<span class="string">&quot;/config.properties&quot;</span>); <span class="comment">// idea与jar均相同，获取jar项目内文件输入流</span></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        p.load(resourceAsStream);</span><br><span class="line">        System.out.println(p);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在获取文件情况下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testtt</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource</span> <span class="operator">=</span> MyTest.class.getResource(<span class="string">&quot;/config.properties&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource2</span> <span class="operator">=</span> MyTest.class.getResource(<span class="string">&quot;config.properties&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource3</span> <span class="operator">=</span> MyTest.class.getClassLoader().getResource(<span class="string">&quot;config.properties&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource4</span> <span class="operator">=</span> MyTest.class.getClassLoader().getResource(<span class="string">&quot;/config.properties&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource5</span> <span class="operator">=</span> MyTest.class.getClassLoader().getClass().getResource(<span class="string">&quot;config.properties&quot;</span>);</span><br><span class="line">        <span class="type">URL</span> <span class="variable">resource6</span> <span class="operator">=</span> MyTest.class.getClassLoader().getClass().getResource(<span class="string">&quot;/config.properties&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> MyTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;codesource:&quot;</span>+path); <span class="comment">// jar包和idea环境均获取相同值，为当前项目路径</span></span><br><span class="line">        <span class="type">File</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(path);</span><br><span class="line">        System.out.println(<span class="string">&quot;exist？&quot;</span>+f.exists());</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">path2</span> <span class="operator">=</span> System.getProperty(<span class="string">&quot;java.class.path&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;path2::&quot;</span>+path2); <span class="comment">// 获取环境变量,jar 中就是获取当前jar包名称。</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;class / :&quot;</span>+resource); <span class="comment">// idea jar中均可以取到,jar 中是jar模式</span></span><br><span class="line">        System.out.println(<span class="string">&quot;class 空 :&quot;</span>+resource2); <span class="comment">// idea jar 均为空</span></span><br><span class="line">        System.out.println(<span class="string">&quot;classloader / :&quot;</span>+resource4); <span class="comment">// idea null  jar  null</span></span><br><span class="line">        System.out.println(<span class="string">&quot;classloader 空 :&quot;</span>+resource3); <span class="comment">// idea 可以取到资源  jar 可以取到 jar模式</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;loader+class/:&quot;</span>+resource6); <span class="comment">// idea 可以取到资源  jar 可以取到 jar模式</span></span><br><span class="line">        System.out.println(<span class="string">&quot;loader+class 空:&quot;</span>+resource5); <span class="comment">// idea null  jar null</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 找到jar包内，properties指定位置路径下所有指定类型的文件</span></span><br><span class="line">        <span class="keyword">if</span> (path.endsWith(<span class="string">&quot;.jar&quot;</span>))&#123; <span class="comment">// 若是jar包，则需要这样做来获取文件</span></span><br><span class="line">            System.out.println(<span class="string">&quot;jar execute&quot;</span>);</span><br><span class="line">            <span class="type">JarFile</span> <span class="variable">jarFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JarFile</span>(path);</span><br><span class="line">            Enumeration&lt;JarEntry&gt; entries = jarFile.entries();</span><br><span class="line">            <span class="keyword">while</span> (entries.hasMoreElements())&#123;</span><br><span class="line">                <span class="type">JarEntry</span> <span class="variable">jarEntry</span> <span class="operator">=</span> entries.nextElement();</span><br><span class="line">                <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> jarEntry.getName(); <span class="comment">// 全类名(/cn/text/A.class),以及包名</span></span><br><span class="line"><span class="comment">//                System.out.println(name);</span></span><br><span class="line">                <span class="keyword">if</span> (name.startsWith(<span class="string">&quot;fxml/&quot;</span>)&amp;&amp;name.endsWith(<span class="string">&quot;.txt&quot;</span>))&#123;</span><br><span class="line">                    System.out.println(<span class="string">&quot;zhjao&quot;</span>);</span><br><span class="line">                    <span class="type">BufferedReader</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(MyTest.class.getClassLoader().getResourceAsStream(name))));</span><br><span class="line">                    <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> b.readLine();</span><br><span class="line">                    System.out.println(s);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">resourceAsStream</span> <span class="operator">=</span> MyTest.class.getResourceAsStream(<span class="string">&quot;/config.properties&quot;</span>); <span class="comment">// idea与jar均相同，获取jar项目内文件输入流</span></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        p.load(resourceAsStream);</span><br><span class="line">        System.out.println(p);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2023/12/18/java-package/" title="java包获取路径">https://voidvvv.github.io/2023/12/18/java-package/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/18/docker-study/" rel="prev" title="docker学习记录">
+                  <i class="fa fa-angle-left"></i> docker学习记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/12/18/mybatis-process/" rel="next" title="mybatis加载流程梳理">
+                  mybatis加载流程梳理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
