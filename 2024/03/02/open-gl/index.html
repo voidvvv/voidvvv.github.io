@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="OpenGL 自学">
+    <meta name="description" content="为了更好的自学游戏开发，所以自学OpenGL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenGL 学习 (1)">
 <meta property="og:url" content="https://voidvvv.github.io/2024/03/02/open-gl/index.html">
 <meta property="og:site_name" content="Voidvvv">
-<meta property="og:description" content="OpenGL 自学">
+<meta property="og:description" content="为了更好的自学游戏开发，所以自学OpenGL">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/02/open-gl/2024-03-02T220734.png">
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/02/open-gl/2024-03-02T215348.png">
@@ -33,8 +33,9 @@
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/02/open-gl/2024-03-02T215738.png">
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/02/open-gl/2024-03-02T215801.png">
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/02/open-gl/2024-03-03T001348.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/02/open-gl/2024-03-03T004349.png">
 <meta property="article:published_time" content="2024-03-02T13:25:55.000Z">
-<meta property="article:modified_time" content="2024-03-02T16:14:31.055Z">
+<meta property="article:modified_time" content="2024-03-02T16:43:50.860Z">
 <meta property="article:author" content="Kai Jie">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="OpenGL">
@@ -122,7 +123,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GLFW"><span class="nav-number">1.1.</span> <span class="nav-text">GLFW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CMake"><span class="nav-number">1.1.1.</span> <span class="nav-text">CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.2.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">我们的第一个工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GLAD"><span class="nav-number">1.3.</span> <span class="nav-text">GLAD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEGLAD%E5%BA%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">配置GLAD库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3"><span class="nav-number">2.2.</span> <span class="nav-text">窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GLAD-1"><span class="nav-number">2.3.</span> <span class="nav-text">GLAD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%8F%A3"><span class="nav-number">2.4.</span> <span class="nav-text">视口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93"><span class="nav-number">2.5.</span> <span class="nav-text">渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E8%B5%84%E6%BA%90"><span class="nav-number">2.6.</span> <span class="nav-text">释放资源</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GLFW"><span class="nav-number">1.1.</span> <span class="nav-text">GLFW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CMake"><span class="nav-number">1.1.1.</span> <span class="nav-text">CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.2.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">我们的第一个工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GLAD"><span class="nav-number">1.3.</span> <span class="nav-text">GLAD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEGLAD%E5%BA%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">配置GLAD库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hello-World"><span class="nav-number">2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3"><span class="nav-number">2.2.</span> <span class="nav-text">窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GLAD-1"><span class="nav-number">2.3.</span> <span class="nav-text">GLAD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%8F%A3"><span class="nav-number">2.4.</span> <span class="nav-text">视口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3-1"><span class="nav-number">2.5.</span> <span class="nav-text">窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8A%E6%94%BE%E8%B5%84%E6%BA%90"><span class="nav-number">2.6.</span> <span class="nav-text">释放资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5"><span class="nav-number">2.7.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93"><span class="nav-number">2.8.</span> <span class="nav-text">渲染</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -218,7 +219,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-03-03 00:14:31" itemprop="dateModified" datetime="2024-03-03T00:14:31+08:00">2024-03-03</time>
+      <time title="Modified: 2024-03-03 00:43:50" itemprop="dateModified" datetime="2024-03-03T00:43:50+08:00">2024-03-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -241,14 +242,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>5k</span>
+      <span>5.7k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>18 mins.</span>
+      <span>21 mins.</span>
     </span>
 </div>
 
@@ -258,7 +259,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><img src="/2024/03/02/open-gl/2024-03-02T220734.png" alt="2024-03-02T220734"><br>OpenGL 自学</p>
+    <div class="post-body" itemprop="articleBody"><p><img src="/2024/03/02/open-gl/2024-03-02T220734.png" alt="2024-03-02T220734"><br>为了更好的自学游戏开发，所以自学OpenGL</p>
 <span id="more"></span>
 
 <ul>
@@ -283,8 +284,10 @@
 <li><a href="#%E7%AA%97%E5%8F%A3">窗口</a></li>
 <li><a href="#glad-1">GLAD</a></li>
 <li><a href="#%E8%A7%86%E5%8F%A3">视口</a></li>
-<li><a href="#%E6%B8%B2%E6%9F%93">渲染</a></li>
+<li><a href="#%E7%AA%97%E5%8F%A3-1">窗口</a></li>
 <li><a href="#%E9%87%8A%E6%94%BE%E8%B5%84%E6%BA%90">释放资源</a></li>
+<li><a href="#%E8%BE%93%E5%85%A5">输入</a></li>
+<li><a href="#%E6%B8%B2%E6%9F%93">渲染</a></li>
 </ul>
 </li>
 </ul>
@@ -365,7 +368,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback);</span><br></pre></td></tr></table></figure>
 <p>这里需要手动使用上面的代码将窗口回调方法注册到openGL里面。<br>当窗口被第一次显示的时候<code>framebuffer_size_callback</code>也会被调用(初始化)。对于视网膜(Retina)显示屏，width和height都会明显比原输入值更高一点。</p>
 <p>我们还可以将我们的函数注册到其它很多的回调函数中。比如说，我们可以创建一个回调函数来处理手柄输入变化，处理错误消息等。我们会在创建窗口之后，渲染循环初始化之前注册这些回调函数。</p>
-<h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><p>我们可不希望只绘制一个图像之后我们的应用程序就立即退出并关闭窗口。我们希望程序在我们主动关闭它之前不断绘制图像并能够接受用户输入。因此，我们需要在程序中添加一个while循环，我们可以把它称之为渲染循环(Render Loop)，它能在我们让GLFW退出前一直保持运行。下面几行的代码就实现了一个简单的渲染循环：</p>
+<h2 id="窗口-1"><a href="#窗口-1" class="headerlink" title="窗口"></a>窗口</h2><p>我们可不希望只绘制一个图像之后我们的应用程序就立即退出并关闭窗口。我们希望程序在我们主动关闭它之前不断绘制图像并能够接受用户输入。因此，我们需要在程序中添加一个while循环，我们可以把它称之为渲染循环(Render Loop)，它能在我们让GLFW退出前一直保持运行。下面几行的代码就实现了一个简单的渲染循环：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -382,7 +385,24 @@
 <p>这样便能清理所有的资源并正确地退出应用程序。现在你可以尝试编译并运行你的应用程序了，如果没做错的话，你将会看到如下的输出：<br><img src="/2024/03/02/open-gl/2024-03-03T001348.png" alt="2024-03-03T001348"></p>
 <p>如果你看见了一个非常无聊的黑色窗口，那么就对了！我们的Hello World至此成功。</p>
 <p>如果程序编译有问题，请先检查连接器选项是否正确，IDE中是否导入了正确的目录（前面教程解释过）。并且请确认你的代码是否正确.</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>我们同样也希望能够在GLFW中实现一些输入控制，这可以通过使用GLFW的几个输入函数来完成。我们将会使用GLFW的<code>glfwGetKey</code>函数，它需要一个窗口以及一个按键作为输入。这个函数将会返回这个按键是否正在被按下。我们将创建一个<code>processInput</code>函数来让所有的输入代码保持整洁。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow *window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">glfwGetKey</span>(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">        <span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们检查用户是否按下了返回键(Esc)（如果没有按下，glfwGetKey将会返回GLFW_RELEASE。如果用户的确按下了返回键，我们将通过使用glfwSetwindowShouldClose把WindowShouldClose属性设置为 true来关闭GLFW。下一次while循环的条件检测将会失败，程序将关闭。</p>
+<p>这里需要记住 <code>glfwGetKey</code> 函数</p>
+<p>我们接下来在渲染循环的每一个迭代中调用<code>processInput</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">processInput</span>(window);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>这就给我们一个非常简单的方式来检测特定的键是否被按下，并在每一帧做出处理。</p>
+<h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><p>我们要把所有的渲染(Rendering)操作放到渲染循环中，因为我们想让这些渲染指令在每次渲染循环迭代的时候都能被执行。代码将会是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 渲染循环</span></span><br><span class="line"><span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 输入</span></span><br><span class="line">    <span class="built_in">processInput</span>(window);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 渲染指令</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查并调用事件，交换缓冲</span></span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">    <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了测试一切都正常工作，我们使用一个自定义的颜色清空屏幕。在每个新的渲染迭代开始的时候我们总是希望清屏，否则我们仍能看见上一次迭代的渲染结果（这可能是你想要的效果，但通常这不是）。我们可以通过调用<code>glClear</code>函数来清空屏幕的颜色缓冲，它接受一个缓冲位(Buffer Bit)来指定要清空的缓冲，可能的缓冲位有<code>GL_COLOR_BUFFER_BIT</code>，<code>GL_DEPTH_BUFFER_BIT</code>和<code>GL_STENCIL_BUFFER_BIT</code>。由于现在我们只关心颜色值，所以我们只清空颜色缓冲。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line"><span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br></pre></td></tr></table></figure>
+
+<p>注意，除了glClear之外，我们还调用了glClearColor来设置清空屏幕所用的颜色。当调用glClear函数，清除颜色缓冲之后，整个颜色缓冲都会被填充为glClearColor里所设置的颜色。在这里，我们将屏幕设置为了类似黑板的深蓝绿色。</p>
+<p><img src="/2024/03/02/open-gl/2024-03-03T004349.png" alt="2024-03-03T004349"></p>
+<div class="note default no-icon"><p>你应该能够回忆起来我们在 OpenGL 这节教程的内容，glClearColor函数是一个状态设置函数，而glClear函数则是一个状态使用的函数，它使用了当前的状态来获取应该清除为的颜色。</p>
+</div>
     </div>
 
     
@@ -457,7 +477,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">1:30</span>
+    <span title="Reading time total">1:33</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
