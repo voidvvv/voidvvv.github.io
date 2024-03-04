@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/04/opengl-issues/2024-03-02T220734.png">
 <meta property="article:published_time" content="2024-03-04T14:32:16.000Z">
-<meta property="article:modified_time" content="2024-03-04T14:41:11.599Z">
+<meta property="article:modified_time" content="2024-03-04T16:46:59.810Z">
 <meta property="article:author" content="Kai Jie">
 <meta property="article:tag" content="c++">
 <meta property="article:tag" content="OpenGL">
@@ -116,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-03-04"><span class="nav-number">1.</span> <span class="nav-text">2024-03-04</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-03-04"><span class="nav-number">1.</span> <span class="nav-text">2024-03-04</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-03-05-%E5%87%8C%E6%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2024-03-05 凌晨</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -204,9 +204,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-03-04 22:32:16 / Modified: 22:41:11" itemprop="dateCreated datePublished" datetime="2024-03-04T22:32:16+08:00">2024-03-04</time>
+      <time title="Created: 2024-03-04 22:32:16" itemprop="dateCreated datePublished" datetime="2024-03-04T22:32:16+08:00">2024-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-03-05 00:46:59" itemprop="dateModified" datetime="2024-03-05T00:46:59+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -233,7 +239,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>747</span>
+      <span>926</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -259,6 +265,11 @@
 <p>一开始我还没看出问题，直到运行时，怎么也出不来想要的图像。我就感觉事态不对了。各种翻看昨天的笔记，代码，逐行对照，都没有结果。<br><strong>在尝试搜索答案未果，进群找人无人理睬的情况下，我开始了把昨天的代码逐行复制到这里查看异常。最后结果出来了：</strong></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里是int, int,int</span></span><br><span class="line"><span class="comment">// float indices[] = &#123;</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> indices[] = &#123;</span><br><span class="line">    <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,</span><br><span class="line">    <span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>我这里定义成了float。。<br>这里，indices代表参数下标，所以必须是整数int，我不知道脑子抽什么风了把这里写成了float。<br>以此为戒吧。被自己蠢哭</p>
+<h1 id="2024-03-05-凌晨"><a href="#2024-03-05-凌晨" class="headerlink" title="2024-03-05 凌晨"></a>2024-03-05 凌晨</h1><p>又遇见一个问题。这个问题是不熟悉C++导致的。<br>当我读取shader源码准备编译时，出现了shader编译报错，代码如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span>* fragmentSourceCodeC;</span><br><span class="line">std::stringstream ss2;</span><br><span class="line">std::ifstream fragmentFileHandle;</span><br><span class="line">fragmentFileHandle.<span class="built_in">open</span>(DEFAULT_FRAGMENT_FILE_PATH);</span><br><span class="line"></span><br><span class="line">ss2 &lt;&lt; fragmentFileHandle.<span class="built_in">rdbuf</span>();</span><br><span class="line">fragmentFileHandle.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">fragmentSourceCodeC = ss2.<span class="built_in">str</span>().<span class="built_in">c_str</span>();</span><br></pre></td></tr></table></figure>
+<p>一直编译shader失败。我就打印了<code>fragmentSourceCodeC</code>看了下，结果全是乱码汉字。但是这段代码跟之前的唯一区别就是我把生成C字符串省略成一个方法了。<br>当代码改回来的时候，一切就正常了;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::string fragmentSourceCode;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* fragmentSourceCodeC;</span><br><span class="line">std::stringstream ss2;</span><br><span class="line">std::ifstream fragmentFileHandle;</span><br><span class="line">fragmentFileHandle.<span class="built_in">open</span>(DEFAULT_FRAGMENT_FILE_PATH);</span><br><span class="line"></span><br><span class="line">ss2 &lt;&lt; fragmentFileHandle.<span class="built_in">rdbuf</span>();</span><br><span class="line">fragmentFileHandle.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line">fragmentSourceCode = ss2.<span class="built_in">str</span>();</span><br><span class="line">fragmentSourceCodeC = fragmentSourceCode.<span class="built_in">c_str</span>();</span><br></pre></td></tr></table></figure>
+<p>暂不明确原因，应该是与c++底层的实现有关.</p>
 
     </div>
 
@@ -334,7 +345,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:31</span>
+    <span title="Reading time total">2:32</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
