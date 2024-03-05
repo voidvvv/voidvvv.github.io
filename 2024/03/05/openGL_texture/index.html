@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="为了更好的自学游戏开发，所以自学OpenGL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL 纹理">
+<meta property="og:url" content="https://voidvvv.github.io/2024/03/05/openGL_texture/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="为了更好的自学游戏开发，所以自学OpenGL">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-02T220734.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-05T203029.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-05T210625.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-05T210640.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-05T210658.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-05T210946.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024-03-05T223546.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024-03-05T223446.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-05T223955.png">
+<meta property="article:published_time" content="2024-03-05T04:10:01.000Z">
+<meta property="article:modified_time" content="2024-03-05T14:47:19.536Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="OpenGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voidvvv.github.io/2024/03/05/openGL_texture/2024-03-02T220734.png">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2024/03/05/openGL_texture/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2024/03/05/openGL_texture/","path":"2024/03/05/openGL_texture/","title":"OpenGL 纹理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenGL 纹理 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">13</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%B9%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">纹理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E7%8E%AF%E7%BB%95%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">纹理环绕方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">纹理过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E6%B8%90%E8%BF%9C%E7%BA%B9%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">多级渐远纹理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%88%9B%E5%BB%BA%E7%BA%B9%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">加载与创建纹理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stb-image-h"><span class="nav-number">1.4.1.</span> <span class="nav-text">stb_image.h</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E7%BA%B9%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">生成纹理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%BA%B9%E7%90%86"><span class="nav-number">1.6.</span> <span class="nav-text">应用纹理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E5%8D%95%E5%85%83"><span class="nav-number">1.7.</span> <span class="nav-text">纹理单元</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">Java开发,但是不仅限于spring,spring只是工作,搞代码才是乐趣</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2024/03/05/openGL_texture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="Java开发,但是不仅限于spring,spring只是工作,搞代码才是乐趣">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenGL 纹理 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenGL 纹理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-03-05 12:10:01 / Modified: 22:47:19" itemprop="dateCreated datePublished" datetime="2024-03-05T12:10:01+08:00">2024-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>21 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/2024/03/05/openGL_texture/2024-03-02T220734.png" alt="2024-03-02T220734"><br>为了更好的自学游戏开发，所以自学OpenGL</p>
+<span id="more"></span>
+<ul>
+<li><a href="#%E7%BA%B9%E7%90%86">纹理</a><ul>
+<li><a href="#%E7%BA%B9%E7%90%86%E7%8E%AF%E7%BB%95%E6%96%B9%E5%BC%8F">纹理环绕方式</a></li>
+<li><a href="#%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4">纹理过滤</a></li>
+<li><a href="#%E5%A4%9A%E7%BA%A7%E6%B8%90%E8%BF%9C%E7%BA%B9%E7%90%86">多级渐远纹理</a></li>
+<li><a href="#%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%88%9B%E5%BB%BA%E7%BA%B9%E7%90%86">加载与创建纹理</a><ul>
+<li><a href="#stb_imageh">stb_image.h</a></li>
+</ul>
+</li>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BA%B9%E7%90%86">生成纹理</a></li>
+<li><a href="#%E5%BA%94%E7%94%A8%E7%BA%B9%E7%90%86">应用纹理</a></li>
+<li><a href="#%E7%BA%B9%E7%90%86%E5%8D%95%E5%85%83">纹理单元</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="纹理"><a href="#纹理" class="headerlink" title="纹理"></a>纹理</h1><blockquote>
+<p>纹理设置参数方法： <code>glTexParameter</code></p>
+</blockquote>
+<p>我们已经了解到，我们可以为每个顶点添加颜色来增加图形的细节，从而创建出有趣的图像。但是，如果想让图形看起来更真实，我们就必须有足够多的顶点，从而指定足够多的颜色。这将会产生很多额外开销，因为每个模型都会需求更多的顶点，每个顶点又需求一个颜色属性。</p>
+<p>艺术家和程序员更喜欢使用纹理(Texture)。纹理是一个2D图片（甚至也有1D和3D的纹理），它可以用来添加物体的细节；你可以想象纹理是一张绘有砖块的纸，无缝折叠贴合到你的3D的房子上，这样你的房子看起来就像有砖墙外表了。因为我们可以在一张图片上插入非常多的细节，这样就可以让物体非常精细而不用指定额外的顶点。</p>
+<div class="note info">简单地说，texture纹理就是把图片以指定形式展示出来(甚至可以贴在我们的物体上)</div>
+
+<p>我们可以为text纹理指定坐标，就像之前指定我们三角形（或者别的形状）指定坐标一样,只需要继续追加坐标即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> vertex[] = &#123;</span><br><span class="line">		<span class="comment">// position			  color					texCoords</span></span><br><span class="line">		<span class="number">-0.5f</span>,<span class="number">-0.5f</span>,<span class="number">0.f</span>,	<span class="number">0.5f</span>,<span class="number">0.f</span>,<span class="number">0.f</span>,		<span class="number">-0.5f</span>,<span class="number">-0.5f</span>,</span><br><span class="line">		<span class="number">-0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.0f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">-0.5f</span>,<span class="number">0.5f</span>,</span><br><span class="line">		<span class="number">0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.0f</span>,<span class="number">0.f</span>,<span class="number">0.5f</span>,		<span class="number">0.5f</span>,<span class="number">0.5f</span>,</span><br><span class="line">		<span class="number">0.5f</span>,<span class="number">-0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.5f</span>,		<span class="number">0.5f</span>,<span class="number">-0.5f</span>,</span><br><span class="line"></span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="纹理环绕方式"><a href="#纹理环绕方式" class="headerlink" title="纹理环绕方式"></a>纹理环绕方式</h2><p>纹理坐标的范围通常是从(0, 0)到(1, 1)，那如果我们把纹理坐标设置在范围之外会发生什么？OpenGL默认的行为是重复这个纹理图像（我们基本上忽略浮点纹理坐标的整数部分），但OpenGL提供了更多的选择：</p>
+<table>
+<thead>
+<tr>
+<th>环绕方式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GL_REPEAT</code></td>
+<td>对纹理的默认行为。重复纹理图像。</td>
+</tr>
+<tr>
+<td><code>GL_MIRRORED_REPEAT</code></td>
+<td>和GL_REPEAT一样，但每次重复图片是镜像放置的。</td>
+</tr>
+<tr>
+<td><code>GL_CLAMP_TO_EDGE</code></td>
+<td>纹理坐标会被约束在0到1之间，超出的部分会重复纹理坐标的边缘，产生一种边缘被拉伸的效果。</td>
+</tr>
+<tr>
+<td><code>GL_CLAMP_TO_BORDER</code></td>
+<td>超出的坐标为用户指定的边缘颜色。</td>
+</tr>
+</tbody></table>
+<p><img src="/2024/03/05/openGL_texture/2024-03-05T203029.png" alt="2024-03-05T203029"><br>前面提到的每个选项都可以使用<code>glTexParameter*</code>函数对单独的一个坐标轴设置（s、t（如果是使用3D纹理那么还有一个r）它们和x、y、z是等价的）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);</span><br></pre></td></tr></table></figure>
+<p>第一个参数指定了纹理目标；我们使用的是2D纹理，因此纹理目标是<code>GL_TEXTURE_2D</code>。第二个参数需要我们指定设置的选项与应用的纹理轴。我们打算配置的是WRAP选项，并且指定S和T轴。最后一个参数需要我们传递一个环绕方式(Wrapping)，在这个例子中OpenGL会给当前激活的纹理设定纹理环绕方式为<code>GL_MIRRORED_REPEAT</code>。<br>如果我们选择<code>GL_CLAMP_TO_BORDER</code>选项，我们还需要指定一个边缘的颜色。这需要使用glTexParameter函数的fv后缀形式，用<code>GL_TEXTURE_BORDER_COLOR</code>作为它的选项，并且传递一个float数组作为边缘的颜色值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> borderColor[] = &#123; <span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span> &#125;;</span><br><span class="line"><span class="built_in">glTexParameterfv</span>(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);</span><br></pre></td></tr></table></figure>
+
+<h2 id="纹理过滤"><a href="#纹理过滤" class="headerlink" title="纹理过滤"></a>纹理过滤</h2><p>纹理坐标不依赖于分辨率(Resolution)，它可以是任意浮点值，所以OpenGL需要知道怎样将纹理像素(Texture Pixel，也叫Texel，译注1)映射到纹理坐标。<strong>当你有一个很大的物体但是纹理的分辨率很低的时候这就变得很重要了</strong>。你可能已经猜到了，OpenGL也有对于纹理过滤(Texture Filtering)的选项。纹理过滤有很多个选项，但是现在我们只讨论最重要的两种：<code>GL_NEAREST``和GL_LINEAR。</code></p>
+<div class="note danger no-icon"><p>Texture Pixel也叫Texel，你可以想象你打开一张<code>.jpg</code>格式图片，不断放大你会发现它是由无数像素点组成的，这个点就是纹理像素；注意不要和纹理坐标搞混，纹理坐标是你给模型顶点设置的那个数组，OpenGL以这个顶点的纹理坐标数据去查找纹理图像上的像素，然后进行采样提取纹理像素的颜色。</p>
+</div>
+
+<p><code>GL_NEAREST</code>（也叫邻近过滤，Nearest Neighbor Filtering）是OpenGL默认的纹理过滤方式。当设置为GL_NEAREST的时候，OpenGL会选择中心点最接近纹理坐标的那个像素。下图中你可以看到四个像素，加号代表纹理坐标。左上角那个纹理像素的中心距离纹理坐标最近，所以它会被选择为样本颜色：<br><img src="/2024/03/05/openGL_texture/2024-03-05T210625.png" alt="2024-03-05T210625"></p>
+<p><code>GL_LINEAR</code>（也叫线性过滤，(Bi)linear Filtering）它会基于纹理坐标附近的纹理像素，计算出一个插值，近似出这些纹理像素之间的颜色。一个纹理像素的中心距离纹理坐标越近，那么这个纹理像素的颜色对最终的样本颜色的贡献越大。下图中你可以看到返回的颜色是邻近像素的混合色：<br><img src="/2024/03/05/openGL_texture/2024-03-05T210640.png" alt="2024-03-05T210640"></p>
+<p>那么这两种纹理过滤方式有怎样的视觉效果呢？让我们看看在一个很大的物体上应用一张低分辨率的纹理会发生什么吧（纹理被放大了，每个纹理像素都能看到）：<br><img src="/2024/03/05/openGL_texture/2024-03-05T210658.png" alt="2024-03-05T210658"></p>
+<p><code>GL_NEAREST</code>产生了颗粒状的图案，我们能够清晰看到组成纹理的像素，而<code>GL_LINEAR</code>能够产生更平滑的图案，很难看出单个的纹理像素。<code>GL_LINEAR</code>可以产生更真实的输出，但有些开发者更喜欢8-bit风格，所以他们会用<code>GL_NEAREST</code>选项。</p>
+<p>当进行放大(Magnify)和缩小(Minify)操作的时候可以设置纹理过滤的选项，比如你可以在纹理被缩小的时候使用邻近过滤，被放大时使用线性过滤。我们需要使用<code>glTexParameter*</code>函数为放大和缩小指定过滤方式。这段代码看起来会和纹理环绕方式的设置很相似：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure>
+
+<h2 id="多级渐远纹理"><a href="#多级渐远纹理" class="headerlink" title="多级渐远纹理"></a>多级渐远纹理</h2><p>想象一下，假设我们有一个包含着上千物体的大房间，每个物体上都有纹理。有些物体会很远，但其纹理会拥有与近处物体同样高的分辨率。由于远处的物体可能只产生很少的片段，OpenGL从高分辨率纹理中为这些片段获取正确的颜色值就很困难，因为它需要对一个跨过纹理很大部分的片段只拾取一个纹理颜色。在小物体上这会产生不真实的感觉，更不用说对它们使用高分辨率纹理浪费内存的问题了。</p>
+<p>OpenGL使用一种叫做<strong>多级渐远纹理</strong>(Mipmap)的概念来解决这个问题，它简单来说就是一系列的纹理图像，后一个纹理图像是前一个的二分之一。多级渐远纹理背后的理念很简单：距观察者的距离超过一定的阈值，OpenGL会使用不同的多级渐远纹理，即最适合物体的距离的那个。由于距离远，解析度不高也不会被用户注意到。同时，多级渐远纹理另一加分之处是它的性能非常好。让我们看一下多级渐远纹理是什么样子的：</p>
+<p><img src="/2024/03/05/openGL_texture/2024-03-05T210946.png" alt="2024-03-05T210946"></p>
+<p>手工为每个纹理图像创建一系列多级渐远纹理很麻烦，幸好OpenGL有一个<code>glGenerateMipmaps</code>函数，在创建完一个纹理后调用它OpenGL就会承担接下来的所有工作了。后面的教程中你会看到该如何使用它。</p>
+<p>在渲染中切换多级渐远纹理级别(Level)时，OpenGL在两个不同级别的多级渐远纹理层之间会产生不真实的生硬边界。就像普通的纹理过滤一样，切换多级渐远纹理级别时你也可以在两个不同多级渐远纹理级别之间使用NEAREST和LINEAR过滤。为了指定不同多级渐远纹理级别之间的过滤方式，你可以使用下面四个选项中的一个代替原有的过滤方式：</p>
+<table>
+<thead>
+<tr>
+<th>过滤方式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GL_NEAREST_MIPMAP_NEAREST</code></td>
+<td>使用最邻近的多级渐远纹理来匹配像素大小，并使用邻近插值进行纹理采样</td>
+</tr>
+<tr>
+<td><code>GL_LINEAR_MIPMAP_NEAREST</code></td>
+<td>使用最邻近的多级渐远纹理级别，并使用线性插值进行采样</td>
+</tr>
+<tr>
+<td><code>GL_NEAREST_MIPMAP_LINEAR</code></td>
+<td>在两个最匹配像素大小的多级渐远纹理之间进行线性插值，使用邻近插值进行采样</td>
+</tr>
+<tr>
+<td><code>GL_LINEAR_MIPMAP_LINEAR</code></td>
+<td>在两个邻近的多级渐远纹理之间使用线性插值，并使用线性插值进行采样</td>
+</tr>
+</tbody></table>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure>
+
+<p>注意，一个常见的错误是，将<strong>放大过滤</strong>的选项设置为多级渐远纹理过滤选项之一。这样没有任何效果，因为多级渐远纹理主要是使用在纹理被缩小的情况下的：纹理放大不会使用多级渐远纹理，为放大过滤设置多级渐远纹理的选项会产生一个<code>GL_INVALID_ENUM</code>错误代码。</p>
+<h2 id="加载与创建纹理"><a href="#加载与创建纹理" class="headerlink" title="加载与创建纹理"></a>加载与创建纹理</h2><p>使用纹理之前要做的第一件事是把它们加载到我们的应用中。纹理图像可能被储存为各种各样的格式，每种都有自己的数据结构和排列，所以我们如何才能把这些图像加载到应用中呢？一个解决方案是选一个需要的文件格式，比如<code>.PNG</code>，然后自己写一个图像加载器，把图像转化为字节序列。写自己的图像加载器虽然不难，但仍然挺麻烦的，而且如果要支持更多文件格式呢？你就不得不为每种你希望支持的格式写加载器了。</p>
+<blockquote>
+<p>另一个解决方案也许是一种更好的选择，使用一个支持多种流行格式的图像加载库来为我们解决这个问题。比如说我们要用的<code>stb_image.h</code>库。</p>
+</blockquote>
+<h3 id="stb-image-h"><a href="#stb-image-h" class="headerlink" title="stb_image.h"></a>stb_image.h</h3><p><code>stb_image.h</code>是<a target="_blank" rel="noopener" href="https://github.com/nothings">Sean Barrett</a>的一个非常流行的单头文件图像加载库，它能够加载大部分流行的文件格式，并且能够很简单得整合到你的工程之中。stb_image.h可以在这里<a target="_blank" rel="noopener" href="https://github.com/nothings/stb/blob/master/stb_image.h">下载</a>。下载这一个头文件，将它以stb_image.h的名字加入你的工程，并另创建一个新的C++文件，输入以下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stb_image.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+<p>通过定义<code>STB_IMAGE_IMPLEMENTATION</code>，预处理器会修改头文件，让其只包含相关的函数定义源码，等于是将这个头文件变为一个 .cpp 文件了。现在只需要在你的程序中包含stb_image.h并编译就可以了。<br>现在，可以随手挑一张图片。要使用<code>stb_image.h</code>加载图片，我们需要使用它的<code>stbi_load</code>函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> width, height, nrChannels;</span><br><span class="line"><span class="built_in">stbi_set_flip_vertically_on_load</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> *data = <span class="built_in">stbi_load</span>(<span class="string">&quot;container.jpg&quot;</span>, &amp;width, &amp;height, &amp;nrChannels, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>这个函数首先接受一个图像文件的位置作为输入。接下来它需要三个<code>int</code>作为它的第二、第三和第四个参数，<code>stb_image.h</code>将会用图像的<strong>宽度、高度和颜色通道</strong>的个数填充这三个变量。我们之后生成纹理的时候会用到的图像的宽度和高度的。<br>但是，在导入之前，需要先调用一下 <code>stbi_set_flip_vertically_on_load</code>函数，来将图片放正。因为默认的图片的0坐标位置是在最上面。跟我们gl中的相反。</p>
+<h2 id="生成纹理"><a href="#生成纹理" class="headerlink" title="生成纹理"></a>生成纹理</h2><p>和之前生成的OpenGL对象一样，纹理也是使用ID引用的。让我们来创建一个：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> texture;</span><br><span class="line"><span class="built_in">glGenTextures</span>(<span class="number">1</span>, &amp;texture);</span><br></pre></td></tr></table></figure>
+<p>再然后，在操作纹理前绑定：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br></pre></td></tr></table></figure>
+<p>现在纹理已经绑定了，我们可以使用前面载入的图片数据生成一个纹理了。纹理可以通过glTexImage2D来生成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, width, height, <span class="number">0</span>, GL_RGB,GL_UNSIGNED_BYTE,data);</span><br><span class="line"><span class="built_in">glGenerateMipmap</span>(GL_TEXTURE_2D);</span><br></pre></td></tr></table></figure>
+<p>函数很长，参数也不少，所以我们一个一个地讲解：</p>
+<ul>
+<li>第一个参数指定了纹理目标(<code>Target</code>)。设置为GL_TEXTURE_2D意味着会生成与当前绑定的纹理对象在同一个目标上的纹理（任何绑定到GL_TEXTURE_1D和GL_TEXTURE_3D的纹理不会受到影响）。</li>
+<li>第二个参数为纹理指定多级渐远纹理的级别，如果你希望单独手动设置每个多级渐远纹理的级别的话。这里我们填0，也就是基本级别。</li>
+<li>第三个参数告诉OpenGL我们希望把纹理储存为何种格式。我们的图像只有RGB值，因此我们也把纹理储存为RGB值。</li>
+<li>第四个和第五个参数设置最终的纹理的宽度和高度。我们之前加载图像的时候储存了它们，所以我们使用对应的变量。</li>
+<li>下个参数应该总是被设为0（历史遗留的问题）。</li>
+<li>第七第八个参数定义了源图的格式和数据类型。我们使用RGB值加载这个图像，并把它们储存为char(byte)数组，我们将会传入对应值。</li>
+<li>最后一个参数是真正的图像数据。</li>
+</ul>
+<p>当调用<code>glTexImage2D</code>时，当前绑定的纹理对象就会被附加上纹理图像。然而，目前只有基本级别(Base-level)的纹理图像被加载了，如果要使用多级渐远纹理，我们必须手动设置所有不同的图像（不断递增第二个参数）。或者，直接在生成纹理之后调用<code>glGenerateMipmap</code>。这会为当前绑定的纹理自动生成所有需要的多级渐远纹理。<br>生成了纹理和相应的多级渐远纹理后，释放图像的内存是一个很好的习惯。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stbi_image_free</span>(data);</span><br></pre></td></tr></table></figure>
+<p>生成一个纹理的过程应该看起来像这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> texture;</span><br><span class="line"><span class="built_in">glGenTextures</span>(<span class="number">1</span>, &amp;texture);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br><span class="line"><span class="comment">// 为当前绑定的纹理对象设置环绕、过滤方式</span></span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   </span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line"><span class="comment">// 加载并生成纹理</span></span><br><span class="line"><span class="type">int</span> width, height, nrChannels;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> *data = <span class="built_in">stbi_load</span>(<span class="string">&quot;container.jpg&quot;</span>, &amp;width, &amp;height, &amp;nrChannels, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (data)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, width, height, <span class="number">0</span>, GL_RGB, GL_UNSIGNED_BYTE, data);</span><br><span class="line">    <span class="built_in">glGenerateMipmap</span>(GL_TEXTURE_2D);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Failed to load texture&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">stbi_image_free</span>(data);</span><br></pre></td></tr></table></figure>
+
+<h2 id="应用纹理"><a href="#应用纹理" class="headerlink" title="应用纹理"></a>应用纹理</h2><p>后面的这部分我们会使用<code>glDrawElements</code>绘制「你好，三角形」教程最后一部分的矩形。我们需要告知OpenGL如何采样纹理，所以我们必须使用纹理坐标更新顶点数据：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> vertex[] = &#123;</span><br><span class="line">	<span class="comment">// position			  color					texCoords</span></span><br><span class="line">	<span class="number">-0.5f</span>,<span class="number">-0.5f</span>,<span class="number">0.f</span>,	<span class="number">0.5f</span>,<span class="number">0.f</span>,<span class="number">0.f</span>,		<span class="number">0.f</span>,<span class="number">0.f</span>,</span><br><span class="line">	<span class="number">-0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.0f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.f</span>,<span class="number">1.f</span>,</span><br><span class="line">	<span class="number">0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.0f</span>,<span class="number">0.f</span>,<span class="number">0.5f</span>,		<span class="number">1.f</span>,<span class="number">1.f</span>,</span><br><span class="line">	<span class="number">0.5f</span>,<span class="number">-0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.5f</span>,		<span class="number">1.f</span>,<span class="number">0.f</span>,</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<div class="note danger no-icon"><p>这里需要讲一下，纹理图片的坐标范围是 0-1 （这点跟gl的-1 - 1 不一样），横坐标 0-1代表一个图片整个宽度，纵坐标 0-1 代表整个图片的高度。<br>这里设置属性的意思代表：在GLSL刷新到 （-0.5，-0.5）点的时候，对应的颜色是 (0.5,0,0),对应的纹理坐标为（0，0）. 然后四个坐标依次类推。整个遍历过程是根据定义的EBO中的indices来决定，然后GL依次序来遍历所有的坐标点（<strong>范围内的所有，比如当前这里就是一个（-0.5，-0.5）到(0.5,0.5) 的矩形</strong>）。然后每到一个点，都会根据比例计算出相应的color坐标，textCoords坐标来决定传入的color属性是什么，以及传入的texCoords是什么。<br>这里就是在整个GL渲染范围内，正好要渲染整张图片。<br><img src="/2024-03-05T223546.png" alt="2024-03-05T223546"><br>但如果是下面这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> vertex[] = &#123;</span><br><span class="line">	<span class="comment">// position			  color					texCoords</span></span><br><span class="line">	<span class="number">-0.5f</span>,<span class="number">-0.5f</span>,<span class="number">0.f</span>,	<span class="number">0.5f</span>,<span class="number">0.f</span>,<span class="number">0.f</span>,		<span class="number">0.f</span>,<span class="number">0.f</span>,</span><br><span class="line">	<span class="number">-0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.0f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.f</span>,<span class="number">0.5f</span>,</span><br><span class="line">	<span class="number">0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.0f</span>,<span class="number">0.f</span>,<span class="number">0.5f</span>,		<span class="number">0.5f</span>,<span class="number">0.5f</span>,</span><br><span class="line">	<span class="number">0.5f</span>,<span class="number">-0.5f</span>,<span class="number">0.f</span>,		<span class="number">0.5f</span>,<span class="number">0.5f</span>,<span class="number">0.5f</span>,		<span class="number">0.5f</span>,<span class="number">0.f</span>,</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样的画图片纹理的范围就只有一半，也就是说，在整个gl遍历的过程中，图片会以一半的形式来占据整个遍历范围。</p>
+<p><img src="/2024-03-05T223446.png" alt="2024-03-05T223446"></p>
+</div>
+
+
+<p>然后，添加新的输入属性:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">2</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="number">8</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span>*)(<span class="number">6</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));</span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>接着我们需要调整顶点着色器使其能够接受顶点坐标为一个顶点属性，并把坐标传给片段着色器：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">float</span> colorSin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">in</span> <span class="type">vec3</span> aPos;   <span class="comment">// 位置变量的属性位置值为 0 </span></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">1</span>) <span class="keyword">in</span> <span class="type">vec3</span> aColor; <span class="comment">// 颜色变量的属性位置值为 1</span></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">2</span>) <span class="keyword">in</span> <span class="type">vec2</span> aTexCoord; <span class="comment">// 纹理坐标</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec3</span> ourColor; <span class="comment">// 向片段着色器输出一个颜色</span></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec2</span> texCoord;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = <span class="type">vec4</span>(aPos, <span class="number">1.0</span>);</span><br><span class="line">    ourColor = aColor; <span class="comment">// 将ourColor设置为我们从顶点数据那里得到的输入颜色</span></span><br><span class="line">    texCoord = aTexCoord;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>片段着色器应该接下来会把输出变量TexCoord作为输入变量。</p>
+<p>片段着色器也应该能访问纹理对象，但是我们怎样能把纹理对象传给片段着色器呢？GLSL有一个供纹理对象使用的内建数据类型，叫做采样器(Sampler)，它以纹理类型作为后缀，比如sampler1D、sampler3D，或在我们的例子中的sampler2D。我们可以简单声明一个uniform sampler2D把一个纹理添加到片段着色器中，稍后我们会把纹理赋值给这个uniform。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec4</span> FragColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> ourColor;</span><br><span class="line"><span class="keyword">in</span> <span class="type">vec2</span> TexCoord;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> ourTexture;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    FragColor = <span class="built_in">texture</span>(ourTexture, TexCoord);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们使用GLSL内建的texture函数来采样纹理的颜色，它第一个参数是纹理采样器，第二个参数是对应的纹理坐标。texture函数会使用之前设置的纹理参数对相应的颜色值进行采样。这个片段着色器的输出就是纹理的（插值）纹理坐标上的(过滤后的)颜色。</p>
+<p>现在只剩下在调用glDrawElements之前绑定纹理了，它会自动把纹理赋值给片段着色器的采样器：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br><span class="line"><span class="built_in">glBindVertexArray</span>(VAO);</span><br><span class="line"><span class="built_in">glDrawElements</span>(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我们还可以把得到的纹理颜色与顶点颜色混合，来获得更有趣的效果。我们只需把纹理颜色与顶点颜色在片段着色器中相乘来混合二者的颜色：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FragColor = <span class="built_in">texture</span>(ourTexture, TexCoord) * <span class="type">vec4</span>(ourColor, <span class="number">1.0</span>);</span><br></pre></td></tr></table></figure>
+<p>最终的效果应该是顶点颜色和纹理颜色的混合色.<br><img src="/2024/03/05/openGL_texture/2024-03-05T223955.png" alt="2024-03-05T223955"></p>
+<h2 id="纹理单元"><a href="#纹理单元" class="headerlink" title="纹理单元"></a>纹理单元</h2><p>你可能会奇怪为什么sampler2D变量是个uniform，我们却不用glUniform给它赋值。使用glUniform1i，我们可以给纹理采样器分配一个位置值，这样的话我们能够在一个片段着色器中设置多个纹理。一个纹理的位置值通常称为一个纹理单元(Texture Unit)。一个纹理的默认纹理单元是0，它是默认的激活纹理单元，所以教程前面部分我们没有分配一个位置值。</p>
+<p>纹理单元的主要目的是让我们在着色器中可以使用多于一个的纹理。通过把纹理单元赋值给采样器，我们可以一次绑定多个纹理，只要我们首先激活对应的纹理单元。就像glBindTexture一样，我们可以使用glActiveTexture激活纹理单元，传入我们需要使用的纹理单元：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glActiveTexture</span>(GL_TEXTURE0); <span class="comment">// 在绑定纹理之前先激活纹理单元</span></span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br></pre></td></tr></table></figure>
+<p>激活纹理单元之后，接下来的glBindTexture函数调用会绑定这个纹理到当前激活的纹理单元，<strong>纹理单元GL_TEXTURE0默认总是被激活，所以我们在前面的例子里当我们使用glBindTexture的时候，无需激活任何纹理单元</strong>。</p>
+<div class="note info">OpenGL至少保证有16个纹理单元供你使用，也就是说你可以激活从GL_TEXTURE0到GL_TEXTRUE15。它们都是按顺序定义的，所以我们也可以通过GL_TEXTURE0 + 8的方式获得GL_TEXTURE8，这在当我们需要循环一些纹理单元的时候会很有用。</div>
+
+<p>我们仍然需要编辑片段着色器来接收另一个采样器。这应该相对来说非常直接了：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> texture1;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> texture2;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    FragColor = <span class="built_in">mix</span>(<span class="built_in">texture</span>(texture1, TexCoord), <span class="built_in">texture</span>(texture2, TexCoord), <span class="number">0.2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终输出颜色现在是两个纹理的结合。GLSL内建的mix函数需要接受两个值作为参数，并对它们根据第三个参数进行线性插值。如果第三个值是0.0，它会返回第一个输入；如果是1.0，会返回第二个输入值。0.2会返回80%的第一个输入颜色和20%的第二个输入颜色，即返回两个纹理的混合色。</p>
+<p>那么选择第二张图片开始混合把。<br>为了使用第二个纹理（以及第一个），我们必须改变一点渲染流程，先绑定两个纹理到对应的纹理单元，然后定义哪个uniform采样器对应哪个纹理单元：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用当前的shader program</span></span><br><span class="line"><span class="built_in">glActiveTexture</span>(GL_TEXTURE0);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture1);</span><br><span class="line"><span class="built_in">glActiveTexture</span>(GL_TEXTURE1);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture2);</span><br><span class="line"></span><br><span class="line"><span class="built_in">glBindVertexArray</span>(VAO);</span><br><span class="line"><span class="built_in">glDrawElements</span>(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="number">0</span>);</span><br><span class="line">````</span><br><span class="line">上面的意思是依次激活一个纹理单元，然后紧跟着将刚才激活的单元放入一个纹理.</span><br><span class="line"></span><br><span class="line">我们还要通过使用`glUniform1i`设置每个采样器的方式告诉OpenGL每个着色器采样器属于哪个纹理单元。我们只需要设置一次即可，所以这个会放在渲染循环的前面：</span><br><span class="line">```c++</span><br><span class="line">ourShader.<span class="built_in">use</span>(); <span class="comment">// 不要忘记在设置uniform变量之前激活着色器程序！</span></span><br><span class="line"><span class="built_in">glUniform1i</span>(<span class="built_in">glGetUniformLocation</span>(ourShader.ID, <span class="string">&quot;texture1&quot;</span>), <span class="number">0</span>); <span class="comment">// 手动设置</span></span><br><span class="line">ourShader.<span class="built_in">setInt</span>(<span class="string">&quot;texture2&quot;</span>, <span class="number">1</span>); <span class="comment">// 或者使用着色器类设置</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(...) </span><br><span class="line">&#123;</span><br><span class="line">    [...]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个步骤是一次性的，我们定义一次即可，所以可以放在渲染循环外面。意思就是对应的变量名，去对应的纹理单元中取得纹理即可.因为这里的纹理单元对应我们之前激活的数个纹理单元，所以这里应该是uniform的int<br>通过使用glUniform1i设置采样器，我们保证了每个uniform采样器对应着正确的纹理单元。</p>
+<p>最后，你应该就可以见到一个混合着两幅图的画面了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2024/03/05/openGL_texture/" title="OpenGL 纹理">https://voidvvv.github.io/2024/03/05/openGL_texture/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c++</a>
+              <a href="/tags/OpenGL/" rel="tag"><i class="fa fa-tag"></i> OpenGL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/04/opengl-issues/" rel="prev" title="OpenGL 学习中遇到的issue">
+                  <i class="fa fa-angle-left"></i> OpenGL 学习中遇到的issue
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa-solid fa-award"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">48k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/voidvvv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
