@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="openGL 坐标系统.重点： 注意矩阵运算的顺序是相反的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opengl 坐标">
+<meta property="og:url" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="openGL 坐标系统.重点： 注意矩阵运算的顺序是相反的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-02T220734.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T185800.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T190956.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T191126.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T191136.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T191213.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T191439.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T191847.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T192913.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T194034.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-07T194404.png">
+<meta property="article:published_time" content="2024-03-07T02:52:03.000Z">
+<meta property="article:modified_time" content="2024-03-07T11:46:11.364Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="OpenGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voidvvv.github.io/2024/03/07/opengl_coordinate/2024-03-02T220734.png">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2024/03/07/opengl_coordinate/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2024/03/07/opengl_coordinate/","path":"2024/03/07/opengl_coordinate/","title":"opengl 坐标"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>opengl 坐标 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">15</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">坐标系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">1.2.</span> <span class="nav-text">局部空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.</span> <span class="nav-text">世界空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4"><span class="nav-number">1.4.</span> <span class="nav-text">观察空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%81%E5%89%AA%E7%A9%BA%E9%97%B4"><span class="nav-number">1.5.</span> <span class="nav-text">裁剪空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%B0%84%E6%8A%95%E5%BD%B1"><span class="nav-number">1.5.1.</span> <span class="nav-text">正射投影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1"><span class="nav-number">1.5.2.</span> <span class="nav-text">透视投影</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%8A%E5%AE%83%E4%BB%AC%E9%83%BD%E7%BB%84%E5%90%88%E5%88%B0%E4%B8%80%E8%B5%B7"><span class="nav-number">1.6.</span> <span class="nav-text">把它们都组合到一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A53D"><span class="nav-number">1.7.</span> <span class="nav-text">进入3D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%8A%A0-3D"><span class="nav-number">1.8.</span> <span class="nav-text">更加 3D</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Z%E7%BC%93%E5%86%B2"><span class="nav-number">1.8.1.</span> <span class="nav-text">Z缓冲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">1.9.</span> <span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">摄像机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA-%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4"><span class="nav-number">2.1.</span> <span class="nav-text">摄像机&#x2F;观察空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.1.1.</span> <span class="nav-text">摄像机位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA%E6%96%B9%E5%90%91"><span class="nav-number">2.1.2.</span> <span class="nav-text">摄像机方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E8%BD%B4"><span class="nav-number">2.1.3.</span> <span class="nav-text">右轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E8%BD%B4"><span class="nav-number">2.1.4.</span> <span class="nav-text">上轴</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Look-At"><span class="nav-number">2.2.</span> <span class="nav-text">Look At</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%A5%BD%E5%A4%84%E4%B9%8B%E4%B8%80%E6%98%AF%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%BD%BF%E7%94%A83%E4%B8%AA%E7%9B%B8%E4%BA%92%E5%9E%82%E7%9B%B4%EF%BC%88%E6%88%96%E9%9D%9E%E7%BA%BF%E6%80%A7%EF%BC%89%E7%9A%84%E8%BD%B4%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AA%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E7%94%A8%E8%BF%993%E4%B8%AA%E8%BD%B4%E5%A4%96%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%B9%B3%E7%A7%BB%E5%90%91%E9%87%8F%E6%9D%A5%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9F%A9%E9%98%B5%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%BD%A0%E5%8F%AF%E4%BB%A5%E7%94%A8%E8%BF%99%E4%B8%AA%E7%9F%A9%E9%98%B5%E4%B9%98%E4%BB%A5%E4%BB%BB%E4%BD%95%E5%90%91%E9%87%8F%E6%9D%A5%E5%B0%86%E5%85%B6%E5%8F%98%E6%8D%A2%E5%88%B0%E9%82%A3%E4%B8%AA%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E3%80%82%E8%BF%99%E6%AD%A3%E6%98%AFLookAt%E7%9F%A9%E9%98%B5%E6%89%80%E5%81%9A%E7%9A%84%EF%BC%8C%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E6%9C%89%E4%BA%863%E4%B8%AA%E7%9B%B8%E4%BA%92%E5%9E%82%E7%9B%B4%E7%9A%84%E8%BD%B4%E5%92%8C%E4%B8%80%E4%B8%AA%E5%AE%9A%E4%B9%89%E6%91%84%E5%83%8F%E6%9C%BA%E7%A9%BA%E9%97%B4%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%9D%90%E6%A0%87%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%88%9B%E5%BB%BA%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84LookAt%E7%9F%A9%E9%98%B5%E4%BA%86%EF%BC%9A%E5%85%B6%E4%B8%ADR%E6%98%AF%E5%8F%B3%E5%90%91%E9%87%8F%EF%BC%8CU%E6%98%AF%E4%B8%8A%E5%90%91%E9%87%8F%EF%BC%8CD%E6%98%AF%E6%96%B9%E5%90%91%E5%90%91%E9%87%8FP%E6%98%AF%E6%91%84%E5%83%8F%E6%9C%BA%E4%BD%8D%E7%BD%AE%E5%90%91%E9%87%8F%E3%80%82%E6%B3%A8%E6%84%8F%EF%BC%8C%E4%BD%8D%E7%BD%AE%E5%90%91%E9%87%8F%E6%98%AF%E7%9B%B8%E5%8F%8D%E7%9A%84%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%88%91%E4%BB%AC%E6%9C%80%E7%BB%88%E5%B8%8C%E6%9C%9B%E6%8A%8A%E4%B8%96%E7%95%8C%E5%B9%B3%E7%A7%BB%E5%88%B0%E4%B8%8E%E6%88%91%E4%BB%AC%E8%87%AA%E8%BA%AB%E7%A7%BB%E5%8A%A8%E7%9A%84%E7%9B%B8%E5%8F%8D%E6%96%B9%E5%90%91%E3%80%82%E6%8A%8A%E8%BF%99%E4%B8%AALookAt%E7%9F%A9%E9%98%B5%E4%BD%9C%E4%B8%BA%E8%A7%82%E5%AF%9F%E7%9F%A9%E9%98%B5%E5%8F%AF%E4%BB%A5%E5%BE%88%E9%AB%98%E6%95%88%E5%9C%B0%E6%8A%8A%E6%89%80%E6%9C%89%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E5%88%B0%E5%88%9A%E5%88%9A%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4%E3%80%82LookAt%E7%9F%A9%E9%98%B5%E5%B0%B1%E5%83%8F%E5%AE%83%E7%9A%84%E5%90%8D%E5%AD%97%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%82%A3%E6%A0%B7%EF%BC%9A%E5%AE%83%E4%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9C%8B%E7%9D%80-Look-at-%E7%BB%99%E5%AE%9A%E7%9B%AE%E6%A0%87%E7%9A%84%E8%A7%82%E5%AF%9F%E7%9F%A9%E9%98%B5%E3%80%82"><span class="nav-number">2.3.</span> <span class="nav-text">使用矩阵的好处之一是如果你使用3个相互垂直（或非线性）的轴定义了一个坐标空间，你可以用这3个轴外加一个平移向量来创建一个矩阵，并且你可以用这个矩阵乘以任何向量来将其变换到那个坐标空间。这正是LookAt矩阵所做的，现在我们有了3个相互垂直的轴和一个定义摄像机空间的位置坐标，我们可以创建我们自己的LookAt矩阵了：其中R是右向量，U是上向量，D是方向向量P是摄像机位置向量。注意，位置向量是相反的，因为我们最终希望把世界平移到与我们自身移动的相反方向。把这个LookAt矩阵作为观察矩阵可以很高效地把所有世界坐标变换到刚刚定义的观察空间。LookAt矩阵就像它的名字表达的那样：它会创建一个看着(Look at)给定目标的观察矩阵。</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">Java开发,但是不仅限于spring,spring只是工作,搞代码才是乐趣</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2024/03/07/opengl_coordinate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="Java开发,但是不仅限于spring,spring只是工作,搞代码才是乐趣">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="opengl 坐标 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          opengl 坐标
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-03-07 10:52:03 / Modified: 19:46:11" itemprop="dateCreated datePublished" datetime="2024-03-07T10:52:03+08:00">2024-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>8.1k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>29 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/2024/03/07/opengl_coordinate/2024-03-02T220734.png" alt="2024-03-02T220734"><br>openGL 坐标系统.重点： 注意矩阵运算的顺序是相反的</p>
+<span id="more"></span>
+<ul>
+<li><a href="#%E5%9D%90%E6%A0%87%E7%B3%BB%E7%BB%9F">坐标系统</a><ul>
+<li><a href="#%E6%A6%82%E8%BF%B0">概述</a></li>
+<li><a href="#%E5%B1%80%E9%83%A8%E7%A9%BA%E9%97%B4">局部空间</a></li>
+<li><a href="#%E4%B8%96%E7%95%8C%E7%A9%BA%E9%97%B4">世界空间</a></li>
+<li><a href="#%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4">观察空间</a></li>
+<li><a href="#%E8%A3%81%E5%89%AA%E7%A9%BA%E9%97%B4">裁剪空间</a><ul>
+<li><a href="#%E6%AD%A3%E5%B0%84%E6%8A%95%E5%BD%B1">正射投影</a></li>
+<li><a href="#%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1">透视投影</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8A%8A%E5%AE%83%E4%BB%AC%E9%83%BD%E7%BB%84%E5%90%88%E5%88%B0%E4%B8%80%E8%B5%B7">把它们都组合到一起</a></li>
+<li><a href="#%E8%BF%9B%E5%85%A53d">进入3D</a></li>
+<li><a href="#%E6%9B%B4%E5%8A%A0-3d">更加 3D</a><ul>
+<li><a href="#z%E7%BC%93%E5%86%B2">Z缓冲</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结：</a></li>
+</ul>
+</li>
+<li><a href="#%E6%91%84%E5%83%8F%E6%9C%BA">摄像机</a><ul>
+<li><a href="#%E6%91%84%E5%83%8F%E6%9C%BA%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4">摄像机&#x2F;观察空间</a><ul>
+<li><a href="#%E6%91%84%E5%83%8F%E6%9C%BA%E4%BD%8D%E7%BD%AE">摄像机位置</a></li>
+<li><a href="#%E6%91%84%E5%83%8F%E6%9C%BA%E6%96%B9%E5%90%91">摄像机方向</a></li>
+<li><a href="#%E5%8F%B3%E8%BD%B4">右轴</a></li>
+<li><a href="#%E4%B8%8A%E8%BD%B4">上轴</a></li>
+</ul>
+</li>
+<li><a href="#look-at">Look At</a></li>
+<li><a href="#%E6%98%AF%E6%91%84%E5%83%8F%E6%9C%BA%E4%BD%8D%E7%BD%AE%E5%90%91%E9%87%8F%E6%B3%A8%E6%84%8F%E4%BD%8D%E7%BD%AE%E5%90%91%E9%87%8F%E6%98%AF%E7%9B%B8%E5%8F%8D%E7%9A%84%E5%9B%A0%E4%B8%BA%E6%88%91%E4%BB%AC%E6%9C%80%E7%BB%88%E5%B8%8C%E6%9C%9B%E6%8A%8A%E4%B8%96%E7%95%8C%E5%B9%B3%E7%A7%BB%E5%88%B0%E4%B8%8E%E6%88%91%E4%BB%AC%E8%87%AA%E8%BA%AB%E7%A7%BB%E5%8A%A8%E7%9A%84%E7%9B%B8%E5%8F%8D%E6%96%B9%E5%90%91%E6%8A%8A%E8%BF%99%E4%B8%AAlookat%E7%9F%A9%E9%98%B5%E4%BD%9C%E4%B8%BA%E8%A7%82%E5%AF%9F%E7%9F%A9%E9%98%B5%E5%8F%AF%E4%BB%A5%E5%BE%88%E9%AB%98%E6%95%88%E5%9C%B0%E6%8A%8A%E6%89%80%E6%9C%89%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E5%88%B0%E5%88%9A%E5%88%9A%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4lookat%E7%9F%A9%E9%98%B5%E5%B0%B1%E5%83%8F%E5%AE%83%E7%9A%84%E5%90%8D%E5%AD%97%E8%A1%A8%E8%BE%BE%E7%9A%84%E9%82%A3%E6%A0%B7%E5%AE%83%E4%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9C%8B%E7%9D%80look-at%E7%BB%99%E5%AE%9A%E7%9B%AE%E6%A0%87%E7%9A%84%E8%A7%82%E5%AF%9F%E7%9F%A9%E9%98%B5">是摄像机位置向量。注意，位置向量是相反的，因为我们最终希望把世界平移到与我们自身移动的相反方向。把这个LookAt矩阵作为观察矩阵可以很高效地把所有世界坐标变换到刚刚定义的观察空间。LookAt矩阵就像它的名字表达的那样：它会创建一个看着(Look at)给定目标的观察矩阵。</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="坐标系统"><a href="#坐标系统" class="headerlink" title="坐标系统"></a>坐标系统</h1><p>在上一个教程中，我们学习了如何有效地利用矩阵的变换来对所有顶点进行变换。OpenGL希望在每次顶点着色器运行后，我们可见的所有顶点都为标准化设备坐标(Normalized Device Coordinate, NDC)。<strong>也就是说，每个顶点的x，y，z坐标都应该在-1.0到1.0之间</strong>，超出这个坐标范围的顶点都将不可见。我们通常会自己设定一个坐标的范围，之后再在顶点着色器中将这些坐标变换为标准化设备坐标。然后将这些标准化设备坐标传入光栅器(Rasterizer)，将它们变换为屏幕上的二维坐标或像素。</p>
+<p>将坐标变换为标准化设备坐标，接着再转化为屏幕坐标的过程通常是分步进行的，也就是类似于流水线那样子。在流水线中，物体的顶点在最终转化为屏幕坐标之前还会被变换到多个坐标系统(Coordinate System)。将物体的坐标变换到几个过渡坐标系(Intermediate Coordinate System)的优点在于，在这些特定的坐标系统中，一些操作或运算更加方便和容易，这一点很快就会变得很明显。对我们来说比较重要的总共有5个不同的坐标系统：</p>
+<ul>
+<li><strong>局部空间</strong>(Local Space，或者称为物体空间(Object Space))</li>
+<li><strong>世界空间</strong>(World Space)</li>
+<li><strong>观察空间</strong>(View Space，或者称为视觉空间(Eye Space))</li>
+<li><strong>裁剪空间</strong>(Clip Space)</li>
+<li><strong>屏幕空间</strong>(Screen Space)</li>
+</ul>
+<p>这就是一个顶点在最终被转化为片段之前需要经历的所有不同状态。</p>
+<p>你现在可能会对什么是坐标空间，什么是坐标系统感到非常困惑，所以我们将用一种更加通俗的方式来解释它们。下面，我们将显示一个整体的图片，之后我们会讲解每个空间的具体功能。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>为了将坐标从一个坐标系变换到另一个坐标系，我们需要用到几个变换矩阵，最重要的几个分别是<strong>模型(Model)<strong>、</strong>观察(View)<strong>、</strong>投影(Projection)<strong>三个矩阵。我们的顶点坐标起始于</strong>局部空间</strong>(Local Space)，在这里它称为<strong>局部坐标</strong>(Local Coordinate)，它在之后会变为<strong>世界坐标</strong>(World Coordinate)，<strong>观察坐标</strong>(View Coordinate)，<strong>裁剪坐标</strong>(Clip Coordinate)，并最后以<strong>屏幕坐标</strong>(Screen Coordinate)的形式结束。下面的这张图展示了整个流程以及各个变换过程做了什么：<br><img src="/2024/03/07/opengl_coordinate/2024-03-07T185800.png" alt="2024-03-07T185800"></p>
+<ul>
+<li>局部坐标是对象相对于局部原点的坐标，也是物体起始的坐标。</li>
+<li>下一步是将局部坐标变换为世界空间坐标，世界空间坐标是处于一个更大的空间范围的。这些坐标相对于世界的全局原点，它们会和其它物体一起相对于世界的原点进行摆放。</li>
+<li>接下来我们将世界坐标变换为观察空间坐标，使得每个坐标都是从摄像机或者说观察者的角度进行观察的。</li>
+<li>坐标到达观察空间之后，我们需要将其投影到裁剪坐标。裁剪坐标会被处理至-1.0到1.0的范围内，并判断哪些顶点将会出现在屏幕上。</li>
+<li>最后，我们将裁剪坐标变换为屏幕坐标，我们将使用一个叫做视口变换(Viewport Transform)的过程。视口变换将位于-1.0到1.0范围的坐标变换到由glViewport函数所定义的坐标范围内。最后变换出来的坐标将会送到光栅器，将其转化为片段。</li>
+</ul>
+<p>你可能已经大致了解了每个坐标空间的作用。我们之所以将顶点变换到各个不同的空间的原因是有些操作在特定的坐标系统中才有意义且更方便。例如，当需要对物体进行修改的时候，在局部空间中来操作会更说得通；如果要对一个物体做出一个相对于其它物体位置的操作时，在世界坐标系中来做这个才更说得通，等等。如果我们愿意，我们也可以定义一个直接从局部空间变换到裁剪空间的变换矩阵，但那样会失去很多灵活性。</p>
+<div class="note info no-icon"><p>个人理解： 这几个坐标转换的方式，我们可以用拍照片来更形象的理解。<br>局部坐标，就是你要拍什么东西，拍的东西长什么样子。在我们之前的学习中，这个局部坐标就是我们定义的vertex，目前我们渲染的都是正方形。<br>世界坐标，就是这个东西现在在世界中是个什么状态，比如被拉伸，正在旋转，或者正在移动。<br>观察坐标，就是拍下的这个东西在相机中的一个状态。比如在相机前面，上面，或者是下面。<br>裁剪坐标，就是拍下的这个物体是怎么映射成图片的，一般有两种方式，一种是正交投影（没有远近，所有物体的大小固定），还有一种是透视投影，所能看到的的东西都是近大远小。<br>屏幕空间, 可以理解为，我们拍出来的照片，该怎么摆在我们眼前。比如，我可以把它挂在墙上，可以放在桌子上，甚至可以投影到墙上。这样每一种摆放方式，我们都能看到不同的效果.</p>
+</div>
+
+<p>接下来我们将要更仔细地讨论各个坐标系统。</p>
+<h2 id="局部空间"><a href="#局部空间" class="headerlink" title="局部空间"></a>局部空间</h2><p>局部空间是指物体所在的坐标空间，即对象最开始所在的地方。想象你在一个建模软件（比如说Blender）中创建了一个立方体。你创建的立方体的原点有可能位于(0, 0, 0)，即便它有可能最后在程序中处于完全不同的位置。甚至有可能你创建的所有模型都以(0, 0, 0)为初始位置（译注：然而它们会最终出现在世界的不同位置）。所以，你的模型的所有顶点都是在局部空间中：它们相对于你的物体来说都是局部的。</p>
+<p>我们一直使用的那个箱子的顶点是被设定在-0.5到0.5的坐标范围中，(0, 0)是它的原点。这些都是局部坐标。</p>
+<h2 id="世界空间"><a href="#世界空间" class="headerlink" title="世界空间"></a>世界空间</h2><p>如果我们将我们所有的物体导入到程序当中，它们有可能会全挤在世界的原点(0, 0, 0)上，这并不是我们想要的结果。我们想为每一个物体定义一个位置，从而能在更大的世界当中放置它们。世界空间中的坐标正如其名：是指顶点相对于（游戏）世界的坐标。如果你希望将物体分散在世界上摆放（特别是非常真实的那样），这就是你希望物体变换到的空间。物体的坐标将会从局部变换到世界空间；该变换是由模型矩阵(Model Matrix)实现的。</p>
+<p>模型矩阵是一种变换矩阵，它能通过对物体进行位移、缩放、旋转来将它置于它本应该在的位置或朝向。你可以将它想像为变换一个房子，你需要先将它缩小（它在局部空间中太大了），并将其位移至郊区的一个小镇，然后在y轴上往左旋转一点以搭配附近的房子。你也可以把上一节将箱子到处摆放在场景中用的那个矩阵大致看作一个模型矩阵；我们将箱子的局部坐标变换到场景&#x2F;世界中的不同位置。</p>
+<h2 id="观察空间"><a href="#观察空间" class="headerlink" title="观察空间"></a>观察空间</h2><p>观察空间经常被人们称之OpenGL的摄像机(Camera)（所以有时也称为摄像机空间(Camera Space)或视觉空间(Eye Space)）。观察空间是将世界空间坐标转化为用户视野前方的坐标而产生的结果。因此观察空间就是从摄像机的视角所观察到的空间。而这通常是由一系列的位移和旋转的组合来完成，平移&#x2F;旋转场景从而使得特定的对象被变换到摄像机的前方。这些组合在一起的变换通常存储在一个观察矩阵(View Matrix)里，它被用来将世界坐标变换到观察空间。在下一节中我们将深入讨论如何创建一个这样的观察矩阵来模拟一个摄像机。</p>
+<h2 id="裁剪空间"><a href="#裁剪空间" class="headerlink" title="裁剪空间"></a>裁剪空间</h2><p>在一个顶点着色器运行的最后，OpenGL期望所有的坐标都能落在一个特定的范围内，且任何在这个范围之外的点都应该被裁剪掉(Clipped)。被裁剪掉的坐标就会被忽略，所以剩下的坐标就将变为屏幕上可见的片段。这也就是裁剪空间(Clip Space)名字的由来。</p>
+<p>因为将所有可见的坐标都指定在-1.0到1.0的范围内不是很直观，所以我们会指定自己的坐标集(Coordinate Set)并将它变换回标准化设备坐标系，就像OpenGL期望的那样。</p>
+<p>为了将顶点坐标从观察变换到裁剪空间，我们需要定义一个投影矩阵(Projection Matrix)，它指定了一个范围的坐标，比如在每个维度上的-1000到1000。投影矩阵接着会将在这个指定的范围内的坐标变换为标准化设备坐标的范围(-1.0, 1.0)。所有在范围外的坐标不会被映射到在-1.0到1.0的范围之间，所以会被裁剪掉。在上面这个投影矩阵所指定的范围内，坐标(1250, 500, 750)将是不可见的，这是由于它的x坐标超出了范围，它被转化为一个大于1.0的标准化设备坐标，所以被裁剪掉了。</p>
+<div class="note info">如果只是图元(Primitive)，例如三角形，的一部分超出了裁剪体积(Clipping Volume)，则OpenGL会重新构建这个三角形为一个或多个三角形让其能够适合这个裁剪范围。</div>
+
+<p>由投影矩阵创建的观察箱(Viewing Box)被称为平截头体(Frustum)，每个出现在平截头体范围内的坐标都会最终出现在用户的屏幕上。将特定范围内的坐标转化到标准化设备坐标系的过程（而且它很容易被映射到2D观察空间坐标）被称之为投影(Projection)，因为使用投影矩阵能将3D坐标投影(Project)到很容易映射到2D的标准化设备坐标系中。</p>
+<p>一旦所有顶点被变换到裁剪空间，最终的操作——透视除法(Perspective Division)将会执行，在这个过程中我们将位置向量的x，y，z分量分别除以向量的齐次w分量；透视除法是将4D裁剪空间坐标变换为3D标准化设备坐标的过程。这一步会在每一个顶点着色器运行的最后被自动执行。</p>
+<p>在这一阶段之后，最终的坐标将会被映射到屏幕空间中（使用glViewport中的设定），并被变换成片段。</p>
+<p>将观察坐标变换为裁剪坐标的投影矩阵可以为两种不同的形式，每种形式都定义了不同的平截头体。我们可以选择创建一个正射投影矩阵(Orthographic Projection Matrix)或一个透视投影矩阵(Perspective Projection Matrix)。</p>
+<h3 id="正射投影"><a href="#正射投影" class="headerlink" title="正射投影"></a>正射投影</h3><p>正射投影矩阵定义了一个类似立方体的平截头箱，它定义了一个裁剪空间，在这空间之外的顶点都会被裁剪掉。创建一个正射投影矩阵需要指定可见平截头体的宽、高和长度。在使用正射投影矩阵变换至裁剪空间之后处于这个平截头体内的所有坐标将不会被裁剪掉。它的平截头体看起来像一个容器<br><img src="/2024/03/07/opengl_coordinate/2024-03-07T190956.png" alt="2024-03-07T190956"></p>
+<p>上面的平截头体定义了可见的坐标，它由由宽、高、近(Near)平面和远(Far)平面所指定。任何出现在近平面之前或远平面之后的坐标都会被裁剪掉。正射平截头体直接将平截头体内部的所有坐标映射为标准化设备坐标，因为每个向量的w分量都没有进行改变；如果w分量等于1.0，透视除法则不会改变这个坐标。</p>
+<p>要创建一个正射投影矩阵，我们可以使用GLM的内置函数glm::ortho：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glm::<span class="built_in">ortho</span>(<span class="number">0.0f</span>, <span class="number">800.0f</span>, <span class="number">0.0f</span>, <span class="number">600.0f</span>, <span class="number">0.1f</span>, <span class="number">100.0f</span>);</span><br></pre></td></tr></table></figure>
+
+<p>前两个参数指定了平截头体的左右坐标，第三和第四参数指定了平截头体的底部和顶部。通过这四个参数我们定义了近平面和远平面的大小，然后第五和第六个参数则定义了近平面和远平面的距离。这个投影矩阵会将处于这些x，y，z值范围内的坐标变换为标准化设备坐标。</p>
+<p>正射投影矩阵直接将坐标映射到2D平面中，即你的屏幕，但实际上一个直接的投影矩阵会产生不真实的结果，因为这个投影没有将透视(Perspective)考虑进去。所以我们需要透视投影矩阵来解决这个问题。</p>
+<h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3><p>如果你曾经体验过实际生活给你带来的景象，你就会注意到离你越远的东西看起来更小。这个奇怪的效果称之为透视(Perspective)。透视的效果在我们看一条无限长的高速公路或铁路时尤其明显，正如下面图片显示的那样：</p>
+<p><img src="/2024/03/07/opengl_coordinate/2024-03-07T191126.png" alt="2024-03-07T191126"></p>
+<p>正如你看到的那样，由于透视，这两条线在很远的地方看起来会相交。这正是透视投影想要模仿的效果，它是使用透视投影矩阵来完成的。这个投影矩阵将给定的平截头体范围映射到裁剪空间，除此之外还修改了每个顶点坐标的w值，从而使得离观察者越远的顶点坐标w分量越大。被变换到裁剪空间的坐标都会在-w到w的范围之间（任何大于这个范围的坐标都会被裁剪掉）。OpenGL要求所有可见的坐标都落在-1.0到1.0范围内，作为顶点着色器最后的输出，因此，一旦坐标在裁剪空间内之后，透视除法就会被应用到裁剪空间坐标上：</p>
+<p><img src="/2024/03/07/opengl_coordinate/2024-03-07T191136.png" alt="2024-03-07T191136"><br>顶点坐标的每个分量都会除以它的w分量，距离观察者越远顶点坐标就会越小。这是也是w分量非常重要的另一个原因，它能够帮助我们进行透视投影。最后的结果坐标就是处于标准化设备空间中的。如果你对正射投影矩阵和透视投影矩阵是如何计算的很感兴趣（且不会对数学感到恐惧的话）我推荐这篇由Songho写的文章。</p>
+<p>在GLM中可以这样创建一个透视投影矩阵：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 proj = glm::<span class="built_in">perspective</span>(glm::<span class="built_in">radians</span>(<span class="number">45.0f</span>), (<span class="type">float</span>)width/(<span class="type">float</span>)height, <span class="number">0.1f</span>, <span class="number">100.0f</span>);</span><br></pre></td></tr></table></figure>
+<p>同样，glm::perspective所做的其实就是创建了一个定义了可视空间的大平截头体，任何在这个平截头体以外的东西最后都不会出现在裁剪空间体积内，并且将会受到裁剪。一个透视平截头体可以被看作一个不均匀形状的箱子，在这个箱子内部的每个坐标都会被映射到裁剪空间上的一个点。下面是一张透视平截头体的图片：<br><img src="/2024/03/07/opengl_coordinate/2024-03-07T191213.png" alt="2024-03-07T191213"></p>
+<p>它的第一个参数定义了fov的值，它表示的是视野(Field of View)，并且设置了观察空间的大小。如果想要一个真实的观察效果，它的值通常设置为45.0f，但想要一个末日风格的结果你可以将其设置一个更大的值。第二个参数设置了宽高比，由视口的宽除以高所得。第三和第四个参数设置了平截头体的近和远平面。我们通常设置近距离为0.1f，而远距离设为100.0f。所有在近平面和远平面内且处于平截头体内的顶点都会被渲染。</p>
+<p>当你把透视矩阵的 near 值设置太大时（如10.0f），OpenGL会将靠近摄像机的坐标（在0.0f和10.0f之间）都裁剪掉，这会导致一个你在游戏中很熟悉的视觉效果：在太过靠近一个物体的时候你的视线会直接穿过去。</p>
+<p>当使用正射投影时，每一个顶点坐标都会直接映射到裁剪空间中而不经过任何精细的透视除法（它仍然会进行透视除法，只是w分量没有被改变（它保持为1），因此没有起作用）。因为正射投影没有使用透视，远处的物体不会显得更小，所以产生奇怪的视觉效果。由于这个原因，正射投影主要用于二维渲染以及一些建筑或工程的程序，在这些场景中我们更希望顶点不会被透视所干扰。某些如 Blender 等进行三维建模的软件有时在建模时也会使用正射投影，因为它在各个维度下都更准确地描绘了每个物体。下面你能够看到在Blender里面使用两种投影方式的对比：</p>
+<p>你可以看到，使用透视投影的话，远处的顶点看起来比较小，而在正射投影中每个顶点距离观察者的距离都是一样的。</p>
+<h2 id="把它们都组合到一起"><a href="#把它们都组合到一起" class="headerlink" title="把它们都组合到一起"></a>把它们都组合到一起</h2><p>我们为上述的每一个步骤都创建了一个变换矩阵：模型矩阵、观察矩阵和投影矩阵。一个顶点坐标将会根据以下过程被变换到裁剪坐标：</p>
+<p><img src="/2024/03/07/opengl_coordinate/2024-03-07T191439.png" alt="2024-03-07T191439"></p>
+<p><strong>注意矩阵运算的顺序是相反的</strong>（记住我们需要从右往左阅读矩阵的乘法）。最后的顶点应该被赋值到顶点着色器中的gl_Position，OpenGL将会自动进行透视除法和裁剪。</p>
+<div class="note info">然后呢？
+
+<p>顶点着色器的输出要求所有的顶点都在裁剪空间内，这正是我们刚才使用变换矩阵所做的。OpenGL然后对裁剪坐标执行透视除法从而将它们变换到标准化设备坐标。OpenGL会使用glViewPort内部的参数来将标准化设备坐标映射到屏幕坐标，每个坐标都关联了一个屏幕上的点（在我们的例子中是一个800x600的屏幕）。这个过程称为视口变换。</div></p>
+<h2 id="进入3D"><a href="#进入3D" class="headerlink" title="进入3D"></a>进入3D</h2><p>既然我们知道了如何将3D坐标变换为2D坐标，我们可以开始使用真正的3D物体，而不是枯燥的2D平面了。</p>
+<p>在开始进行3D绘图时，我们首先创建一个模型矩阵。这个模型矩阵包含了位移、缩放与旋转操作，它们会被应用到所有物体的顶点上，以变换它们到全局的世界空间。让我们变换一下我们的平面，将其绕着x轴旋转，使它看起来像放在地上一样。这个模型矩阵看起来是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 model;</span><br><span class="line">model = glm::<span class="built_in">rotate</span>(model, glm::<span class="built_in">radians</span>(<span class="number">-55.0f</span>), glm::<span class="built_in">vec3</span>(<span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>));</span><br></pre></td></tr></table></figure>
+<p>通过将顶点坐标乘以这个模型矩阵，我们将该顶点坐标变换到世界坐标。我们的平面看起来就是在地板上，代表全局世界里的平面。</p>
+<p>接下来我们需要创建一个观察矩阵。我们想要在场景里面稍微往后移动，以使得物体变成可见的（当在世界空间时，我们位于原点(0,0,0)）。要想在场景里面移动，先仔细想一想下面这个句子：</p>
+<p><strong>将摄像机向后移动，和将整个场景向前移动是一样的。</strong></p>
+<p>这正是观察矩阵所做的，我们以相反于摄像机移动的方向移动整个场景。因为我们想要往后移动，并且OpenGL是一个右手坐标系(Right-handed System)，所以我们需要沿着z轴的正方向移动。我们会通过将场景沿着z轴负方向平移来实现。它会给我们一种我们在往后移动的感觉。</p>
+<p><img src="/2024/03/07/opengl_coordinate/2024-03-07T191847.png" alt="2024-03-07T191847"></p>
+<p>在下一个教程中我们将会详细讨论如何在场景中移动。就目前来说，观察矩阵是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 view;</span><br><span class="line"><span class="comment">// 注意，我们将矩阵向我们要进行移动场景的反方向移动。</span></span><br><span class="line">view = glm::<span class="built_in">translate</span>(view, glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">-3.0f</span>));</span><br></pre></td></tr></table></figure>
+
+<p>最后我们需要做的是定义一个投影矩阵。我们希望在场景中使用透视投影，所以像这样声明一个投影矩阵：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 projection;</span><br><span class="line">projection = glm::<span class="built_in">perspective</span>(glm::<span class="built_in">radians</span>(<span class="number">45.0f</span>), screenWidth / screenHeight, <span class="number">0.1f</span>, <span class="number">100.0f</span>);</span><br></pre></td></tr></table></figure>
+
+<p>既然我们已经创建了变换矩阵，我们应该将它们传入着色器。首先，让我们在顶点着色器中声明一个uniform变换矩阵然后将它乘以顶点坐标：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"><span class="built_in">layout</span> (location = <span class="number">0</span>) in vec3 aPos;</span><br><span class="line">...</span><br><span class="line">uniform mat4 model;</span><br><span class="line">uniform mat4 view;</span><br><span class="line">uniform mat4 projection;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 注意乘法要从右向左读</span></span><br><span class="line">    gl_Position = projection * view * model * <span class="built_in">vec4</span>(aPos, <span class="number">1.0</span>);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们还应该将矩阵传入着色器（这通常在每次的渲染迭代中进行，因为变换矩阵会经常变动）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> modelLoc = <span class="built_in">glGetUniformLocation</span>(ourShader.ID, <span class="string">&quot;model&quot;</span>));</span><br><span class="line"><span class="built_in">glUniformMatrix4fv</span>(modelLoc, <span class="number">1</span>, GL_FALSE, glm::<span class="built_in">value_ptr</span>(model));</span><br><span class="line">... <span class="comment">// 观察矩阵和投影矩阵与之类似</span></span><br></pre></td></tr></table></figure>
+<p>我们的顶点坐标已经使用模型、观察和投影矩阵进行变换了，最终的物体应该会：</p>
+<ul>
+<li>稍微向后倾斜至地板方向。</li>
+<li>离我们有一些距离。</li>
+<li>有透视效果（顶点越远，变得越小）。</li>
+</ul>
+<p>让我们检查一下结果是否满足这些要求：<br><img src="/2024/03/07/opengl_coordinate/2024-03-07T192913.png" alt="2024-03-07T192913"></p>
+<h2 id="更加-3D"><a href="#更加-3D" class="headerlink" title="更加 3D"></a>更加 3D</h2><p>到目前为止，我们一直都在使用一个2D平面，而且甚至是在3D空间里！所以，让我们大胆地拓展我们的2D平面为一个3D立方体。要想渲染一个立方体，我们一共需要36个顶点（6个面 x 每个面有2个三角形组成 x 每个三角形有3个顶点），这36个顶点的位置你可以从<a target="_blank" rel="noopener" href="https://learnopengl.com/code_viewer.php?code=getting-started/cube_vertices">这里</a>获取。</p>
+<p>为了有趣一点，我们将让立方体随着时间旋转：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model = glm::<span class="built_in">rotate</span>(model, (<span class="type">float</span>)<span class="built_in">glfwGetTime</span>() * glm::<span class="built_in">radians</span>(<span class="number">50.0f</span>), glm::<span class="built_in">vec3</span>(<span class="number">0.5f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后我们使用glDrawArrays来绘制立方体，但这一次总共有36个顶点。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glDrawArrays</span>(GL_TRIANGLES, <span class="number">0</span>, <span class="number">36</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Z缓冲"><a href="#Z缓冲" class="headerlink" title="Z缓冲"></a>Z缓冲</h3><p>OpenGL存储它的所有深度信息于一个Z缓冲(Z-buffer)中，也被称为深度缓冲(Depth Buffer)。GLFW会自动为你生成这样一个缓冲（就像它也有一个颜色缓冲来存储输出图像的颜色）。深度值存储在每个片段里面（作为片段的z值），当片段想要输出它的颜色时，OpenGL会将它的深度值和z缓冲进行比较，如果当前的片段在其它片段之后，它将会被丢弃，否则将会覆盖。这个过程称为深度测试(Depth Testing)，它是由OpenGL自动完成的。</p>
+<p>然而，如果我们想要确定OpenGL真的执行了深度测试，首先我们要告诉OpenGL我们想要启用深度测试；它默认是关闭的。我们可以通过glEnable函数来开启深度测试。glEnable和glDisable函数允许我们启用或禁用某个OpenGL功能。这个功能会一直保持启用&#x2F;禁用状态，直到另一个调用来禁用&#x2F;启用它。现在我们想启用深度测试，需要开启GL_DEPTH_TEST：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glEnable</span>(GL_DEPTH_TEST);</span><br></pre></td></tr></table></figure>
+<p>因为我们使用了深度测试，我们也想要在每次渲染迭代之前清除深度缓冲（否则前一帧的深度信息仍然保存在缓冲中）。就像清除颜色缓冲一样，我们可以通过在glClear函数中指定DEPTH_BUFFER_BIT位来清除深度缓冲：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p><strong>简单的讲，整个坐标变换，我们要做的，其实就是按照顺序，把物体原本的vertex，依次与model，view，projection相乘即可。</strong></p>
+<h1 id="摄像机"><a href="#摄像机" class="headerlink" title="摄像机"></a>摄像机</h1><p>前面的教程中我们讨论了观察矩阵以及如何使用观察矩阵移动场景（我们向后移动了一点）。OpenGL本身没有摄像机(Camera)的概念，但我们可以通过把场景中的所有物体往相反方向移动的方式来模拟出摄像机，产生一种我们在移动的感觉，而不是场景在移动。</p>
+<p>本节我们将会讨论如何在OpenGL中配置一个摄像机，并且将会讨论FPS风格的摄像机，让你能够在3D场景中自由移动。我们也会讨论键盘和鼠标输入，最终完成一个自定义的摄像机类。</p>
+<p>我们之前总结过，<strong>整个坐标变换，我们要做的，其实就是按照顺序，把物体原本的vertex，依次与model，view，projection相乘即可。</strong>，我们所谓的相机，其实就是为了完成后面两个矩阵的。即： view 观察空间，projection 裁剪空间。</p>
+<h2 id="摄像机-观察空间"><a href="#摄像机-观察空间" class="headerlink" title="摄像机&#x2F;观察空间"></a>摄像机&#x2F;观察空间</h2><p>当我们讨论摄像机&#x2F;观察空间(Camera&#x2F;View Space)的时候，是在讨论以摄像机的视角作为场景原点时场景中所有的顶点坐标：观察矩阵把所有的世界坐标变换为相对于摄像机位置与方向的观察坐标。要定义一个摄像机，我们需要它在世界空间中的位置、观察的方向、一个指向它右侧的向量以及一个指向它上方的向量。细心的读者可能已经注意到我们实际上创建了一个三个单位轴相互垂直的、以摄像机的位置为原点的坐标系。</p>
+<p><img src="/2024/03/07/opengl_coordinate/2024-03-07T194034.png" alt="2024-03-07T194034"></p>
+<h3 id="摄像机位置"><a href="#摄像机位置" class="headerlink" title="摄像机位置"></a>摄像机位置</h3><p>获取摄像机位置很简单。摄像机位置简单来说就是世界空间中一个指向摄像机位置的向量。我们把摄像机位置设置为上一节中的那个相同的位置：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 cameraPos = glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="摄像机方向"><a href="#摄像机方向" class="headerlink" title="摄像机方向"></a>摄像机方向</h3><p>下一个需要的向量是摄像机的方向，这里指的是摄像机指向哪个方向。现在我们让摄像机指向场景原点：(0, 0, 0)。还记得如果将两个矢量相减，我们就能得到这两个矢量的差吗？用场景原点向量减去摄像机位置向量的结果就是摄像机的指向向量。由于我们知道摄像机指向z轴负方向，但我们希望方向向量(Direction Vector)指向摄像机的z轴正方向。如果我们交换相减的顺序，我们就会获得一个指向摄像机正z轴方向的向量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 cameraTarget = glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>);</span><br><span class="line">glm::vec3 cameraDirection = glm::<span class="built_in">normalize</span>(cameraPos - cameraTarget);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="右轴"><a href="#右轴" class="headerlink" title="右轴"></a>右轴</h3><p> 我们需要的另一个向量是一个右向量(Right Vector)，它代表摄像机空间的x轴的正方向。为获取右向量我们需要先使用一个小技巧：先定义一个上向量(Up Vector)。接下来把上向量和第二步得到的方向向量进行叉乘。两个向量叉乘的结果会同时垂直于两向量，因此我们会得到指向x轴正方向的那个向量（如果我们交换两个向量叉乘的顺序就会得到相反的指向x轴负方向的向量）：<br> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> glm::vec3 up = glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>); </span><br><span class="line">glm::vec3 cameraRight = glm::<span class="built_in">normalize</span>(glm::<span class="built_in">cross</span>(up, cameraDirection));</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h3 id="上轴"><a href="#上轴" class="headerlink" title="上轴"></a>上轴</h3><p>现在我们已经有了x轴向量和z轴向量，获取一个指向摄像机的正y轴向量就相对简单了：我们把右向量和方向向量进行叉乘：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 cameraUp = glm::<span class="built_in">cross</span>(cameraDirection, cameraRight);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Look-At"><a href="#Look-At" class="headerlink" title="Look At"></a>Look At</h2><h2 id="使用矩阵的好处之一是如果你使用3个相互垂直（或非线性）的轴定义了一个坐标空间，你可以用这3个轴外加一个平移向量来创建一个矩阵，并且你可以用这个矩阵乘以任何向量来将其变换到那个坐标空间。这正是LookAt矩阵所做的，现在我们有了3个相互垂直的轴和一个定义摄像机空间的位置坐标，我们可以创建我们自己的LookAt矩阵了：其中R是右向量，U是上向量，D是方向向量P是摄像机位置向量。注意，位置向量是相反的，因为我们最终希望把世界平移到与我们自身移动的相反方向。把这个LookAt矩阵作为观察矩阵可以很高效地把所有世界坐标变换到刚刚定义的观察空间。LookAt矩阵就像它的名字表达的那样：它会创建一个看着-Look-at-给定目标的观察矩阵。"><a href="#使用矩阵的好处之一是如果你使用3个相互垂直（或非线性）的轴定义了一个坐标空间，你可以用这3个轴外加一个平移向量来创建一个矩阵，并且你可以用这个矩阵乘以任何向量来将其变换到那个坐标空间。这正是LookAt矩阵所做的，现在我们有了3个相互垂直的轴和一个定义摄像机空间的位置坐标，我们可以创建我们自己的LookAt矩阵了：其中R是右向量，U是上向量，D是方向向量P是摄像机位置向量。注意，位置向量是相反的，因为我们最终希望把世界平移到与我们自身移动的相反方向。把这个LookAt矩阵作为观察矩阵可以很高效地把所有世界坐标变换到刚刚定义的观察空间。LookAt矩阵就像它的名字表达的那样：它会创建一个看着-Look-at-给定目标的观察矩阵。" class="headerlink" title="使用矩阵的好处之一是如果你使用3个相互垂直（或非线性）的轴定义了一个坐标空间，你可以用这3个轴外加一个平移向量来创建一个矩阵，并且你可以用这个矩阵乘以任何向量来将其变换到那个坐标空间。这正是LookAt矩阵所做的，现在我们有了3个相互垂直的轴和一个定义摄像机空间的位置坐标，我们可以创建我们自己的LookAt矩阵了：其中R是右向量，U是上向量，D是方向向量P是摄像机位置向量。注意，位置向量是相反的，因为我们最终希望把世界平移到与我们自身移动的相反方向。把这个LookAt矩阵作为观察矩阵可以很高效地把所有世界坐标变换到刚刚定义的观察空间。LookAt矩阵就像它的名字表达的那样：它会创建一个看着(Look at)给定目标的观察矩阵。"></a>使用矩阵的好处之一是如果你使用3个相互垂直（或非线性）的轴定义了一个坐标空间，你可以用这3个轴外加一个平移向量来创建一个矩阵，并且你可以用这个矩阵乘以任何向量来将其变换到那个坐标空间。这正是LookAt矩阵所做的，现在我们有了3个相互垂直的轴和一个定义摄像机空间的位置坐标，我们可以创建我们自己的LookAt矩阵了：<br><img src="/2024/03/07/opengl_coordinate/2024-03-07T194404.png" alt="2024-03-07T194404"><br>其中R<br>是右向量，U<br>是上向量，D<br>是方向向量P<br>是摄像机位置向量。注意，位置向量是相反的，因为我们最终希望把世界平移到与我们自身移动的相反方向。把这个LookAt矩阵作为观察矩阵可以很高效地把所有世界坐标变换到刚刚定义的观察空间。LookAt矩阵就像它的名字表达的那样：它会创建一个看着(Look at)给定目标的观察矩阵。</h2><p>幸运的是，GLM已经提供了这些支持。我们要做的只是定义一个摄像机位置，一个目标位置和一个表示世界空间中的上向量的向量（我们计算右向量使用的那个上向量）。接着GLM就会创建一个LookAt矩阵，我们可以把它当作我们的观察矩阵：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 view;</span><br><span class="line">view = glm::<span class="built_in">lookAt</span>(glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">3.0f</span>), </span><br><span class="line">           glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>), </span><br><span class="line">           glm::<span class="built_in">vec3</span>(<span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</span><br></pre></td></tr></table></figure>
+
+<p><code>glm::LookAt</code>函数需要一个位置、目标和上向量。它会创建一个和在上一节使用的一样的观察矩阵。</p>
+<p>在讨论用户输入之前，我们先来做些有意思的事，把我们的摄像机在场景中旋转。我们会将摄像机的注视点保持在(0, 0, 0)。</p>
+<p>我们需要用到一点三角学的知识来在每一帧创建一个x和z坐标，它会代表圆上的一点，我们将会使用它作为摄像机的位置。通过重新计算x和y坐标，我们会遍历圆上的所有点，这样摄像机就会绕着场景旋转了。我们预先定义这个圆的半径radius，在每次渲染迭代中使用GLFW的glfwGetTime函数重新创建观察矩阵，来扩大这个圆。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> radius = <span class="number">10.0f</span>;</span><br><span class="line"><span class="type">float</span> camX = <span class="built_in">sin</span>(<span class="built_in">glfwGetTime</span>()) * radius;</span><br><span class="line"><span class="type">float</span> camZ = <span class="built_in">cos</span>(<span class="built_in">glfwGetTime</span>()) * radius;</span><br><span class="line">glm::mat4 view;</span><br><span class="line">view = glm::<span class="built_in">lookAt</span>(glm::<span class="built_in">vec3</span>(camX, <span class="number">0.0</span>, camZ), glm::<span class="built_in">vec3</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>), glm::<span class="built_in">vec3</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>)); </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2024/03/07/opengl_coordinate/" title="opengl 坐标">https://voidvvv.github.io/2024/03/07/opengl_coordinate/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c++</a>
+              <a href="/tags/OpenGL/" rel="tag"><i class="fa fa-tag"></i> OpenGL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/06/opengl_transformation/" rel="prev" title="opengl 变换">
+                  <i class="fa fa-angle-left"></i> opengl 变换
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa-solid fa-award"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">63k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">3:50</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/voidvvv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
