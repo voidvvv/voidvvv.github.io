@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="作为一个java开发，还是java用得顺手按照前面的学习，试着学习用LibGDX封装好的API来渲染一个3d物体，同时分析libgdx封装的3d渲染源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="libGDX 游戏引擎渲染3d">
+<meta property="og:url" content="https://voidvvv.github.io/2024/03/09/opengl_java_3d/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="作为一个java开发，还是java用得顺手按照前面的学习，试着学习用LibGDX封装好的API来渲染一个3d物体，同时分析libgdx封装的3d渲染源码">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/09/opengl_java_3d/libgdx_logo.svg">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/09/opengl_java_3d/2024-03-09T225319.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/09/opengl_java_3d/2024-03-10T095248.png">
+<meta property="article:published_time" content="2024-03-09T06:29:34.000Z">
+<meta property="article:modified_time" content="2024-03-10T02:03:43.116Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="OpenGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voidvvv.github.io/2024/03/09/opengl_java_3d/libgdx_logo.svg">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2024/03/09/opengl_java_3d/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2024/03/09/opengl_java_3d/","path":"2024/03/09/opengl_java_3d/","title":"libGDX 游戏引擎渲染3d"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>libGDX 游戏引擎渲染3d | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">17</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Libgdx"><span class="nav-number">1.</span> <span class="nav-text">Libgdx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">2.1.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#materials"><span class="nav-number">2.1.1.</span> <span class="nav-text">materials</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node-%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">node 节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NodePart"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">NodePart</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesh"><span class="nav-number">2.1.3.</span> <span class="nav-text">Mesh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#render"><span class="nav-number">3.</span> <span class="nav-text">render</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ModelBatch"><span class="nav-number">3.1.</span> <span class="nav-text">ModelBatch</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">Coding and Joy</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2024/03/09/opengl_java_3d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="Coding and Joy">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="libGDX 游戏引擎渲染3d | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          libGDX 游戏引擎渲染3d
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-03-09 14:29:34" itemprop="dateCreated datePublished" datetime="2024-03-09T14:29:34+08:00">2024-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-03-10 10:03:43" itemprop="dateModified" datetime="2024-03-10T10:03:43+08:00">2024-03-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>9 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/2024/03/09/opengl_java_3d/libgdx_logo.svg" alt="logo"><br>作为一个java开发，还是java用得顺手<br>按照前面的学习，试着学习用LibGDX封装好的API来渲染一个3d物体，同时分析libgdx封装的3d渲染源码</p>
+<span id="more"></span>
+
+<h1 id="Libgdx"><a href="#Libgdx" class="headerlink" title="Libgdx"></a>Libgdx</h1><p>LibGDX游戏引擎的基本使用参考这里。<br>引擎中，关于3d的渲染部分，全部在<code>com.badlogic.gdx.graphics.g3d</code>包中，把很多OpenGL底层操作全部封装了，所以，如果我们想要直接看到libGDX渲染3d的功能效果，还是很方便的.其中有几个概念，是libGDX封装便于操作的：</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.voidvvv.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.Game;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.Gdx;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.Input;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.*;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.*;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.model.MeshPart;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.model.Node;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.model.NodePart;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.model.data.ModelNodePart;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.utils.CameraInputController;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.glutils.IndexArray;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.glutils.IndexData;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.glutils.VertexArray;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.graphics.glutils.VertexData;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.math.Matrix4;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.math.Vector3;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.utils.Array;</span><br><span class="line"><span class="keyword">import</span> com.badlogic.gdx.utils.ScreenUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyGame</span> <span class="keyword">extends</span> <span class="title class_">Game</span> &#123;</span><br><span class="line">    Model model;</span><br><span class="line">    ModelBatch modelBatch;</span><br><span class="line">    ModelInstance demo;</span><br><span class="line">    PerspectiveCamera camera;</span><br><span class="line">    <span class="type">float</span>[] vertex = &#123;</span><br><span class="line">            <span class="comment">// 第一个面</span></span><br><span class="line">            <span class="number">0.f</span>, <span class="number">0f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0.f</span>, <span class="number">10f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10.f</span>, <span class="number">10f</span>, <span class="number">0f</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">            <span class="number">10.f</span>, <span class="number">10f</span>, <span class="number">0f</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10.f</span>, <span class="number">0.f</span>, <span class="number">0f</span>, <span class="number">1</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0.f</span>, <span class="number">0f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 第二个面</span></span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 第三个面</span></span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 第四个面</span></span><br><span class="line">            <span class="number">0.f</span>, <span class="number">0f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0.f</span>, <span class="number">0f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 第五个面 需要注意，颜色渲染是在逆时针方向展示的，如果把这个面冲着立方体里面，那么外面看就是空白的</span></span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="number">10f</span>, <span class="number">0f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 第六个面</span></span><br><span class="line">            <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,</span><br><span class="line">            <span class="number">0</span>, <span class="number">0f</span>, <span class="number">0f</span>, <span class="number">0</span>, <span class="number">0</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    Color[] colors = &#123;</span><br><span class="line">            Color.BLACK,</span><br><span class="line">            Color.WHITE,</span><br><span class="line">            Color.BLUE,</span><br><span class="line">            Color.CHARTREUSE,</span><br><span class="line">            Color.YELLOW,</span><br><span class="line">            Color.FIREBRICK,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    CameraInputController cameraInputController;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">create</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.out.println(vertex.length);</span><br><span class="line">        camera = <span class="keyword">new</span> <span class="title class_">PerspectiveCamera</span>(<span class="number">67</span>, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span><br><span class="line">        modelBatch = <span class="keyword">new</span> <span class="title class_">ModelBatch</span>();</span><br><span class="line">        <span class="type">VertexAttribute</span> <span class="variable">positionAtt</span> <span class="operator">=</span> VertexAttribute.Position();</span><br><span class="line"><span class="comment">//        VertexAttribute colorAtt = VertexAttribute.ColorUnpacked();</span></span><br><span class="line">        <span class="type">VertexAttribute</span> <span class="variable">texCorrAtt</span> <span class="operator">=</span> VertexAttribute.TexCoords(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        model = <span class="keyword">new</span> <span class="title class_">Model</span>();</span><br><span class="line">        <span class="type">Mesh</span> <span class="variable">mesh</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Mesh</span>(<span class="literal">true</span>, <span class="number">36</span>, <span class="number">0</span>, positionAtt, texCorrAtt);</span><br><span class="line">        mesh.setVertices(vertex);</span><br><span class="line"><span class="comment">//        mesh.setIndices();</span></span><br><span class="line"><span class="comment">//        mesh.setInstanceData()</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Node</span> <span class="variable">n1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>();</span><br><span class="line"></span><br><span class="line">        <span class="type">TextureAttribute</span> <span class="variable">ta</span> <span class="operator">=</span> TextureAttribute.createDiffuse(<span class="keyword">new</span> <span class="title class_">Texture</span>(<span class="string">&quot;badlogic.jpg&quot;</span>));</span><br><span class="line">        <span class="type">TextureAttribute</span> <span class="variable">ta2</span> <span class="operator">=</span> TextureAttribute.createDiffuse(<span class="keyword">new</span> <span class="title class_">Texture</span>(Gdx.files.absolute(<span class="string">&quot;C:\\Users\\voidvvv\\Pictures\\asset\\enhancer_profile.png&quot;</span>)));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i&lt;<span class="number">6</span>; i++)&#123;</span><br><span class="line">            <span class="type">NodePart</span> <span class="variable">nodePart</span> <span class="operator">=</span> nodePart_(mesh, <span class="number">6</span> * i, colors[i], ta ,ta2 );</span><br><span class="line"></span><br><span class="line">            n1.parts.add(nodePart);</span><br><span class="line">            System.out.println(<span class="string">&quot;i: &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">        model.meshes.add(mesh);</span><br><span class="line">        model.nodes.add(n1);</span><br><span class="line"></span><br><span class="line">        demo = <span class="keyword">new</span> <span class="title class_">ModelInstance</span>(model);</span><br><span class="line"><span class="comment">//        demo.transform.scl(1.f).translate(0,0,0);</span></span><br><span class="line"></span><br><span class="line">        camera.position.set(<span class="number">5</span>,<span class="number">6</span>,-<span class="number">20</span>);</span><br><span class="line">        camera.lookAt(<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>);</span><br><span class="line">        cameraInputController = <span class="keyword">new</span> <span class="title class_">CameraInputController</span>(camera);</span><br><span class="line">        Gdx.input.setInputProcessor(cameraInputController);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> NodePart <span class="title function_">nodePart_</span><span class="params">(Mesh mesh, <span class="type">int</span> offset, Color color,  TextureAttribute ta , TextureAttribute ta2)</span> &#123;</span><br><span class="line">        <span class="type">MeshPart</span> <span class="variable">mp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MeshPart</span>();</span><br><span class="line">        mp.primitiveType = GL30.GL_TRIANGLES;</span><br><span class="line">        mp.mesh = mesh;</span><br><span class="line">        mp.offset = offset;</span><br><span class="line">        mp.size = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">NodePart</span> <span class="variable">np</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NodePart</span>(mp, <span class="keyword">new</span> <span class="title class_">Material</span>(ColorAttribute.createDiffuse(color),ta , ta2));</span><br><span class="line">        np.meshPart = mp;</span><br><span class="line">        <span class="keyword">return</span> np;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">Vector3</span> <span class="variable">tmp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vector3</span>();</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">render</span><span class="params">()</span> &#123;</span><br><span class="line">        camera.update();</span><br><span class="line">        Gdx.gl.glClearColor(Color.GRAY.r,Color.GRAY.g,Color.GRAY.b,Color.GRAY.a);</span><br><span class="line">        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">        Gdx.gl.glViewport(<span class="number">0</span>, <span class="number">0</span>, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</span><br><span class="line">        cameraInputController.update();;</span><br><span class="line">        <span class="keyword">if</span> (Gdx.input.isKeyPressed(Input.Keys.SPACE))&#123;</span><br><span class="line"></span><br><span class="line">            camera.position.set(<span class="number">5</span>,<span class="number">6</span>,-<span class="number">20</span>);</span><br><span class="line">            camera.lookAt(<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>);</span><br><span class="line">            camera.up.set(<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        demo.transform.rotate(tmp.set(1,1,1),1.5f);</span></span><br><span class="line"></span><br><span class="line">        modelBatch.begin(camera);</span><br><span class="line">        Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);</span><br><span class="line"></span><br><span class="line">        modelBatch.render(demo);</span><br><span class="line">        modelBatch.end();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>代码使用libgdx内置的moedel类型构建了一个方块原型，设置了vertex顶点数组，给model添加了node，然后node下面添加了一个node part作为渲染对象。<br>最后，使用model构建出modelinstatnce，使用model batch对modelInstance渲染。</p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>openGL中，若我们想渲染3d物体，需要一下计算公式：<br><img src="/2024/03/09/opengl_java_3d/2024-03-09T225319.png" alt="2024-03-09T225319"> 我们的Model类就是为了获取Local向量而来的。</p>
+<p>Model是一个3d物体的原型。用来表示物体本来的样子。<br>我们这里的Model类，存储的是上面Local的内容，可以看到，本质是个向量。我们可以看下其源码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.badlogic.gdx.graphics.g3d;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** A model represents a 3D assets. It stores a hierarchy of nodes. A node has a transform and optionally a graphical part in form</span></span><br><span class="line"><span class="comment"> * of a &#123;<span class="doctag">@link</span> MeshPart&#125; and &#123;<span class="doctag">@link</span> Material&#125;. Mesh parts reference subsets of vertices in one of the meshes of the model.</span></span><br><span class="line"><span class="comment"> * Animations can be applied to nodes, to modify their transform (translation, rotation, scale) over time.</span></span><br><span class="line"><span class="comment"> * &lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A model can be rendered by creating a &#123;<span class="doctag">@link</span> ModelInstance&#125; from it. That instance has an additional transform to position the</span></span><br><span class="line"><span class="comment"> * model in the world, and allows modification of materials and nodes without destroying the original model. The original model is</span></span><br><span class="line"><span class="comment"> * the owner of any meshes and textures, all instances created from the model share these resources. Disposing the model will</span></span><br><span class="line"><span class="comment"> * automatically make all instances invalid!</span></span><br><span class="line"><span class="comment"> * &lt;/p&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * A model is created from &#123;<span class="doctag">@link</span> ModelData&#125;, which in turn is loaded by a &#123;<span class="doctag">@link</span> ModelLoader&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> badlogic, xoppa */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Model</span> <span class="keyword">implements</span> <span class="title class_">Disposable</span> &#123;</span><br><span class="line">	<span class="comment">/** the materials of the model, used by nodes that have a graphical representation FIXME not sure if superfluous, allows</span></span><br><span class="line"><span class="comment">	 * modification of materials without having to traverse the nodes **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> Array&lt;Material&gt; materials = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line">	<span class="comment">/** root nodes of the model **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> Array&lt;Node&gt; nodes = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line">	<span class="comment">/** animations of the model, modifying node transformations **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> Array&lt;Animation&gt; animations = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line">	<span class="comment">/** the meshes of the model **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> Array&lt;Mesh&gt; meshes = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line">	<span class="comment">/** parts of meshes, used by nodes that have a graphical representation FIXME not sure if superfluous, stored in Nodes as well,</span></span><br><span class="line"><span class="comment">	 * could be useful to create bullet meshes **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> Array&lt;MeshPart&gt; meshParts = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line">	<span class="comment">/** Array of disposable resources like textures or meshes the Model is responsible for disposing **/</span></span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">final</span> Array&lt;Disposable&gt; disposables = <span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Constructs an empty model. Manual created models do not manage their resources by default. Use</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> #manageDisposable(Disposable)&#125; to add resources to be managed by this model. */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Model</span> <span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Constructs a new Model based on the &#123;<span class="doctag">@link</span> ModelData&#125;. Texture files will be loaded from the internal file storage via an</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> FileTextureProvider&#125;.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> modelData the &#123;<span class="doctag">@link</span> ModelData&#125; got from e.g. &#123;<span class="doctag">@link</span> ModelLoader&#125; */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Model</span> <span class="params">(ModelData modelData)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>(modelData, <span class="keyword">new</span> <span class="title class_">FileTextureProvider</span>());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** Constructs a new Model based on the &#123;<span class="doctag">@link</span> ModelData&#125;.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> modelData the &#123;<span class="doctag">@link</span> ModelData&#125; got from e.g. &#123;<span class="doctag">@link</span> ModelLoader&#125;</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> textureProvider the &#123;<span class="doctag">@link</span> TextureProvider&#125; to use for loading the textures */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Model</span> <span class="params">(ModelData modelData, TextureProvider textureProvider)</span> &#123;</span><br><span class="line">		load(modelData, textureProvider);</span><br><span class="line">	&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>里面存储的内容有 materials（材质），nodes 节点（后面会介绍），Animation 变化动画，Mesh 网格节点。</p>
+<p>Model下面层级的关系有点类似：<br><img src="/2024/03/09/opengl_java_3d/2024-03-10T095248.png" alt="2024-03-10T095248"><br>nodepart 包含 mesh part</p>
+<h3 id="materials"><a href="#materials" class="headerlink" title="materials"></a>materials</h3><p>材质，可以理解为我们的3d物体外表是什么样子的，常见的设置比如颜色，图片等等。</p>
+<h3 id="node-节点"><a href="#node-节点" class="headerlink" title="node 节点"></a>node 节点</h3><p>我们的Model存储了很多的node节点，model本身没有local位置信息，只有一些物体原型数据。<br>而我们的Node节点，就存储了我们物体的model矩阵信息。可以看源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.badlogic.gdx.graphics.g3d.model;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** A node is part of a hierarchy of Nodes in a &#123;<span class="doctag">@link</span> Model&#125;. A Node encodes a transform relative to its parents. A Node can have</span></span><br><span class="line"><span class="comment"> * child nodes. Optionally a node can specify a &#123;<span class="doctag">@link</span> MeshPart&#125; and a &#123;<span class="doctag">@link</span> Material&#125; to be applied to the mesh part.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> badlogic */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">	<span class="comment">/** the id, may be null, FIXME is this unique? **/</span></span><br><span class="line">	<span class="keyword">public</span> String id;</span><br><span class="line">	<span class="comment">/** Whether this node should inherit the transformation of its parent node, defaults to true. When this flag is false the value</span></span><br><span class="line"><span class="comment">	 * of &#123;<span class="doctag">@link</span> #globalTransform&#125; will be the same as the value of &#123;<span class="doctag">@link</span> #localTransform&#125; causing the transform to be independent</span></span><br><span class="line"><span class="comment">	 * of its parent transform. */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="variable">inheritTransform</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="comment">/** Whether this node is currently being animated, if so the translation, rotation and scale values are not used. */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> isAnimated;</span><br><span class="line">	<span class="comment">/** the translation, relative to the parent, not modified by animations **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="type">Vector3</span> <span class="variable">translation</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vector3</span>();</span><br><span class="line">	<span class="comment">/** the rotation, relative to the parent, not modified by animations **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="type">Quaternion</span> <span class="variable">rotation</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Quaternion</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">	<span class="comment">/** the scale, relative to the parent, not modified by animations **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="type">Vector3</span> <span class="variable">scale</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vector3</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">	<span class="comment">/** the local transform, based on translation/rotation/scale (&#123;<span class="doctag">@link</span> #calculateLocalTransform()&#125;) or any applied animation **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="type">Matrix4</span> <span class="variable">localTransform</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Matrix4</span>();</span><br><span class="line">	<span class="comment">/** the global transform, product of local transform and transform of the parent node, calculated via</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> #calculateWorldTransform()&#125; **/</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="type">Matrix4</span> <span class="variable">globalTransform</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Matrix4</span>();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Array&lt;NodePart&gt; parts = <span class="keyword">new</span> <span class="title class_">Array</span>&lt;NodePart&gt;(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">protected</span> Node parent;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Array&lt;Node&gt; children = <span class="keyword">new</span> <span class="title class_">Array</span>&lt;Node&gt;(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到我们的node节点里的的确确定义了transition 位移，rotation 旋转，scale 缩放等矩阵信息。<br>我们的model存储了一系列的node集合，每一个node都有自己的local矩阵，这样可以更好更方便的批量渲染我们的数据。</p>
+<div class="note info">类比的话，我个人觉得model就像一个人，而node就像人体上的四肢。每个人的四肢长短大小不一，这样就是model下面的node存在的意义。但在代码层面，我个人人为仅仅是方便我们使用而已</div>
+
+<h4 id="NodePart"><a href="#NodePart" class="headerlink" title="NodePart"></a>NodePart</h4><p>NodePart是Node下面更子一级的东西。我们已经知道，node节点已经存储了local矩阵信息，但是我们还需要知道我们物体原本的顶点数组，这样我们才能知道怎么渲染这个物体。<br>Nodepart就是node下面一系列包含顶点数组的类的集合。就好比我们的手是跟着胳膊动的，但是我们手上分别有五个手指，是各自的样子。<br>NodePart下面包含 material材质，MeshPart 网格部分数据，<br>材质比较好理解，我们node下面的每一个part都可能有不同的渲染需求，比如一个立方体，每一个面都想渲染不同颜色。<br>MeshPart，顾名思义，是Mesh的一部分，这个类里面存放着的是Mesh网格数据，以及当前noded part所需要这个网格的区域，用offset和size标识。</p>
+<h3 id="Mesh"><a href="#Mesh" class="headerlink" title="Mesh"></a>Mesh</h3><p>Mesh网格，这里面存放的就是我们的顶点数组，还有索引数组。一个model可以有许多mesh，可以分给不同的node（node part）来读取渲染。</p>
+<h1 id="render"><a href="#render" class="headerlink" title="render"></a>render</h1><p>渲染这部分，底层就是OpenGL，使用shader，渲染顶点数组对象。但是Libgdx封装了很多实用的功能，所以我决定从源码开始看.</p>
+<h2 id="ModelBatch"><a href="#ModelBatch" class="headerlink" title="ModelBatch"></a>ModelBatch</h2><p>ModelBatch 是libgdx为我们准备的渲染3d物体的一个批处理器。想要获取它的对象非常简单，我们可以直接new。<br>我们可以看到这个类有一些render方法,render方法有非常多的重载，我只想来详细看下这个render方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为了解这个方法就足以了解别的render方法了</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">render</span> <span class="params">(<span class="keyword">final</span> RenderableProvider renderableProvider)</span> &#123;</span><br><span class="line">		<span class="keyword">final</span> <span class="type">int</span> <span class="variable">offset</span> <span class="operator">=</span> renderables.size;</span><br><span class="line">		renderableProvider.getRenderables(renderables, renderablesPool);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> offset; i &lt; renderables.size; i++) &#123;</span><br><span class="line">			<span class="type">Renderable</span> <span class="variable">renderable</span> <span class="operator">=</span> renderables.get(i);</span><br><span class="line">			renderable.shader = shaderProvider.getShader(renderable);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法做了以下几件事：</p>
+<ol>
+<li>方法需要传入一个RenderableProvider</li>
+<li>使用传入的RenderableProvider，配合本身内部的renderablesPool对象池，生成renderable对象放在我们当前的batch类中</li>
+<li>遍历所有renderable对象，为其设置shader</li>
+</ol>
+<p>其中，RenderableProvider是一个接口。接口中只有一个抽象方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getRenderables</span> <span class="params">(Array&lt;Renderable&gt; renderables, Pool&lt;Renderable&gt; pool)</span>;</span><br></pre></td></tr></table></figure>
+<p>我们看一下它的其中一个实现类：ModelInstance的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getRenderables</span> <span class="params">(Array&lt;Renderable&gt; renderables, Pool&lt;Renderable&gt; pool)</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> (Node node : nodes) &#123;</span><br><span class="line">		getRenderables(node, renderables, pool);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里可以看到就是把当前model实例中的node全部拿来遍历，然后为每个node生成renderable。再往下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">getRenderables</span> <span class="params">(Node node, Array&lt;Renderable&gt; renderables, Pool&lt;Renderable&gt; pool)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (node.parts.size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (NodePart nodePart : node.parts) &#123;</span><br><span class="line">			<span class="keyword">if</span> (nodePart.enabled) renderables.add(getRenderable(pool.obtain(), node, nodePart));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (Node child : node.getChildren()) &#123;</span><br><span class="line">		getRenderables(child, renderables, pool);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于当前node下的每一个node part，都会从我们的rederable对象池中获取一个renderable，作为其真正的到渲染物。<br>然后，每一个node part会把自身包含的material以及mesh part 绑定到这个renderable中，来进行渲染。</p>
+<p>最后真正的渲染方法，在:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modelBatch.end();</span><br></pre></td></tr></table></figure>
+<p>end方法就是结束一个批次，来将之前生成的所有renderable来用对应的shader进行渲染。</p>
+<p>嗯，就先这样把</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2024/03/09/opengl_java_3d/" title="libGDX 游戏引擎渲染3d">https://voidvvv.github.io/2024/03/09/opengl_java_3d/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c++</a>
+              <a href="/tags/OpenGL/" rel="tag"><i class="fa fa-tag"></i> OpenGL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/08/openGL_camera_diy/" rel="prev" title="openGL 实现自己的Camera类">
+                  <i class="fa fa-angle-left"></i> openGL 实现自己的Camera类
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa-solid fa-award"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">67k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:03</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/voidvvv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
