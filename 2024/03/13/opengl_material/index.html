@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="为了更好的自学游戏开发，所以自学OpenGL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="opengl 材质">
+<meta property="og:url" content="https://voidvvv.github.io/2024/03/13/opengl_material/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="为了更好的自学游戏开发，所以自学OpenGL">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/13/opengl_material/2024-03-02T220734.png">
+<meta property="og:image" content="https://voidvvv.github.io/2024/03/13/opengl_material/2024-03-13T213241.png">
+<meta property="article:published_time" content="2024-03-13T05:20:12.000Z">
+<meta property="article:modified_time" content="2024-03-23T05:13:40.689Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="OpenGL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voidvvv.github.io/2024/03/13/opengl_material/2024-03-02T220734.png">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2024/03/13/opengl_material/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2024/03/13/opengl_material/","path":"2024/03/13/opengl_material/","title":"opengl 材质"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>opengl 材质 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">13</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">21</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%90%E8%B4%A8"><span class="nav-number">1.</span> <span class="nav-text">材质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%9D%90%E8%B4%A8"><span class="nav-number">1.1.</span> <span class="nav-text">设置材质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">光的属性</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">Coding and Joy</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2024/03/13/opengl_material/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="Coding and Joy">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="opengl 材质 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          opengl 材质
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-03-13 13:20:12" itemprop="dateCreated datePublished" datetime="2024-03-13T13:20:12+08:00">2024-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-03-23 13:13:40" itemprop="dateModified" datetime="2024-03-23T13:13:40+08:00">2024-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>8 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/2024/03/13/opengl_material/2024-03-02T220734.png" alt="2024-03-02T220734"><br>为了更好的自学游戏开发，所以自学OpenGL</p>
+<span id="more"></span>
+
+<h1 id="材质"><a href="#材质" class="headerlink" title="材质"></a>材质</h1><p>在现实世界里，每个物体会对光产生不同的反应。比如，钢制物体看起来通常会比陶土花瓶更闪闪发光，一个木头箱子也不会与一个钢制箱子反射同样程度的光。有些物体反射光的时候不会有太多的散射(Scatter)，因而产生较小的高光点，而有些物体则会散射很多，产生一个有着更大半径的高光点。如果我们想要在OpenGL中模拟多种类型的物体，我们必须针对每种表面定义不同的材质(Material)属性。</p>
+<p>在上一节中，我们定义了一个物体和光的颜色，并结合环境光与镜面强度分量，来决定物体的视觉输出。当描述一个表面时，我们可以分别为三个光照分量定义一个材质颜色(Material Color)：环境光照(Ambient Lighting)、漫反射光照(Diffuse Lighting)和镜面光照(Specular Lighting)。通过为每个分量指定一个颜色，我们就能够对表面的颜色输出有细粒度的控制了。现在，我们再添加一个反光度(Shininess)分量，结合上述的三个颜色，我们就有了全部所需的材质属性了：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line">struct Material &#123;</span><br><span class="line">    <span class="type">vec3</span> ambient;</span><br><span class="line">    <span class="type">vec3</span> diffuse;</span><br><span class="line">    <span class="type">vec3</span> specular;</span><br><span class="line">    <span class="type">float</span> shininess;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> Material material;</span><br></pre></td></tr></table></figure>
+<p>在片段着色器中，我们创建一个结构体(Struct)来储存物体的材质属性。我们也可以把它们储存为独立的uniform值，但是作为一个结构体来储存会更有条理一些。我们首先定义结构体的布局(Layout)，然后简单地以刚创建的结构体作为类型声明一个uniform变量。</p>
+<p>如你所见，我们为冯氏光照模型的每个分量都定义一个颜色向量。ambient材质向量定义了在环境光照下这个表面反射的是什么颜色，通常与表面的颜色相同。diffuse材质向量定义了在漫反射光照下表面的颜色。漫反射颜色（和环境光照一样）也被设置为我们期望的物体颜色。specular材质向量设置的是表面上镜面高光的颜色（或者甚至可能反映一个特定表面的颜色）。最后，shininess影响镜面高光的散射&#x2F;半径。</p>
+<p>有这4个元素定义一个物体的材质，我们能够模拟很多现实世界中的材质。devernay.free.fr中的一个表格展示了一系列材质属性，它们模拟了现实世界中的真实材质。下图展示了几组现实世界的材质参数值对我们的立方体的影响：<br><img src="/2024/03/13/opengl_material/2024-03-13T213241.png" alt="2024-03-13T213241"></p>
+<p>可以看到，通过正确地指定一个物体的材质属性，我们对这个物体的感知也就不同了。效果非常明显，但是要想获得更真实的效果，我们需要以更复杂的形状替换这个立方体。在模型加载章节中，我们会讨论更复杂的形状。</p>
+<p>搞清楚一个物体正确的材质设定是个困难的工程，这主要需要实验和丰富的经验。用了不合适的材质而毁了物体的视觉质量是件经常发生的事。</p>
+<p>让我们试着在着色器中实现这样的一个材质系统。</p>
+<h2 id="设置材质"><a href="#设置材质" class="headerlink" title="设置材质"></a>设置材质</h2><p>首先，先看下我们现在当前的片段着色器是什么样子的:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec4</span> FragColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> Normal;</span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> FragPos;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> objectColor;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> lightColor;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> lightPos;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> viewPos;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">// ambient</span></span><br><span class="line">    <span class="type">float</span> ambientStrength = <span class="number">0.1</span>;</span><br><span class="line">    <span class="type">vec3</span> ambient = ambientStrength * lightColor; <span class="comment">// 环境光</span></span><br><span class="line">  	</span><br><span class="line">    <span class="type">vec3</span> norm = <span class="built_in">normalize</span>(Normal); <span class="comment">// 标准化法向量</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// diffuse </span></span><br><span class="line">    <span class="type">vec3</span> lightDir = <span class="built_in">normalize</span>(lightPos - FragPos); <span class="comment">// 计算物体冲着光的方向，并且标准化</span></span><br><span class="line">    <span class="type">float</span> diff = <span class="built_in">max</span>(<span class="built_in">dot</span>(norm, lightDir), <span class="number">0.0</span>);<span class="comment">// 点乘，获取夹角的cos值，角度越大，cos越小，光亮效果越小</span></span><br><span class="line">    <span class="type">vec3</span> diffuse = diff * lightColor; <span class="comment">// 点乘结果跟灯光相乘</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//specular 镜面光</span></span><br><span class="line">    <span class="type">float</span> specularStrength = <span class="number">1.0</span>;<span class="comment">//镜面强度</span></span><br><span class="line">    <span class="type">float</span> shiness = <span class="number">128</span>; <span class="comment">// 反光度</span></span><br><span class="line">    <span class="type">vec3</span> viewDir = <span class="built_in">normalize</span>(viewPos - FragPos); <span class="comment">// 物体冲着view的方向</span></span><br><span class="line">    <span class="type">vec3</span> reflectDir = <span class="built_in">reflect</span>(-lightDir, norm);</span><br><span class="line">    <span class="type">float</span> spec = <span class="built_in">pow</span>(<span class="built_in">max</span>(<span class="built_in">dot</span>(viewDir, reflectDir), <span class="number">0.0</span>), shiness);</span><br><span class="line">    <span class="type">vec3</span> specular = specularStrength * spec * lightColor;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">            </span><br><span class="line">    <span class="type">vec3</span> result = (specular+ ambient + diffuse) * objectColor; <span class="comment">//混合环境光以及漫反射</span></span><br><span class="line">    FragColor = <span class="type">vec4</span>(result, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，我们的环境光强度，镜面光强度以及镜面光反光度都是定义在方法的临时变量。我们可以把这些变量放在uniform中，类型就是我们定义的material:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line">struct Material &#123;</span><br><span class="line">    <span class="type">vec3</span> ambient;</span><br><span class="line">    <span class="type">vec3</span> diffuse;</span><br><span class="line">    <span class="type">vec3</span> specular;</span><br><span class="line">    <span class="type">float</span> shininess;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> Material material;</span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec4</span> FragColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> Normal;</span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> FragPos;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> objectColor;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> lightColor;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> lightPos;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> viewPos;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">// ambient</span></span><br><span class="line">    </span><br><span class="line">    <span class="type">vec3</span> ambient = material.ambient * lightColor; <span class="comment">// 环境光</span></span><br><span class="line">  	</span><br><span class="line">    <span class="type">vec3</span> norm = <span class="built_in">normalize</span>(Normal); <span class="comment">// 标准化法向量</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// diffuse </span></span><br><span class="line">    <span class="type">vec3</span> lightDir = <span class="built_in">normalize</span>(lightPos - FragPos); <span class="comment">// 计算物体冲着光的方向，并且标准化</span></span><br><span class="line">    <span class="type">float</span> diff = <span class="built_in">max</span>(<span class="built_in">dot</span>(norm, lightDir), <span class="number">0.0</span>);<span class="comment">// 点乘，获取夹角的cos值，角度越大，cos越小，光亮效果越小</span></span><br><span class="line">    <span class="type">vec3</span> diffuse = diff * lightColor * material.diffuse; <span class="comment">// 点乘结果跟灯光相乘</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//specular 镜面光</span></span><br><span class="line"><span class="comment">//    float specularStrength = 1.0;//镜面强度</span></span><br><span class="line"><span class="comment">//    float shiness = 128; // 反光度</span></span><br><span class="line">    <span class="type">vec3</span> viewDir = <span class="built_in">normalize</span>(viewPos - FragPos); <span class="comment">// 物体冲着view的方向</span></span><br><span class="line">    <span class="type">vec3</span> reflectDir = <span class="built_in">reflect</span>(-lightDir, norm);</span><br><span class="line">    <span class="type">float</span> spec = <span class="built_in">pow</span>(<span class="built_in">max</span>(<span class="built_in">dot</span>(viewDir, reflectDir), <span class="number">0.0</span>), material.shiness);</span><br><span class="line">    <span class="type">vec3</span> specular = material.specular * (spec * lightColor);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">            </span><br><span class="line">    <span class="type">vec3</span> result = (specular+ ambient + diffuse) * objectColor; <span class="comment">//混合环境光以及漫反射</span></span><br><span class="line">    FragColor = <span class="type">vec4</span>(result, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到，把三种光的变量都使用材质(<code>material</code>)中对应的变量，这样我们就可以控制当前材质对各种光的敏感度。<br>我们现在可以通过设置适当的uniform来设置应用中物体的材质了。GLSL中一个结构体在设置uniform时并无任何区别，结构体只是充当uniform变量们的一个命名空间。所以如果想填充这个结构体的话，我们必须设置每个单独的uniform，但要以结构体名为前缀：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lightingShader.<span class="built_in">setVec3</span>(<span class="string">&quot;material.ambient&quot;</span>,  <span class="number">1.0f</span>, <span class="number">0.5f</span>, <span class="number">0.31f</span>);</span><br><span class="line">lightingShader.<span class="built_in">setVec3</span>(<span class="string">&quot;material.diffuse&quot;</span>,  <span class="number">1.0f</span>, <span class="number">0.5f</span>, <span class="number">0.31f</span>);</span><br><span class="line">lightingShader.<span class="built_in">setVec3</span>(<span class="string">&quot;material.specular&quot;</span>, <span class="number">0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.5f</span>);</span><br><span class="line">lightingShader.<span class="built_in">setFloat</span>(<span class="string">&quot;material.shininess&quot;</span>, <span class="number">32.0f</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="光的属性"><a href="#光的属性" class="headerlink" title="光的属性"></a>光的属性</h2><p>这个物体太亮了。物体过亮的原因是环境光、漫反射和镜面光这三个颜色对任何一个光源都全力反射。光源对环境光、漫反射和镜面光分量也分别具有不同的强度。前面的章节中，我们通过使用一个强度值改变环境光和镜面光强度的方式解决了这个问题。我们想做类似的事情，但是这次是要为每个光照分量分别指定一个强度向量。如果我们假设lightColor是vec3(1.0)，代码会看起来像这样：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">vec3</span> ambient  = <span class="type">vec3</span>(<span class="number">1.0</span>) * material.ambient;</span><br><span class="line"><span class="type">vec3</span> diffuse  = <span class="type">vec3</span>(<span class="number">1.0</span>) * (diff * material.diffuse);</span><br><span class="line"><span class="type">vec3</span> specular = <span class="type">vec3</span>(<span class="number">1.0</span>) * (spec * material.specular);</span><br></pre></td></tr></table></figure>
+<p>所以物体的每个材质属性对每一个光照分量都返回了最大的强度。对单个光源来说，这些vec3(1.0)值同样可以对每种光源分别改变，而这通常就是我们想要的。现在，物体的环境光分量完全地影响了立方体的颜色，可是环境光分量实际上不应该对最终的颜色有这么大的影响，所以我们会将光源的环境光强度设置为一个小一点的值，从而限制环境光颜色：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">vec3</span> ambient = <span class="type">vec3</span>(<span class="number">0.1</span>) * material.ambient;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以用同样的方式影响光源的漫反射和镜面光强度。这和我们在上一节中所做的极为相似，你可以认为我们已经创建了一些光照属性来影响各个光照分量。我们希望为光照属性创建类似材质结构体的东西：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct Light &#123;</span><br><span class="line">    <span class="type">vec3</span> position;</span><br><span class="line"></span><br><span class="line">    <span class="type">vec3</span> ambient;</span><br><span class="line">    <span class="type">vec3</span> diffuse;</span><br><span class="line">    <span class="type">vec3</span> specular;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> Light light;</span><br></pre></td></tr></table></figure>
+<p>一个光源对它的ambient、diffuse和specular光照分量有着不同的强度。环境光照通常被设置为一个比较低的强度，因为我们不希望环境光颜色太过主导。光源的漫反射分量通常被设置为我们希望光所具有的那个颜色，通常是一个比较明亮的白色。镜面光分量通常会保持为vec3(1.0)，以最大强度发光。注意我们也将光源的位置向量加入了结构体。</p>
+<p>和材质uniform一样，我们需要更新片段着色器：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">vec3</span> ambient  = light.ambient * material.ambient;</span><br><span class="line"><span class="type">vec3</span> diffuse  = light.diffuse * (diff * material.diffuse);</span><br><span class="line"><span class="type">vec3</span> specular = light.specular * (spec * material.specular);</span><br></pre></td></tr></table></figure>
+<p>我们接下来在应用中设置光照强度：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lightingShader.<span class="built_in">setVec3</span>(<span class="string">&quot;light.ambient&quot;</span>,  <span class="number">0.2f</span>, <span class="number">0.2f</span>, <span class="number">0.2f</span>);</span><br><span class="line">lightingShader.<span class="built_in">setVec3</span>(<span class="string">&quot;light.diffuse&quot;</span>,  <span class="number">0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.5f</span>); <span class="comment">// 将光照调暗了一些以搭配场景</span></span><br><span class="line">lightingShader.<span class="built_in">setVec3</span>(<span class="string">&quot;light.specular&quot;</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>); </span><br></pre></td></tr></table></figure>
+
+<p>简而言之，材质就是把之前我们渲染的纯粹的颜色，给加上了我们想要的外表。并且视频specular还会添加反光效果。<br>实现原理就是specular是一张黑白图，越白的地方就表示反光越强，计算出的颜色也越白</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2024/03/13/opengl_material/" title="opengl 材质">https://voidvvv.github.io/2024/03/13/opengl_material/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c++</a>
+              <a href="/tags/OpenGL/" rel="tag"><i class="fa fa-tag"></i> OpenGL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/11/opengl_color_light02/" rel="prev" title="opengl 光照">
+                  <i class="fa fa-angle-left"></i> opengl 光照
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/23/opengl_color_end/" rel="next" title="opengl 光照(2)">
+                  opengl 光照(2) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa-solid fa-award"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">81k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">4:55</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/voidvvv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
