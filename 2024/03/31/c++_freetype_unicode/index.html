@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://voidvvv.github.io/2024/03/31/c++_freetype_unicode/2024-03-31T095450.png">
 <meta property="article:published_time" content="2024-03-30T17:43:10.000Z">
-<meta property="article:modified_time" content="2024-03-31T02:28:10.981Z">
+<meta property="article:modified_time" content="2024-03-31T02:31:28.010Z">
 <meta property="article:author" content="Kai Jie">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="FreeType">
@@ -206,7 +206,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-03-31 01:43:10 / Modified: 10:28:10" itemprop="dateCreated datePublished" datetime="2024-03-31T01:43:10+08:00">2024-03-31</time>
+      <time title="Created: 2024-03-31 01:43:10 / Modified: 10:31:28" itemprop="dateCreated datePublished" datetime="2024-03-31T01:43:10+08:00">2024-03-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -260,6 +260,7 @@
 <p>但最后我突然想到，freetype是查找char使用方法<code>FT_Get_Char_Index</code>中,charcode的类型其实是 <code>FT_ULong</code>，是一个无符号的long，c++中<code>long</code>的范围至少有32位，那么我直接使用wstring中的wchar强转成long来直接放入查找可以吗？<br>于是我就进行了尝试，结果是OK的。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这个问题其实本身并不难，甚至比较基础，但是查询过程中，由于对c++熟悉度不够，还是走了很多弯路。甚至中间曾经出现过使用nullptr的情况，这些跟java有太多不一样了。</p>
 <p>但最后，如何在控制台输出wchar还是没有解决。<br>对于这个问题，我有自己的想法<span style='text-decoration: line-through;'>(猜测)</span>,那就是控制台是windows平台的，windows平台可能对底层的char进行了自己的优化，在展示时会根据char值来判断是否是unicode来进行展示，判断是unicode则使用unicode来展示，所以直接cout输出char数组是可以展示中文的。<br>但是对于wchar，可能windows底层并没有对其优化，想要展示还需要我们开发做一些其他工作。<br>至于java为什么即使使用宽字节也可以正常展示中文，我猜测可能是虚拟机（VM）底层对其进行了优化，使其能够将宽字节正确处理成unicode。</p>
+<p>最后附上<a target="_blank" rel="noopener" href="https://github.com/voidvvv/LinkA">项目地址</a></p>
 
     </div>
 
