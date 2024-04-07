@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这几天在试着用c++和opengl写一个连连看小游戏。发现坑还挺多。其中一个就是判断两个块之间是否可以连通，经过分析之后我使用了AStar寻路算法来完成判断。为了保证复用还使用了模板。但是抽象这一块费了很大的劲，因为需要让代码能够跟我游戏中定义的一些类来相配合。先说一下简单的思路：按照AStar寻路算法，就是从起点开始，依次判断周围连同点的cost大小，若联通点没有被经过或者之前经过的cost大于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A*寻路算法 C++ 实现">
+<meta property="og:url" content="https://voidvvv.github.io/2024/04/07/AStarFind/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="这几天在试着用c++和opengl写一个连连看小游戏。发现坑还挺多。其中一个就是判断两个块之间是否可以连通，经过分析之后我使用了AStar寻路算法来完成判断。为了保证复用还使用了模板。但是抽象这一块费了很大的劲，因为需要让代码能够跟我游戏中定义的一些类来相配合。先说一下简单的思路：按照AStar寻路算法，就是从起点开始，依次判断周围连同点的cost大小，若联通点没有被经过或者之前经过的cost大于">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-07T01:05:15.000Z">
+<meta property="article:modified_time" content="2024-04-07T09:20:36.412Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="AStar">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2024/04/07/AStarFind/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2024/04/07/AStarFind/","path":"2024/04/07/AStarFind/","title":"A*寻路算法 C++ 实现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>A*寻路算法 C++ 实现 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">17</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">23</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">Coding and Joy</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2024/04/07/AStarFind/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="Coding and Joy">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="A*寻路算法 C++ 实现 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A*寻路算法 C++ 实现
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-04-07 09:05:15 / Modified: 17:20:36" itemprop="dateCreated datePublished" datetime="2024-04-07T09:05:15+08:00">2024-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/c/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>978</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>4 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>这几天在试着用c++和opengl写一个<a target="_blank" rel="noopener" href="https://github.com/voidvvv/LinkA">连连看小游戏</a>。发现坑还挺多。其中一个就是判断两个块之间是否可以连通，经过分析之后我使用了AStar寻路算法来完成判断。为了保证复用还使用了模板。但是抽象这一块费了很大的劲，因为需要让代码能够跟我游戏中定义的一些类来相配合。<br>先说一下简单的思路：<br>按照AStar寻路算法，就是从起点开始，依次判断周围连同点的cost大小，若联通点没有被经过或者之前经过的cost大于当前计算的cost，则使用当前的路径，否则使用之前的路径，依次判断，直到找到终点.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先先定义三个类，作为我们算法的基本类型，</span></span><br><span class="line"><span class="comment">// 第一个，连通类，保存有连通两端的节点，以及当前连通所需要的cost</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Connection</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">float</span> <span class="title">getCost</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> N *<span class="title">getFromNode</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> N *<span class="title">getToNode</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 第二个，我们的地图，这里将地图抽象出来几个方法，1. 查询指定节点的所有连通，2. 查询指定节点的索引，3. 当前地图节点的数量（size）</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Graph</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> std::vector&lt;Connection&lt;N&gt; *&gt; <span class="built_in">getConnections</span>(N *fromNode) = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">virtual</span> std::vector&lt;Connection&lt;N&gt; *&gt; <span class="built_in">getConnections</span>(N *fromNode, N* matchNode) = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">int</span> <span class="title">getIndex</span><span class="params">(N *node)</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">int</span> <span class="title">size</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 第三个，就是我们算法中需要用到的节点记录类，用来记录某个节点以及其联通的额匹配对，以及节点的访问状态</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Node_Category</span></span><br><span class="line">&#123;</span><br><span class="line">    UNVISITED,</span><br><span class="line">    OPEN,</span><br><span class="line">    CLOSE</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NodeRecord</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    N *node;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** The incoming connection to the node */</span></span><br><span class="line">    Connection&lt;N&gt; *connection;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** The actual cost from the start node. */</span></span><br><span class="line">    <span class="type">float</span> costSoFar = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** The node category: &#123;@link #UNVISITED&#125;, &#123;@link #OPEN&#125; or &#123;@link #CLOSED&#125;. */</span></span><br><span class="line">    Node_Category category = Node_Category::UNVISITED;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** ID of the current search. */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> searchId = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然后，我们定义我们的寻路算法类</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PathFinder</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">searchNodePath</span><span class="params">(N *startNode, N *endNode,</span></span></span><br><span class="line"><span class="params"><span class="function">                                <span class="type">float</span> (*_Heuristic)(N *, N *),</span></span></span><br><span class="line"><span class="params"><span class="function">                                <span class="type">bool</span> (*_shouldStop)(N *, N *),</span></span></span><br><span class="line"><span class="params"><span class="function">                                std::vector&lt;N *&gt; &amp;outPath)</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// virtual bool searchNodePath(N *startNode, N *endNode, Heuristic&lt;N&gt; &amp;, std::vector&lt;N *&gt; &amp;outPath) = 0;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">generateNodePath</span><span class="params">(N *startNode, std::vector&lt;N *&gt; &amp;outPath)</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个算法类有两个抽象方法，一个是查询路径，将返回结果放入一个vector中，另一个是生成节点路径，是为了在查询路径成功后，将路劲记录系下来的方法.<br>下面是这个类的实现类:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;AStar.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> N&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AStarPathFinder</span> : <span class="keyword">public</span> PathFinder&lt;N&gt;</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> searchId = <span class="number">0</span>;</span><br><span class="line">    std::vector&lt;NodeRecord&lt;N&gt; *&gt; records;</span><br><span class="line">    std::shared_ptr&lt;Graph&lt;N&gt;&gt; graph;</span><br><span class="line">    NodeRecord&lt;N&gt; *current;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">NodeRecord&lt;N&gt; *<span class="title">getNodeRecord</span><span class="params">(N *node)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Graph&lt;N&gt; *gp = graph.<span class="built_in">get</span>();</span><br><span class="line">        <span class="type">int</span> index = gp-&gt;<span class="built_in">getIndex</span>(node);</span><br><span class="line">        NodeRecord&lt;N&gt; *nodeRecord = records[index];</span><br><span class="line">        <span class="keyword">if</span> (nodeRecord == <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            nodeRecord = <span class="keyword">new</span> <span class="built_in">NodeRecord</span>&lt;N&gt;();</span><br><span class="line">            nodeRecord-&gt;category = Node_Category::UNVISITED;</span><br><span class="line">            nodeRecord-&gt;searchId = <span class="keyword">this</span>-&gt;searchId;</span><br><span class="line">            nodeRecord-&gt;connection = <span class="literal">NULL</span>;</span><br><span class="line">            records[index] = nodeRecord;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (nodeRecord-&gt;searchId != <span class="keyword">this</span>-&gt;searchId)</span><br><span class="line">        &#123;</span><br><span class="line">            nodeRecord-&gt;searchId = <span class="keyword">this</span>-&gt;searchId;</span><br><span class="line">            nodeRecord-&gt;connection = <span class="literal">NULL</span>;</span><br><span class="line">            nodeRecord-&gt;category = Node_Category::UNVISITED;</span><br><span class="line">        &#125;</span><br><span class="line">        nodeRecord-&gt;node = node;</span><br><span class="line">        <span class="keyword">return</span> nodeRecord;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(Graph&lt;N&gt; *_graph)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        current = <span class="literal">NULL</span>;</span><br><span class="line">        records = std::vector&lt;NodeRecord&lt;N&gt; *&gt;(_graph-&gt;<span class="built_in">size</span>());</span><br><span class="line">        <span class="keyword">this</span>-&gt;graph.<span class="built_in">reset</span>(_graph);</span><br><span class="line">        <span class="comment">// this-&gt;graph = std::shared_ptr&lt;Graph&lt;N&gt;&gt;(_graph);</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">generateNodePath</span><span class="params">(N *startNode, std::vector&lt;N *&gt; &amp;outPath)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// todo</span></span><br><span class="line">        <span class="keyword">while</span> (current &amp;&amp; current-&gt;connection)</span><br><span class="line">        &#123;</span><br><span class="line">            outPath.<span class="built_in">push_back</span>(current-&gt;node);</span><br><span class="line">            <span class="comment">// current-&gt;connection-&gt;getFromNode</span></span><br><span class="line">            Graph&lt;N&gt; *gp = graph.<span class="built_in">get</span>();</span><br><span class="line">            current = records[gp-&gt;<span class="built_in">getIndex</span>(current-&gt;connection-&gt;<span class="built_in">getFromNode</span>())];</span><br><span class="line">        &#125;</span><br><span class="line">        outPath.<span class="built_in">push_back</span>(startNode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">visitChild</span><span class="params">(N *end, <span class="type">float</span> (*_Heuristic)(N *, N *), std::vector&lt;NodeRecord&lt;N&gt; *&gt; &amp;openList)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Graph&lt;N&gt; *graphPtr = <span class="keyword">this</span>-&gt;graph.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">        std::vector&lt;Connection&lt;N&gt; *&gt; connections = graphPtr-&gt;<span class="built_in">getConnections</span>(current-&gt;node,end);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> x = <span class="number">0</span>; x &lt; connections.<span class="built_in">size</span>(); x++)</span><br><span class="line">        &#123;</span><br><span class="line">            Connection&lt;N&gt; *con = connections[x];</span><br><span class="line">            N *toNode = con-&gt;<span class="built_in">getToNode</span>();</span><br><span class="line">            <span class="type">float</span> nodeCost = current-&gt;costSoFar + con-&gt;<span class="built_in">getCost</span>();</span><br><span class="line"></span><br><span class="line">            NodeRecord&lt;N&gt; *nrNode = <span class="built_in">getNodeRecord</span>(toNode);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (toNode == end)</span><br><span class="line">            &#123;</span><br><span class="line">                nrNode-&gt;costSoFar = nodeCost;</span><br><span class="line">                nrNode-&gt;connection = con;</span><br><span class="line"></span><br><span class="line">                nrNode-&gt;category = Node_Category::OPEN;</span><br><span class="line">                openList.<span class="built_in">push_back</span>(nrNode);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (nrNode-&gt;category == Node_Category::CLOSE &amp;&amp; nrNode-&gt;costSoFar &lt;= nodeCost)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nrNode-&gt;category == Node_Category::OPEN)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nrNode-&gt;costSoFar &lt;= nodeCost)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                openList.<span class="built_in">erase</span>(std::<span class="built_in">find</span>(openList.<span class="built_in">begin</span>(), openList.<span class="built_in">end</span>(), nrNode));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            nrNode-&gt;costSoFar = nodeCost;</span><br><span class="line">            nrNode-&gt;connection = con;</span><br><span class="line"></span><br><span class="line">            nrNode-&gt;category = Node_Category::OPEN;</span><br><span class="line">            openList.<span class="built_in">push_back</span>(nrNode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">searchNodePath</span><span class="params">(N *startNode, N *endNode,</span></span></span><br><span class="line"><span class="params"><span class="function">                        <span class="type">float</span> (*_Heuristic)(N *, N *),</span></span></span><br><span class="line"><span class="params"><span class="function">                        <span class="type">bool</span> (*_shouldStop)(N *, N *),</span></span></span><br><span class="line"><span class="params"><span class="function">                        std::vector&lt;N *&gt; &amp;outPath)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;current = <span class="literal">NULL</span>;</span><br><span class="line">        std::vector&lt;NodeRecord&lt;N&gt; *&gt; openList;</span><br><span class="line">        <span class="keyword">this</span>-&gt;searchId++;</span><br><span class="line">        NodeRecord&lt;N&gt; *nr = <span class="built_in">getNodeRecord</span>(startNode);</span><br><span class="line">        nr-&gt;category = Node_Category::OPEN;</span><br><span class="line">        nr-&gt;connection = <span class="literal">NULL</span>;</span><br><span class="line">        openList.<span class="built_in">push_back</span>(nr);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (openList.<span class="built_in">size</span>() &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;current = openList.<span class="built_in">back</span>();</span><br><span class="line">            openList.<span class="built_in">pop_back</span>();</span><br><span class="line">            <span class="keyword">this</span>-&gt;current-&gt;category = Node_Category::CLOSE;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (_shouldStop(<span class="keyword">this</span>-&gt;current-&gt;node, endNode))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">generateNodePath</span>(startNode, outPath);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">visitChild</span>(endNode, _Heuristic, openList);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中最主要的算法逻辑是参考了<a target="_blank" rel="noopener" href="https://github.com/libgdx/gdx-ai">libgdx-AI框架</a>中的AStar寻路算法.<br>之前有一段时间特别着迷的读这个框架源码。感觉收益颇丰.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2024/04/07/AStarFind/" title="A*寻路算法 C++ 实现">https://voidvvv.github.io/2024/04/07/AStarFind/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/algorithm/" rel="tag"><i class="fa fa-tag"></i> algorithm</a>
+              <a href="/tags/AStar/" rel="tag"><i class="fa fa-tag"></i> AStar</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/31/c++_freetype_unicode/" rel="prev" title="在C++中使用freetype显示中文的问题">
+                  <i class="fa fa-angle-left"></i> 在C++中使用freetype显示中文的问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa-solid fa-award"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">84k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">5:04</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/voidvvv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
