@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Spring security 基础使用整合springboot，基本可以说是开箱即用。甚至无需额外设置，只需要引入依赖: 1234&lt;dependency&gt;    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;spring-boot-starter-security&lt;&#x2F;ar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringSecurity 踩坑记录">
+<meta property="og:url" content="https://voidvvv.github.io/2025/05/17/spring-security/index.html">
+<meta property="og:site_name" content="Voidvvv">
+<meta property="og:description" content="Spring security 基础使用整合springboot，基本可以说是开箱即用。甚至无需额外设置，只需要引入依赖: 1234&lt;dependency&gt;    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;spring-boot-starter-security&lt;&#x2F;ar">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://voidvvv.github.io/unify%5Cspring_security%5Cimage.png">
+<meta property="article:published_time" content="2025-05-17T12:48:45.000Z">
+<meta property="article:modified_time" content="2025-05-17T12:54:29.243Z">
+<meta property="article:author" content="Kai Jie">
+<meta property="article:tag" content="java code c++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voidvvv.github.io/unify%5Cspring_security%5Cimage.png">
+
+
+<link rel="canonical" href="https://voidvvv.github.io/2025/05/17/spring-security/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2025/05/17/spring-security/","path":"2025/05/17/spring-security/","title":"SpringSecurity 踩坑记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringSecurity 踩坑记录 | Voidvvv</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Voidvvv</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">study</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">18</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">28</span></a></li><li class="menu-item menu-item-整合"><a href="/unify/" rel="section"><i class="fa fa-home fa-fw"></i>整合</a></li><li class="menu-item menu-item-about-me"><a href="/resume/index_en" rel="section"><i class="fa fa-file fa-fw"></i>About Me</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-security-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Spring security 基础使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Security-%E7%9A%84%E7%9B%B8%E5%85%B3%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">Spring Security 的相关功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Security-%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">Spring Security 的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E9%93%BE%EF%BC%88SecurityFilterChain%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">过滤器链（SecurityFilterChain）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Security%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%88SecurityContext%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">Security上下文（SecurityContext）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AuthenticateManager%E8%AE%A4%E8%AF%81%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">AuthenticateManager认证管理器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%88%E5%9D%91%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">问题（坑）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0"><span class="nav-number">4.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E7%8E%B0"><span class="nav-number">4.2.</span> <span class="nav-text">复现</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kai Jie"
+      src="/images/avater_mw.png">
+  <p class="site-author-name" itemprop="name">Kai Jie</p>
+  <div class="site-description" itemprop="description">Keep Funning & Keep Learning</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2025/05/17/spring-security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avater_mw.png">
+      <meta itemprop="name" content="Kai Jie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Voidvvv">
+      <meta itemprop="description" content="Keep Funning & Keep Learning">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringSecurity 踩坑记录 | Voidvvv">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringSecurity 踩坑记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-05-17 20:48:45 / Modified: 20:54:29" itemprop="dateCreated datePublished" datetime="2025-05-17T20:48:45+08:00">2025-05-17</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>7 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Spring-security-基础使用"><a href="#Spring-security-基础使用" class="headerlink" title="Spring security 基础使用"></a>Spring security 基础使用</h2><p>整合springboot，基本可以说是开箱即用。甚至无需额外设置，只需要引入依赖:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后直接运行，即可看到spring security默认的登陆页面。</p>
+<span id="more"></span>
+
+<h2 id="Spring-Security-的相关功能"><a href="#Spring-Security-的相关功能" class="headerlink" title="Spring Security 的相关功能"></a>Spring Security 的相关功能</h2><p>整个springsecurity的基础功能，可以归纳为三个大部分：</p>
+<ol>
+<li>认证 (Authenticate)<br>认证简单来说就是让系统知道你是谁。一般是用前端传过来的username 和password去数据库里进行获取user信息（也可以是别的比如session缓存，jwt token），这样我们就知道了当前的用户是谁。</li>
+<li>鉴权 （Authorization）<br>就是在知道你是谁了后，你有哪些权限。</li>
+<li>检查 （Check）<br>在知道你是谁并且确认了你的权限后，需要去跟当前要访问的资源进行匹配。匹配成功后，才会放行，否则会阻止访问并且正常会有 <code>AccessDeniedException</code> 抛出</li>
+</ol>
+<h2 id="Spring-Security-的组件"><a href="#Spring-Security-的组件" class="headerlink" title="Spring Security 的组件"></a>Spring Security 的组件</h2><h3 id="过滤器链（SecurityFilterChain）"><a href="#过滤器链（SecurityFilterChain）" class="headerlink" title="过滤器链（SecurityFilterChain）"></a>过滤器链（SecurityFilterChain）</h3><p>构成Spring Security的核心功能的，是由<code>SecurityFilterChain</code>过滤器链来实现的。其本质就是一个个一连串的过滤器，进行各自功能的check以及验证。<br>而在<code>SecurityFilterChain</code>过滤器链内，则是有各个功能自己的组件。<br>而这个 <code>SecurityFilterChain</code>过滤器链，实际上是由一个：FilterChainProxy 过滤器链代理的类来执行的。<br>其主要逻辑源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">doFilterInternal</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span></span><br><span class="line">        <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="type">FirewalledRequest</span> <span class="variable">firewallRequest</span> <span class="operator">=</span> <span class="built_in">this</span>.firewall.getFirewalledRequest((HttpServletRequest) request);</span><br><span class="line">    <span class="type">HttpServletResponse</span> <span class="variable">firewallResponse</span> <span class="operator">=</span> <span class="built_in">this</span>.firewall.getFirewalledResponse((HttpServletResponse) response);</span><br><span class="line">    <span class="comment">// 获取当前请求所对应的过滤器集合</span></span><br><span class="line">    List&lt;Filter&gt; filters = getFilters(firewallRequest);</span><br><span class="line">    <span class="keyword">if</span> (filters == <span class="literal">null</span> || filters.isEmpty()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (logger.isTraceEnabled()) &#123;</span><br><span class="line">            logger.trace(LogMessage.of(() -&gt; <span class="string">&quot;No security for &quot;</span> + requestLine(firewallRequest)));</span><br><span class="line">        &#125;</span><br><span class="line">        firewallRequest.reset();</span><br><span class="line">        <span class="built_in">this</span>.filterChainDecorator.decorate(chain).doFilter(firewallRequest, firewallResponse);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">        logger.debug(LogMessage.of(() -&gt; <span class="string">&quot;Securing &quot;</span> + requestLine(firewallRequest)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 这个匿名内部类的作用是在遍历完所有对应过滤器集合后，回归当前的filter chain的</span></span><br><span class="line">    <span class="type">FilterChain</span> <span class="variable">reset</span> <span class="operator">=</span> (req, res) -&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">            logger.debug(LogMessage.of(() -&gt; <span class="string">&quot;Secured &quot;</span> + requestLine(firewallRequest)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Deactivate path stripping as we exit the security filter chain</span></span><br><span class="line">        firewallRequest.reset();</span><br><span class="line">        chain.doFilter(req, res);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 此处是真实的过滤器逻辑，使用了装饰者模式</span></span><br><span class="line">    <span class="built_in">this</span>.filterChainDecorator.decorate(reset, filters).doFilter(firewallRequest, firewallResponse);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>装饰者内部逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(<span class="keyword">final</span> ServletRequest request, <span class="keyword">final</span> ServletResponse response)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">    <span class="comment">// 若过滤器集合遍历完毕，则回归主filter chain</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.currentPosition == <span class="built_in">this</span>.additionalFilters.size()) &#123;</span><br><span class="line">        <span class="built_in">this</span>.originalChain.doFilter(request, response);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 循环遍历所有找到的filter</span></span><br><span class="line">        ++<span class="built_in">this</span>.currentPosition;</span><br><span class="line">        <span class="type">Filter</span> <span class="variable">nextFilter</span> <span class="operator">=</span> (Filter)<span class="built_in">this</span>.additionalFilters.get(<span class="built_in">this</span>.currentPosition - <span class="number">1</span>);</span><br><span class="line">        nextFilter.doFilter(request, response, <span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Security上下文（SecurityContext）"><a href="#Security上下文（SecurityContext）" class="headerlink" title="Security上下文（SecurityContext）"></a>Security上下文（SecurityContext）</h3><p>使用Context来保存上下文信息是一个常用的方法，在spring中更是有application context来保存当前应用的上下文。在springsecurity中也不例外，springsecurity有自己的securityContext。其中主要是用来保存用户的认证信息（Authentication）。<br>在程序中，我们可以通过 SecurityContextHolder 来获取当前线程中的 SecurityContext。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SecurityContextHolder.getContext();</span><br></pre></td></tr></table></figure>
+<p>其内部是存在<strong>threadlocal</strong>里的</p>
+<h3 id="AuthenticateManager认证管理器"><a href="#AuthenticateManager认证管理器" class="headerlink" title="AuthenticateManager认证管理器"></a>AuthenticateManager认证管理器</h3><p>这个是认证步骤的核心逻辑。其主要功能是负责认证一个用户的身份(Authentication).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AuthenticateManager是一个接口，只有一个方法，目的就是认证身份</span></span><br><span class="line">    Authentication <span class="title function_">authenticate</span><span class="params">(Authentication authentication)</span> <span class="keyword">throws</span> AuthenticationException;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>springsecurity中，我们需要从当前的请求（request）以及响应（response）中，想办法获取user的身份(Authenticate)，然后放进AuthenticateManager中认证即可。<br>参考demo可以看springsecurity自带的<code>UsernamePasswordAuthenticationFilter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Authentication <span class="title function_">attemptAuthentication</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">        <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.postOnly &amp;&amp; !request.getMethod().equals(<span class="string">&quot;POST&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AuthenticationServiceException</span>(<span class="string">&quot;Authentication method not supported: &quot;</span> + request.getMethod());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> obtainUsername(request);</span><br><span class="line">    username = (username != <span class="literal">null</span>) ? username.trim() : <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> obtainPassword(request);</span><br><span class="line">    password = (password != <span class="literal">null</span>) ? password : <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">authRequest</span> <span class="operator">=</span> UsernamePasswordAuthenticationToken.unauthenticated(username,</span><br><span class="line">            password);</span><br><span class="line">    <span class="comment">// Allow subclasses to set the &quot;details&quot; property</span></span><br><span class="line">    setDetails(request, authRequest);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.getAuthenticationManager().authenticate(authRequest);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="问题（坑）"><a href="#问题（坑）" class="headerlink" title="问题（坑）"></a>问题（坑）</h2><ol>
+<li><p>获取<code>AuthenticationManager</code>问题。</p>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>关于如果在自己的代码中注入并使用<code>AuthenticationManager</code>，我搜到资料表示说可以直接注入，但是我使用的springboot版本3.4.4的情况下，直接注入<code>AuthenticationManager</code>会找不到bean报错。意味着spring security并没有把一个默认的<code>AuthenticationManager</code>放到spring context中。<br><img src="/unify%5Cspring_security%5Cimage.png" alt="alt text"><br> 此时，继续按照网上的另一个注入方法：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> AuthenticationConfiguration AuthenticationConfiguration;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用AuthenticationConfiguration 来获取 AuthenticationManager</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> AuthenticationManager <span class="title function_">authenticationManager</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="keyword">return</span> AuthenticationConfiguration.getAuthenticationManager();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 看起来好像没有问题，并且可以启动成功。但是使用起来还是有些问题。<br> 如果我们在security的config中，配置了AuthenticateProvider，如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> SecurityFilterChain <span class="title function_">securityFilterChain</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="keyword">return</span> http.authenticationProvider(<span class="keyword">new</span> <span class="title class_">KAuthenticationProvider</span>()).build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 然后我们在自己的代码中，使用刚才注册的 <code>AuthenticationManager</code></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> AuthenticationManager authenticationManager;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">check</span> <span class="params">()</span> &#123;</span><br><span class="line">            <span class="type">UsernamePasswordAuthenticationToken</span> <span class="variable">auth</span> <span class="operator">=</span> UsernamePasswordAuthenticationToken.unauthenticated(<span class="string">&quot;user&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line">    <span class="type">Authentication</span> <span class="variable">result</span> <span class="operator">=</span> authenticationManager.authenticate(auth);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 会发现，我们刚才的provider永远也走不到。在进一步debug下，我发现，spring security初始化<code>AuthenticationManager</code>是分为两步的，这可能也是为什么我们没办法获取spring security默认给我们的authenticateManager 的原因把。其中第一步，是在<code>org.springframework.security.config.annotation.web.configuration.HttpSecurityConfiguration#httpSecurity</code>中</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Bean(HTTPSECURITY_BEAN_NAME)</span></span><br><span class="line"><span class="meta">@Scope(&quot;prototype&quot;)</span></span><br><span class="line">HttpSecurity <span class="title function_">httpSecurity</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">LazyPasswordEncoder</span> <span class="variable">passwordEncoder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LazyPasswordEncoder</span>(<span class="built_in">this</span>.context);</span><br><span class="line">    <span class="type">AuthenticationManagerBuilder</span> <span class="variable">authenticationBuilder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultPasswordEncoderAuthenticationManagerBuilder</span>(</span><br><span class="line">            <span class="built_in">this</span>.objectPostProcessor, passwordEncoder);</span><br><span class="line">            <span class="comment">// 这里会初始化第一个authenticationManager，并且作为AuthenticationConfiguration获取到的manager</span></span><br><span class="line">            <span class="comment">// 可以看到这里其实是把这个作为我们后面http的manager的parent manager了</span></span><br><span class="line">    authenticationBuilder.parentAuthenticationManager(authenticationManager());</span><br><span class="line">    authenticationBuilder.authenticationEventPublisher(getAuthenticationEventPublisher());</span><br><span class="line">    <span class="type">HttpSecurity</span> <span class="variable">http</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpSecurity</span>(<span class="built_in">this</span>.objectPostProcessor, authenticationBuilder, createSharedObjects());</span><br><span class="line">    <span class="type">WebAsyncManagerIntegrationFilter</span> <span class="variable">webAsyncManagerIntegrationFilter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WebAsyncManagerIntegrationFilter</span>();</span><br><span class="line">    webAsyncManagerIntegrationFilter.setSecurityContextHolderStrategy(<span class="built_in">this</span>.securityContextHolderStrategy);</span><br><span class="line">    <span class="comment">// @formatter:off</span></span><br><span class="line">    http</span><br><span class="line">        .csrf(withDefaults())</span><br><span class="line">        .addFilter(webAsyncManagerIntegrationFilter)</span><br><span class="line">        .exceptionHandling(withDefaults())</span><br><span class="line">        .headers(withDefaults())</span><br><span class="line">        .sessionManagement(withDefaults())</span><br><span class="line">        .securityContext(withDefaults())</span><br><span class="line">        .requestCache(withDefaults())</span><br><span class="line">        .anonymous(withDefaults())</span><br><span class="line">        .servletApi(withDefaults())</span><br><span class="line">        .apply(<span class="keyword">new</span> <span class="title class_">DefaultLoginPageConfigurer</span>&lt;&gt;());</span><br><span class="line">    http.logout(withDefaults());</span><br><span class="line">    <span class="comment">// @formatter:on</span></span><br><span class="line">    applyCorsIfAvailable(http);</span><br><span class="line">    applyDefaultConfigurers(http);</span><br><span class="line">    <span class="keyword">return</span> http;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这里的是第一个初始化的AuthenticateManager，作为我们后面那一个的parent。然后在我们配置Secuirty的config的时候，会生成第二个AuthenticateManager：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> SecurityFilterChain <span class="title function_">securityFilterChain</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    http.</span><br><span class="line">    .authenticationProvider(<span class="keyword">new</span> <span class="title class_">KAuthenticationProvider</span>())</span><br><span class="line">    ...</span><br><span class="line">    .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 注意，此时我们的Provider给的是当前build出来的第二个AuthenticateManager，是之前那个的child<br> 然后看ProviderManager中，有如下代码：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// 如果当前的manager没有成功获取身份信息，则去parent中继续获取</span></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.parent != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// Allow the parent to try.</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        parentResult = <span class="built_in">this</span>.parent.authenticate(authentication);</span><br><span class="line">        result = parentResult;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (ProviderNotFoundException ex) &#123;</span><br><span class="line">        <span class="comment">// ignore as we will throw below if no other exception occurred prior to</span></span><br><span class="line">        <span class="comment">// calling parent and the parent</span></span><br><span class="line">        <span class="comment">// may throw ProviderNotFound even though a provider in the child already</span></span><br><span class="line">        <span class="comment">// handled the request</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (AuthenticationException ex) &#123;</span><br><span class="line">        parentException = ex;</span><br><span class="line">        lastException = ex;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p> 可以看到这里其实是在当前判断失败时会去parent那里再去尝试的。</p>
+<p> 到现在为止，好像一切都还很正常。但是如果我要自己定义一个filter去根据user的token获取user的身份，然后再用我们拿到的<code>AuthenticationManager</code>去认证的话，就会出现无法认证的情况。因为我们自己获取到的是parent,而我们把provider放到的是child中。直接使用parent的authenticate是无法调用child的方法的。</p>
+<h3 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h3><ol>
+<li><p>关于 <code>AuthenticationManager</code>无法直接注入,直接把下面的代码放入自己项目即可复现</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityIssue</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AuthenticationManager authenticationManager;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>无法使用自己的provider</p>
+<ul>
+<li>首先定义一个自己的authentication</li>
+</ul>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">package</span> com.kz.web.test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAuthentication</span> <span class="keyword">implements</span> <span class="title class_">Authentication</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> authState;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getCredentials</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getDetails</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getPrincipal</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isAuthenticated</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> authState;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAuthenticated</span><span class="params">(<span class="type">boolean</span> isAuthenticated)</span> <span class="keyword">throws</span> IllegalArgumentException &#123;</span><br><span class="line">        <span class="built_in">this</span>.authState = isAuthenticated;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>然后定义自己的provider</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kz.web.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationProvider;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.AuthenticationException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAuthenticateProvider</span> <span class="keyword">implements</span> <span class="title class_">AuthenticationProvider</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Authentication <span class="title function_">authenticate</span><span class="params">(Authentication authentication)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">        <span class="comment">// 直接给与验证通过</span></span><br><span class="line">        authentication.setAuthenticated(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">return</span> authentication;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; authentication)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;MyAuthenticateProvider.supports&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> MyAuthentication.class.isAssignableFrom(authentication);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义自己的filter</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.kz.web.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.FilterChain;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.filter.OncePerRequestFilter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleFilter</span> <span class="keyword">extends</span> <span class="title class_">OncePerRequestFilter</span> &#123;</span><br><span class="line">    AuthenticationManager authenticationManager;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SimpleFilter</span><span class="params">(AuthenticationManager authenticationManager)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.authenticationManager = authenticationManager;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doFilterInternal</span><span class="params">(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;SimpleFilter.doFilterInternal&quot;</span>);</span><br><span class="line">        <span class="type">MyAuthentication</span> <span class="variable">myAuthentication</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyAuthentication</span>();</span><br><span class="line">        <span class="built_in">this</span>.authenticationManager.authenticate(myAuthentication);</span><br><span class="line">        filterChain.doFilter(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义自己的config</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">package</span> com.kz.web.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.annotation.Order;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.authentication.AuthenticationManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.SecurityFilterChain;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.logout.LogoutFilter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SimpleConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AuthenticationConfiguration authenticationConfiguration;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> AuthenticationManager <span class="title function_">manager</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">return</span> authenticationConfiguration.getAuthenticationManager();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Order(0)</span></span><br><span class="line">    <span class="keyword">public</span> SecurityFilterChain <span class="title function_">securityFilterChain</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        http</span><br><span class="line">                .authorizeHttpRequests(authorize -&gt; authorize</span><br><span class="line">                        .requestMatchers(<span class="string">&quot;/login&quot;</span>).permitAll() <span class="comment">// 登录页放行</span></span><br><span class="line">                        .requestMatchers(<span class="string">&quot;/public/**&quot;</span>, <span class="string">&quot;/error&quot;</span>).permitAll() <span class="comment">// 明确放行登录页和公共路径</span></span><br><span class="line">                        .requestMatchers(<span class="string">&quot;/admin/**&quot;</span>).hasAuthority(<span class="string">&quot;admin&quot;</span>)    <span class="comment">// 需要 ADMIN 角色</span></span><br><span class="line">                        .anyRequest().authenticated()                     <span class="comment">// 其他所有路径需要认证</span></span><br><span class="line">                )</span><br><span class="line">                .anonymous(anon -&gt; anon</span><br><span class="line">                        .principal(<span class="string">&quot;anonymousUser&quot;</span>) <span class="comment">// 匿名用户</span></span><br><span class="line">                )</span><br><span class="line">                .formLogin(form -&gt;</span><br><span class="line">                        form.disable()</span><br><span class="line">                )</span><br><span class="line">                .addFilterAfter(<span class="keyword">new</span> <span class="title class_">SimpleFilter</span>(manager()), LogoutFilter.class)</span><br><span class="line">                .authenticationProvider(<span class="keyword">new</span> <span class="title class_">MyAuthenticateProvider</span>())</span><br><span class="line">                .logout(logout -&gt; logout</span><br><span class="line">                        .logoutUrl(<span class="string">&quot;/logout&quot;</span>)          <span class="comment">// 登出URL</span></span><br><span class="line">                        .logoutSuccessUrl(<span class="string">&quot;/login?logout&quot;</span>) <span class="comment">// 登出成功后跳转</span></span><br><span class="line">                        .permitAll()</span><br><span class="line">                );</span><br><span class="line">        <span class="keyword">return</span> http.build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p> 运行上面的代码会发现自己的provider没有走进去。我下午尝试的时候还出现了循环依赖，AuthenticationManager 自己循环依赖自己。这个问题还没解决。还在看</p>
+</li>
+</ol>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Kai Jie
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://voidvvv.github.io/2025/05/17/spring-security/" title="SpringSecurity 踩坑记录">https://voidvvv.github.io/2025/05/17/spring-security/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/01/unreal_study_problem/" rel="prev" title="虚幻引擎学习踩坑">
+                  <i class="fa fa-angle-left"></i> 虚幻引擎学习踩坑
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/05/17/maven-upload/" rel="next" title="向Maven仓库发布自己的项目所遇到的一些坑">
+                  向Maven仓库发布自己的项目所遇到的一些坑 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa-solid fa-award"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kai Jie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Word count total">92k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">5:34</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/voidvvv" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
