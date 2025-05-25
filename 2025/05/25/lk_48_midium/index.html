@@ -19,34 +19,31 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"voidvvv.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="这里用来记录虚幻引擎学习的踩坑记录。大部分是引擎API以及内置设置相关问题。部分问题可以通过手动写代码来实现的功能，但是使用引擎会对开发更加友好，大部分是这种问题">
+    <meta name="description" content="You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).You have to rotate the image in-place, which means you have to modify the input 2D matrix directly.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="虚幻引擎学习踩坑">
-<meta property="og:url" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/index.html">
+<meta property="og:title" content="leecode-48-旋转图象">
+<meta property="og:url" content="https://voidvvv.github.io/2025/05/25/lk_48_midium/index.html">
 <meta property="og:site_name" content="Voidvvv">
-<meta property="og:description" content="这里用来记录虚幻引擎学习的踩坑记录。大部分是引擎API以及内置设置相关问题。部分问题可以通过手动写代码来实现的功能，但是使用引擎会对开发更加友好，大部分是这种问题">
+<meta property="og:description" content="You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).You have to rotate the image in-place, which means you have to modify the input 2D matrix directly.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/2024-06-01T165305.png">
-<meta property="og:image" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/2024-06-01T165453.png">
-<meta property="og:image" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/2024-06-01T165658.png">
-<meta property="og:image" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/2024-06-01T165829.png">
-<meta property="og:image" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/2024-06-01T170249.png">
-<meta property="article:published_time" content="2024-06-01T00:50:47.000Z">
-<meta property="article:modified_time" content="2025-03-28T02:05:35.063Z">
+<meta property="og:image" content="https://voidvvv.github.io/2025/05/25/lk_48_midium/2025-05-25T181854.png">
+<meta property="og:image" content="https://voidvvv.github.io/2025/05/25/lk_48_midium/2025-05-25T184226.png">
+<meta property="article:published_time" content="2025-05-25T02:18:05.000Z">
+<meta property="article:modified_time" content="2025-05-25T10:58:24.980Z">
 <meta property="article:author" content="Kai Jie">
-<meta property="article:tag" content="c++">
-<meta property="article:tag" content="OpenGL">
+<meta property="article:tag" content="矩阵">
+<meta property="article:tag" content="matrix">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://voidvvv.github.io/2024/06/01/unreal_study_problem/2024-06-01T165305.png">
+<meta name="twitter:image" content="https://voidvvv.github.io/2025/05/25/lk_48_midium/2025-05-25T181854.png">
 
 
-<link rel="canonical" href="https://voidvvv.github.io/2024/06/01/unreal_study_problem/">
+<link rel="canonical" href="https://voidvvv.github.io/2025/05/25/lk_48_midium/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2024/06/01/unreal_study_problem/","path":"2024/06/01/unreal_study_problem/","title":"虚幻引擎学习踩坑"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://voidvvv.github.io/2025/05/25/lk_48_midium/","path":"2025/05/25/lk_48_midium/","title":"leecode-48-旋转图象"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>虚幻引擎学习踩坑 | Voidvvv</title>
+<title>leecode-48-旋转图象 | Voidvvv</title>
   
 
 
@@ -106,7 +103,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -119,6 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">代码：</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -178,7 +176,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2024/06/01/unreal_study_problem/">
+    <link itemprop="mainEntityOfPage" href="https://voidvvv.github.io/2025/05/25/lk_48_midium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avater_mw.png">
@@ -191,12 +189,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="虚幻引擎学习踩坑 | Voidvvv">
+      <meta itemprop="name" content="leecode-48-旋转图象 | Voidvvv">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          虚幻引擎学习踩坑
+          leecode-48-旋转图象
         </h1>
 
         <div class="post-meta-container">
@@ -206,15 +204,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2024-06-01 08:50:47" itemprop="dateCreated datePublished" datetime="2024-06-01T08:50:47+08:00">2024-06-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-03-28 10:05:35" itemprop="dateModified" datetime="2025-03-28T10:05:35+08:00">2025-03-28</time>
+      <time title="Created: 2025-05-25 10:18:05 / Modified: 18:58:24" itemprop="dateCreated datePublished" datetime="2025-05-25T10:18:05+08:00">2025-05-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -222,11 +214,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">游戏</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%B8%B8%E6%88%8F/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E/" itemprop="url" rel="index"><span itemprop="name">虚幻引擎</span></a>
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
         </span>
     </span>
 
@@ -237,14 +225,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Word count in article: </span>
-      <span>446</span>
+      <span>700</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>2 mins.</span>
+      <span>3 mins.</span>
     </span>
 </div>
 
@@ -254,18 +242,20 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>这里用来记录虚幻引擎学习的踩坑记录。<br>大部分是引擎API以及内置设置相关问题。部分问题可以通过手动写代码来实现的功能，但是使用引擎会对开发更加友好，大部分是这种问题<br><img src="/2024/06/01/unreal_study_problem/2024-06-01T165305.png" alt="2024-06-01T165305"></p>
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).<br>You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.</p>
+</blockquote>
 <span id="more"></span>
 
-<div class="note info">问题：如何使角色(Charecter)面朝当前移动速度向量的方向？
-答：如果自己写代码来更改rotate，比较繁琐，比较方便的方法是直接在蓝图中设置
-
-<p> <img src="/2024/06/01/unreal_study_problem/2024-06-01T165453.png" alt="2024-06-01T165453"><br>这样可以实时的让引擎帮忙更新人物当前朝向</p>
-</div>
-
-<p>问题：如何自由移动当前摄像机视角<br>答：假设当前摄像机是以如下方式（引入springarm）加入到actor中的：<br><img src="/2024/06/01/unreal_study_problem/2024-06-01T165658.png" alt="2024-06-01T165658"><br>那么，需要设置CameraSetting：<br><img src="/2024/06/01/unreal_study_problem/2024-06-01T165829.png" alt="2024-06-01T165829"><br>将其监听controller的欧拉角。<br>然后我们直接在蓝图中更新controller即即可，可以达成解耦的功效</p>
-<p>问题：角色始终背对相机如何解决<br>答：这种情况需要将角色与相机解耦。相机自由移动视角由上一个问题可以使用controller的欧拉角，<br>然后我们角色需要解绑controller的欧拉角，设置pawn catagory下，把对应角都取消勾选即可解绑controller角度<br><img src="/2024/06/01/unreal_study_problem/2024-06-01T170249.png" alt="2024-06-01T170249"></p>
-<p>总结，以上其实都是使用controller角度的问题，controller作为统一管理中心，可以直接读取用户输入的操作用来更新自己当前持有的角度。<br>其他组件如果想使用controller的角度，设置上进行绑定即可。这样，如果多个组件都使用了controller的欧拉角，那么自然这些组件都会看起来是绑定到一起了</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rotate-image/submissions/632331118/?envType=study-plan-v2&envId=top-100-liked">题目</a><br></p>
+<p><img src="/2025/05/25/lk_48_midium/2025-05-25T181854.png" alt="2025-05-25T181854"></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>可以将整体旋转，解构为按层来旋转。并且，<code>n*n</code> 矩阵最多有 <code>n/2</code> 层。<br>我们可以从最外层开始，遍历所有层， 每一层都从上边(可以任意选择)开始旋转。<br>上边从最左边的点开始，依次绕圈找到该坐标旋转后的位置，将其放入，重复四次即可。（因为有四条边）<br><img src="/2025/05/25/lk_48_midium/2025-05-25T184226.png" alt="2025-05-25T184226"></p>
+<p>图上就是一个3*3的矩阵旋转变化。在此矩阵中，层数为: <code>n/3 = 1</code>.<br>看这里1的位置，1为最外层<code>(i = 0)</code>的初始元素，设其初始位置为 <code>(x,y)</code>,在这里，x y此时都为<code>0（i）</code>，变换后的位置为 <code>(n - 1 - i, x)</code>， 这个就是上边旋转到右边后的坐标算法。可以这么来想：</p>
+<blockquote>
+<p>上边的纵坐标是恒定的（即y不会变，是一条横线），而右边的边横坐标是恒定的（x不会变，是一条竖线），所以我们判定该店对应右边的横坐标与该点原本的纵坐标有关系。具体关系的大小，可以观察，当前边所处的层即为右边横坐标与总层数的差值，即可得右边的横坐标公式： <code>n - 1 - i</code><br>至于纵坐标，可以观察到随着当前选取的点不断右移，在右边所对应的纵坐标也不断下移，可推论出右边的纵坐标即为当前点的横坐标 <code>x</code> 最后得出坐标公式 <strong><code>(n - 1 - i, x)</code></strong></p>
+</blockquote>
+<p>然后右边本来的3旋转到了下边，此时的左边变换是: <code>(n - 1 - i, x) -&gt; (n - 1 - x, x - 1 - i)</code><br>最后下边变为左边的对应坐标变换: <code>(n - 1 - x, x - 1 - i) -&gt;  (i, n - 1 - x)</code><br>第四次就会绕回原点： <code>(i, n - 1 - x) -&gt; (x, i)</code></p>
+<h2 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rotate</span><span class="params">(<span class="type">int</span>[][] matrix)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> matrix.length;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n / <span class="number">2</span>; i++) &#123;<span class="comment">// 遍历所有层级。 EXAMPLE: 3 × 3 代表着两层，外面一层，里面一层。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> i, y = i; x &lt; (n - i - <span class="number">1</span>); x++) &#123; <span class="comment">// 每一层开始， 从（i,i）处当作起点，依次遍历四个边所对应的坐标</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">targetX</span> <span class="operator">=</span> (n - i - <span class="number">1</span>);</span><br><span class="line">            <span class="type">int</span> <span class="variable">targetY</span> <span class="operator">=</span> x;</span><br><span class="line">            <span class="type">int</span> <span class="variable">tmp</span> <span class="operator">=</span> matrix[targetY][targetX];</span><br><span class="line">            matrix[targetY][targetX] = matrix[y][x]; <span class="comment">// 起点赋值给右边的</span></span><br><span class="line"></span><br><span class="line">            targetX = (n - <span class="number">1</span> - x);</span><br><span class="line">            targetY = (n - <span class="number">1</span> - i);</span><br><span class="line">            matrix[y][x] = tmp;</span><br><span class="line">            tmp = matrix[targetY][targetX];</span><br><span class="line">            matrix[targetY][targetX] = matrix[y][x];<span class="comment">// 右边的值赋值给底边的</span></span><br><span class="line"></span><br><span class="line">            targetX = i;</span><br><span class="line">            targetY = (n - <span class="number">1</span> - x);</span><br><span class="line">            matrix[y][x] = tmp;</span><br><span class="line">            tmp = matrix[targetY][targetX];</span><br><span class="line">            matrix[targetY][targetX] = matrix[y][x];<span class="comment">// 底边的值赋值给左边的</span></span><br><span class="line"></span><br><span class="line">            matrix[y][x] = tmp; <span class="comment">// 最后将左边的值赋值给原点 x,y </span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -283,7 +273,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>Post link: </strong>
-      <a href="https://voidvvv.github.io/2024/06/01/unreal_study_problem/" title="虚幻引擎学习踩坑">https://voidvvv.github.io/2024/06/01/unreal_study_problem/</a>
+      <a href="https://voidvvv.github.io/2025/05/25/lk_48_midium/" title="leecode-48-旋转图象">https://voidvvv.github.io/2025/05/25/lk_48_midium/</a>
   </li>
   <li class="post-copyright-license">
       <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -292,22 +282,19 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c++</a>
-              <a href="/tags/OpenGL/" rel="tag"><i class="fa fa-tag"></i> OpenGL</a>
+              <a href="/tags/%E7%9F%A9%E9%98%B5/" rel="tag"><i class="fa fa-tag"></i> 矩阵</a>
+              <a href="/tags/matrix/" rel="tag"><i class="fa fa-tag"></i> matrix</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/04/12/openAL_MP3_OGG/" rel="prev" title="OpenAL 解析MP3 + OGG 音频">
-                  <i class="fa fa-angle-left"></i> OpenAL 解析MP3 + OGG 音频
+                <a href="/2025/05/21/lk_76_hard/" rel="prev" title="手撸算法 - 力扣 76. Minimum Window Substring">
+                  <i class="fa fa-angle-left"></i> 手撸算法 - 力扣 76. Minimum Window Substring
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/05/17/spring-security/" rel="next" title="SpringSecurity 踩坑记录">
-                  SpringSecurity 踩坑记录 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
