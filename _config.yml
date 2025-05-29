@@ -71,7 +71,7 @@ index_generator:
 
 # Category & Tag
 default_category: uncategorized
-category_map: abc
+category_map: 
 tag_map:
 
 # Metadata elements
