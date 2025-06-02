@@ -1,6 +1,6 @@
 ---
-title: leecode-3372-Maximize the Number of Target Nodes After Connecting Trees I
-date: 2025-05-20:47:05+08:00
+title: leetcode-3372-Maximize the Number of Target Nodes After Connecting Trees I
+date: 2025-05-31:47:05+08:00
 categories: 
 - 算法
 tags: 
