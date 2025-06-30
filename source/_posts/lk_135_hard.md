@@ -1,7 +1,7 @@
 ---
 title: leetcode-135-Candy
 date: 2025-06-02T20:27:36+08:00
-tags:
+categories:
 - 算法
 ---
 

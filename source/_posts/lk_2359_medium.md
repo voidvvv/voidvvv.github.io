@@ -1,7 +1,8 @@
 ---
 title: leetcode_2359_Find Closest Node to Given Two Nodes
 date: 2025-05-30T21:30:39+08:00
-tags:
+categories: 
+- 算法
 ---
 
 You are given a directed graph of n nodes numbered from 0 to n - 1, where each node has at most one outgoing edge.
